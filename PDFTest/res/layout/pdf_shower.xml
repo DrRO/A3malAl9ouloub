@@ -1,23 +1,143 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent" >
+    android:id="@+id/principal_layout"
+    android:layout_width="720px"
+    android:layout_height="1280px"
+    android:layout_gravity="center"
+    android:background="@drawable/pdf_bg" >
 
     <com.joanzapata.pdfview.PDFView
         android:id="@+id/pdfView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" 
-        android:layout_centerInParent="true"/>
+        android:layout_width="720px"
+        android:layout_height="1280px"
+        android:layout_centerInParent="true"
+        android:background="@drawable/pdf_bg" />
 
-    <Button
-        android:id="@+id/button1"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/pdfView"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="78dp"
-        android:layout_marginTop="18dp"
-        android:text="Button" />
+    <LinearLayout
+        android:layout_width="720px"
+        android:layout_height="83px"
+        android:layout_marginTop="40px"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/pdf_back"
+            android:layout_width="71px"
+            android:layout_height="71px"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="60px"
+            android:background="@drawable/pdf_back" />
+
+        <Button
+            android:id="@+id/pdf_list"
+            android:layout_width="71px"
+            android:layout_height="58px"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="60px"
+            android:background="@drawable/pdf_list" />
+
+        <Button
+            android:id="@+id/pdf_crop"
+            android:layout_width="51px"
+            android:layout_height="70px"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="70px"
+            android:background="@drawable/pdf_crop" />
+
+        <Button
+            android:id="@+id/pdf_bookmark"
+            android:layout_width="71px"
+            android:layout_height="71px"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="68px"
+            android:background="@drawable/pdf_bookmark" />
+
+        <Button
+            android:id="@+id/pdf_bookmark_list"
+            android:layout_width="69px"
+            android:layout_height="69px"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="60px"
+            android:background="@drawable/pdf_bookmark_list" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="720px"
+        android:layout_height="156px"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal" >
+
+        <com.joanzapata.pdfview.PDFView
+            android:id="@+id/preview10"
+            android:layout_width="60px"
+            android:layout_height="90px"
+            android:layout_marginLeft="35px"
+            android:layout_gravity="center_vertical" 
+            />
+        
+        <com.joanzapata.pdfview.PDFView
+            android:id="@+id/preview9"
+            android:layout_width="60px"
+            android:layout_height="90px"
+            android:layout_marginLeft="6px"
+            android:layout_gravity="center_vertical" 
+            />
+        
+        <com.joanzapata.pdfview.PDFView
+            android:id="@+id/preview8"
+            android:layout_width="60px"
+            android:layout_height="90px"
+            android:layout_marginLeft="6px"
+            android:layout_gravity="center_vertical" 
+            />
+        <com.joanzapata.pdfview.PDFView
+            android:id="@+id/preview7"
+            android:layout_width="60px"
+            android:layout_height="90px"
+            android:layout_marginLeft="6px"
+            android:layout_gravity="center_vertical" 
+            />
+        <com.joanzapata.pdfview.PDFView
+            android:id="@+id/preview6"
+            android:layout_width="60px"
+            android:layout_height="90px"
+            android:layout_marginLeft="6px"
+            android:layout_gravity="center_vertical" 
+            />
+        <com.joanzapata.pdfview.PDFView
+            android:id="@+id/preview5"
+            android:layout_width="60px"
+            android:layout_height="90px"
+            android:layout_marginLeft="6px"
+            android:layout_gravity="center_vertical" 
+            />
+        <com.joanzapata.pdfview.PDFView
+            android:id="@+id/preview4"
+            android:layout_width="60px"
+            android:layout_height="90px"
+            android:layout_marginLeft="6px"
+            android:layout_gravity="center_vertical" 
+            />
+       <com.joanzapata.pdfview.PDFView
+            android:id="@+id/preview3"
+            android:layout_width="60px"
+            android:layout_height="90px"
+            android:layout_marginLeft="6px"
+            android:layout_gravity="center_vertical" 
+            />
+        <com.joanzapata.pdfview.PDFView
+            android:id="@+id/preview2"
+            android:layout_width="60px"
+            android:layout_height="90px"
+            android:layout_marginLeft="6px"
+            android:layout_gravity="center_vertical" 
+            />
+        <com.joanzapata.pdfview.PDFView
+            android:id="@+id/preview1"
+            android:layout_width="60px"
+            android:layout_height="90px"
+            android:layout_marginLeft="6px"
+            android:layout_gravity="center_vertical" 
+            />
+        
+    </LinearLayout>
 
 </RelativeLayout>

@@ -22,7 +22,9 @@ import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
 import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
+import android.annotation.TargetApi;
 import android.graphics.PointF;
+import android.os.Build;
 import android.view.animation.DecelerateInterpolator;
 
 import com.joanzapata.pdfview.PDFView;
@@ -35,6 +37,7 @@ import com.joanzapata.pdfview.PDFView;
  *         an animation, and call moveTo() on the PDFView as a result
  *         of each animation update.
  */
+@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 class AnimationManager {
 
     /** PDF View */

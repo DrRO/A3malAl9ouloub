@@ -85,9 +85,9 @@ class DragPinchManager implements OnDragListener, OnPinchListener, OnDoubleTapLi
                 float distance = x - startDragX;
                 long time = System.currentTimeMillis() - startDragTime;
                 int diff = distance > 0 ? -1 : +1;
-
+// HERE *CORRECT
                 if (isQuickMove(distance, time) || isPageChange(distance)) {
-                    pdfView.showPage(pdfView.getCurrentPage() + diff);
+                    pdfView.showPage(pdfView.getCurrentPage() - diff);
                 } else {
                     pdfView.showPage(pdfView.getCurrentPage());
                 }

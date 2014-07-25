@@ -18,6 +18,7 @@
  */
 package com.joanzapata.pdfview;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.*;
 import android.graphics.Paint.Style;
@@ -61,6 +62,7 @@ import static com.joanzapata.pdfview.util.Constants.Cache.CACHE_SIZE;
  *         using {@link #load(Uri, OnLoadCompleteListener, int[])}. In this
  *         particular case, a userPage of 5 can refer to a documentPage of 17.
  */
+@SuppressLint("NewApi")
 public class PDFView extends SurfaceView {
 
     private static final String TAG = PDFView.class.getSimpleName();
@@ -261,7 +263,7 @@ public class PDFView extends SurfaceView {
 
         // Reset the zoom and center the page on the screen
         resetZoom();
-        animationManager.startXAnimation(currentXOffset, calculateCenterOffsetForPage(pageNb));
+        animationManager.startXAnimation(calculateCenterOffsetForPage(pageNb), currentXOffset);
         loadPages();
 
         if (onPageChangeListener != null) {
@@ -350,7 +352,7 @@ public class PDFView extends SurfaceView {
         // abstraction of the screen position when rendering the parts.
 
         // Draws background
-        canvas.drawColor(Color.WHITE);
+        canvas.drawColor(Color.TRANSPARENT);
 
         if (state != State.SHOWN) {
             return;
