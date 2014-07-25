@@ -28,7 +28,24 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 	private ImageView book_1, book_2, book_3, book_4 ,book_5 ,book_6 ,
 						book_7,book_8 , book_9 , book_10 ,book_11, book_12 , new_back;
 	
+
+	public static final String book1 = "mhbbat-eklas-1.pdf";
+	public static final String book2 = "mhbbat-twkl-2.pdf";
+	public static final String book3 = "mhbbat-mhbh-3.pdf";
+	public static final String book4 = "mhbbat-kuf-4.pdf";
+	public static final String book5 = "mhbbat-rja-5.pdf";
+	public static final String book6 = "mhbbat-t8wa-6.pdf";
+	public static final String book7 = "mhbbat-rda-7.pdf";
+	public static final String book8 = "mhbbat-shkr-8.pdf";
+	public static final String book9 = "mhbbat-sabr-9.pdf";
+	public static final String book10 = "mhbbat-war3-10.pdf";
+	public static final String book11 = "mhbbat-tfkor-11.pdf";
+	public static final String book12 = "mhbbat-mohasba-12.pdf";
+	
+	
 	private RelativeLayout principal_layout ;
+	
+	public String book_number ;
 	
 	private Animation zoomin;
 	
@@ -57,6 +74,19 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 		book_10 = (ImageView) findViewById(R.id.book_10);
 		book_11 = (ImageView) findViewById(R.id.book_11);
 		book_12 = (ImageView) findViewById(R.id.book_12);
+		
+		book_1.setTag(book1);
+		book_2.setTag(book2);
+		book_3.setTag(book3);
+		book_4.setTag(book4);
+		book_5.setTag(book5);
+		book_6.setTag(book6);
+		book_7.setTag(book7);
+		book_8.setTag(book8);
+		book_9.setTag(book9);
+		book_10.setTag(book10);
+		book_11.setTag(book11);
+		book_12.setTag(book12);
 		
 		
 //		book_1.setOnClickListener( new OnClickListener() {
@@ -110,7 +140,9 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 		
 		public void handleMessage(Message msg) {
 
-			startActivity(new Intent(MainBookChoice.this, PDFViewerActivity.class));
+			Intent i = new Intent(MainBookChoice.this, PDFViewerActivity.class) ;
+			i.putExtra("book", book_number);
+			startActivity(i);
 			finish();
 
 			super.handleMessage(msg);
@@ -120,6 +152,8 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 	@Override
 	public void onClick(final View v) {
 
+		book_number = (String) v.getTag();
+		
 		int left = v.getLeft();
 		int top = v.getTop();
 		
