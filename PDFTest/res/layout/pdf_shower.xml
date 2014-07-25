@@ -135,5 +135,11 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="6px" />
     </LinearLayout>
+    
+    <FrameLayout
+        android:id="@+id/fragment_view"
+        android:layout_width="720px"
+    	android:layout_height="1280px">
+    </FrameLayout>
 
 </RelativeLayout>

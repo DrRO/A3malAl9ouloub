@@ -42,8 +42,9 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 	
 	private RelativeLayout principal_layout ;
 	
-	public String pdfFile ;
-	
+	private String pdfFile ;
+	private int book_id;
+ 	
 	private AnimationSet animationSet;
 	private Animation zoomin, alpha;
 	private AKManager akManager;
@@ -238,6 +239,8 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 
 			Intent i = new Intent(MainBookChoice.this, PDFViewerActivity.class) ;
 			i.putExtra("book", pdfFile);
+			i.putExtra("book_id", book_id);
+			
 			startActivity(i);
 			finish();
 
@@ -250,7 +253,8 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 
 		int selectedPosition = (Integer) v.getTag();
 		pdfFile = books.get(selectedPosition).getPdfFile();
-
+		book_id = books.get(selectedPosition).getId();
+		
 		img_cover.setBackgroundDrawable(v.getBackground());
 		img_cover.startAnimation(animationSet);
 		img_cover.bringToFront();

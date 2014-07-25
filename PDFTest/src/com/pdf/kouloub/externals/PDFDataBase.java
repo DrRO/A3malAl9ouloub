@@ -33,7 +33,7 @@ public class PDFDataBase extends SQLiteAssetHelper {
 			+ COL_PAGE_NUMBER + " INTEGER);";
     
     public PDFDataBase(Context context) {
-    	super(context, DATABASE_NAME, context.getExternalFilesDir(null).getAbsolutePath(), null, DATABASE_VERSION);
+    	super(context.getApplicationContext(), DATABASE_NAME, context.getExternalFilesDir(null).getAbsolutePath(), null, DATABASE_VERSION);
         
     	createTableBookMark();
     }

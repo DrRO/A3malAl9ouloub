@@ -8,8 +8,11 @@ import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -26,6 +29,12 @@ import com.pdf.kouloub.utils.MySuperScaler;
 public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteListener, OnPageChangeListener {
 
 	private PDFView pdf ;
+
+	private static final String PARTS_FRAGMENT = "parts_fragment";
+	private static final String BOOKMARKS_FRAGMENT = "bookmark_fragment";
+	private Fragment fragment;
+
+	private int book_id;
 
 	private ImageView preview1, preview2, preview3, preview4, preview5, 
 	preview6, preview7, preview8, preview9, preview10 ;
@@ -58,6 +67,7 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 
 		Bundle b = getIntent().getExtras();
 		final String book_to_read = b.getString("book");
+		book_id = b.getInt("book_id");
 
 
 		pdf.fromAsset(book_to_read + ".pdf")
@@ -78,19 +88,19 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 		Bitmap bm8 = AKManager.originalResolution(this, "previews/"+book_to_read+"/8.png", preview1.getWidth(), preview8.getHeight());
 		Bitmap bm9 = AKManager.originalResolution(this, "previews/"+book_to_read+"/9.png", preview1.getWidth(), preview9.getHeight());
 		Bitmap bm10 = AKManager.originalResolution(this, "previews/"+book_to_read+"/10.png", preview1.getWidth(), preview10.getHeight());
-		
-		
-//		Drawable d1 = new BitmapDrawable(getResources(), bm1);
-//		Drawable d2 = new BitmapDrawable(getResources(), bm1);
-//		Drawable d3 = new BitmapDrawable(getResources(), bm1);
-//		Drawable d4 = new BitmapDrawable(getResources(), bm1);
-//		Drawable d5 = new BitmapDrawable(getResources(), bm1);
-//		Drawable d6 = new BitmapDrawable(getResources(), bm1);
-//		Drawable d7 = new BitmapDrawable(getResources(), bm1);
-//		Drawable d1 = new BitmapDrawable(getResources(), bm1);
-//		Drawable d1 = new BitmapDrawable(getResources(), bm1);
-		
-		
+
+
+		//		Drawable d1 = new BitmapDrawable(getResources(), bm1);
+		//		Drawable d2 = new BitmapDrawable(getResources(), bm1);
+		//		Drawable d3 = new BitmapDrawable(getResources(), bm1);
+		//		Drawable d4 = new BitmapDrawable(getResources(), bm1);
+		//		Drawable d5 = new BitmapDrawable(getResources(), bm1);
+		//		Drawable d6 = new BitmapDrawable(getResources(), bm1);
+		//		Drawable d7 = new BitmapDrawable(getResources(), bm1);
+		//		Drawable d1 = new BitmapDrawable(getResources(), bm1);
+		//		Drawable d1 = new BitmapDrawable(getResources(), bm1);
+
+
 		preview1.setBackgroundDrawable(new BitmapDrawable(getResources(), bm1));
 		preview2.setBackgroundDrawable(new BitmapDrawable(getResources(), bm2));
 		preview3.setBackgroundDrawable(new BitmapDrawable(getResources(), bm3));
@@ -101,23 +111,56 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 		preview8.setBackgroundDrawable(new BitmapDrawable(getResources(), bm8));
 		preview9.setBackgroundDrawable(new BitmapDrawable(getResources(), bm9));
 		preview10.setBackgroundDrawable(new BitmapDrawable(getResources(), bm10));
-		
-//		preview1.setImageBitmap(getBitmapFromAssets("previews/"+book_to_read+"/1.png"));
-//		preview2.setImageBitmap(getBitmapFromAssets("previews/"+book_to_read+"/2.png"));
-//		preview3.setImageBitmap(getBitmapFromAssets("previews/"+book_to_read+"/3.png"));
-//		preview4.setImageBitmap(getBitmapFromAssets("previews/"+book_to_read+"/4.png"));
-//		preview5.setImageBitmap(getBitmapFromAssets("previews/"+book_to_read+"/5.png"));
-//		preview6.setImageBitmap(getBitmapFromAssets("previews/"+book_to_read+"/6.png"));
-//		preview7.setImageBitmap(getBitmapFromAssets("previews/"+book_to_read+"/7.png"));
-//		preview8.setImageBitmap(getBitmapFromAssets("previews/"+book_to_read+"/8.png"));
-//		preview9.setImageBitmap(getBitmapFromAssets("previews/"+book_to_read+"/9.png"));
-//		preview10.setImageBitmap(getBitmapFromAssets("previews/"+book_to_read+"/10.png"));
+
+		//		preview1.setImageBitmap(getBitmapFromAssets("previews/"+book_to_read+"/1.png"));
+		//		preview2.setImageBitmap(getBitmapFromAssets("previews/"+book_to_read+"/2.png"));
+		//		preview3.setImageBitmap(getBitmapFromAssets("previews/"+book_to_read+"/3.png"));
+		//		preview4.setImageBitmap(getBitmapFromAssets("previews/"+book_to_read+"/4.png"));
+		//		preview5.setImageBitmap(getBitmapFromAssets("previews/"+book_to_read+"/5.png"));
+		//		preview6.setImageBitmap(getBitmapFromAssets("previews/"+book_to_read+"/6.png"));
+		//		preview7.setImageBitmap(getBitmapFromAssets("previews/"+book_to_read+"/7.png"));
+		//		preview8.setImageBitmap(getBitmapFromAssets("previews/"+book_to_read+"/8.png"));
+		//		preview9.setImageBitmap(getBitmapFromAssets("previews/"+book_to_read+"/9.png"));
+		//		preview10.setImageBitmap(getBitmapFromAssets("previews/"+book_to_read+"/10.png"));
 
 
 		back.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
 				onBackPressed();
+			}
+		});
+
+		list_summary.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+
+				gotoFragment(PARTS_FRAGMENT);
+
+			}
+		});
+
+		bookmark_list.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+
+				gotoFragment(BOOKMARKS_FRAGMENT);
+
+			}
+		});
+
+		add_bookmark.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+
+				if(pdfDB.isBookMarked(book_id, pdf.getCurrentPage())){
+					pdfDB.removeFromBookMarks(book_id, pdf.getCurrentPage());
+				}else
+					pdfDB.addToBookMarks(book_id, pdf.getCurrentPage());
+
 			}
 		});
 
@@ -135,29 +178,74 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 
 	}
 
-	
-	 public Bitmap getBitmapFromAssets(String fileName) {
-		    
-		 AssetManager assetManager = getAssets();
-		    Bitmap bitmap = null;
-		    InputStream istr;
-			try {
-				istr = assetManager.open(fileName);
-				bitmap = BitmapFactory.decodeStream(istr);
-				
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		   
-			return bitmap;
+
+	public Bitmap getBitmapFromAssets(String fileName) {
+
+		AssetManager assetManager = getAssets();
+		Bitmap bitmap = null;
+		InputStream istr;
+		try {
+			istr = assetManager.open(fileName);
+			bitmap = BitmapFactory.decodeStream(istr);
+
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-	
+
+		return bitmap;
+	}
+
 	@Override
 	public void onBackPressed() {
 
-		startActivity(new Intent( PDFViewerActivity.this, MainBookChoice.class));
-		finish();
+		if(fragment == null)
+			startActivity(new Intent( PDFViewerActivity.this, MainBookChoice.class));
+		else{
+			toggleEnabledViews(true);
+			fragment = null;
+		}
+		super.onBackPressed();
+	}
 
+	public void onPageItemClicked(int pageTo){
+		onBackPressed();
+		pdf.jumpTo(pageTo + 1);
+	}
+
+	private void gotoFragment(String fragmentTAG){
+
+		FragmentManager fragmentManager = getSupportFragmentManager();
+		FragmentTransaction transaction = fragmentManager.beginTransaction();
+		transaction.setCustomAnimations(R.anim.down_in, R.anim.down_out, R.anim.up_in, R.anim.up_out);
+
+		fragment = getSupportFragmentManager().findFragmentByTag(fragmentTAG);
+
+		if(fragment == null){
+			Log.i("", "new instance of views fragment................");
+			if(fragmentTAG.equals(PARTS_FRAGMENT))
+				fragment = new BookContentFragment(book_id);
+			else 
+				fragment = new BookMarkFragment(book_id);
+
+			transaction.replace(R.id.fragment_view, fragment, fragmentTAG);
+			transaction.addToBackStack(fragmentTAG);
+		}else{
+			Log.i("", "show the same instance");
+			transaction.attach(fragment);
+		}
+
+		transaction.commit();
+
+		toggleEnabledViews(false);
+	}
+
+	private void toggleEnabledViews(boolean enabled){
+		pdf.setEnabled(enabled);
+		back.setEnabled(enabled);
+		add_bookmark.setEnabled(enabled);
+		bookmark_list.setEnabled(enabled);
+		crop.setEnabled(enabled);
+		list_summary.setEnabled(enabled);
 	}
 
 }

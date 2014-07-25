@@ -21,6 +21,8 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
+import com.pdf.kouloub.externals.PDFDataBase;
+
 /**
  * This is Super Scaler
  *
@@ -42,6 +44,7 @@ public class MySuperScaler extends FragmentActivity  {
 	
 	public static boolean isTablet ;
 	
+	public PDFDataBase pdfDB;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,7 @@ public class MySuperScaler extends FragmentActivity  {
 		
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		
+		pdfDB = new PDFDataBase(this);
 		
 		memoryAnalyser();
 		
@@ -208,6 +212,10 @@ public class MySuperScaler extends FragmentActivity  {
 		super.onResume();
 		
 		thisAct = this;
+		
+		if(pdfDB == null){
+			pdfDB = new PDFDataBase(this);
+		}
 	
 	}
 	
@@ -222,6 +230,10 @@ public class MySuperScaler extends FragmentActivity  {
 	protected void onStop() {
 		super.onStop();
 		
+		if(pdfDB != null){
+			pdfDB.close();
+			pdfDB = null;
+		}
 	}
 	
     protected double tabletInchSize(){
