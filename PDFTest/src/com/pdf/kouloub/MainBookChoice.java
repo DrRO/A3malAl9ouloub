@@ -22,7 +22,7 @@ import com.pdf.kouloub.utils.MySuperScaler;
 
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 @SuppressLint("HandlerLeak")
-public class MainBookChoice extends MySuperScaler implements OnClickListener{
+public class MainBookChoice extends MySuperScaler implements OnClickListener {
 
 	private Button info ;
 	private ImageView book_1, book_2, book_3, book_4 ,book_5 ,book_6 ,
@@ -58,6 +58,20 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener{
 		book_11 = (ImageView) findViewById(R.id.book_11);
 		book_12 = (ImageView) findViewById(R.id.book_12);
 		
+		
+//		book_1.setOnClickListener( new OnClickListener() {
+//			@Override
+//			public void onClick(View view) {
+//				 Intent i = new Intent(MainBookChoice.this, PDFViewerActivity.class);
+//                 Bundle b = null;
+//                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+//                     Bitmap bitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+//                     b = ActivityOptions.makeThumbnailScaleUpAnimation(view, bitmap, 0, 0).toBundle();
+//                 }
+//                 startActivity(i, b);
+//				
+//			}
+//		});
 		
 		book_1.setOnClickListener(this);
 		book_2.setOnClickListener(this);
@@ -117,6 +131,9 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener{
 		
 		v.bringToFront();
 		v.startAnimation(zoomin);
+		
+		
+		
 		zoomin.setAnimationListener(new AnimationListener() {
 			
 			@Override
@@ -140,8 +157,6 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener{
 				
 			}
 		});
-		
-		
 	}
 	
 }
