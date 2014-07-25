@@ -65,79 +65,75 @@
         android:layout_alignParentBottom="true"
         android:orientation="horizontal" >
 
-        <com.joanzapata.pdfview.PDFView
+        <ImageView
             android:id="@+id/preview10"
             android:layout_width="60px"
             android:layout_height="90px"
-            android:layout_marginLeft="35px"
-            android:layout_gravity="center_vertical" 
-            />
-        
-        <com.joanzapata.pdfview.PDFView
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="35px" />
+
+        <ImageView
             android:id="@+id/preview9"
             android:layout_width="60px"
             android:layout_height="90px"
-            android:layout_marginLeft="6px"
-            android:layout_gravity="center_vertical" 
-            />
-        
-        <com.joanzapata.pdfview.PDFView
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="6px" />
+
+        <ImageView
             android:id="@+id/preview8"
             android:layout_width="60px"
             android:layout_height="90px"
-            android:layout_marginLeft="6px"
-            android:layout_gravity="center_vertical" 
-            />
-        <com.joanzapata.pdfview.PDFView
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="6px" />
+
+        <ImageView
             android:id="@+id/preview7"
             android:layout_width="60px"
             android:layout_height="90px"
-            android:layout_marginLeft="6px"
-            android:layout_gravity="center_vertical" 
-            />
-        <com.joanzapata.pdfview.PDFView
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="6px" />
+
+        <ImageView
             android:id="@+id/preview6"
             android:layout_width="60px"
             android:layout_height="90px"
-            android:layout_marginLeft="6px"
-            android:layout_gravity="center_vertical" 
-            />
-        <com.joanzapata.pdfview.PDFView
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="6px" />
+
+        <ImageView
             android:id="@+id/preview5"
             android:layout_width="60px"
             android:layout_height="90px"
-            android:layout_marginLeft="6px"
-            android:layout_gravity="center_vertical" 
-            />
-        <com.joanzapata.pdfview.PDFView
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="6px" />
+
+        <ImageView
             android:id="@+id/preview4"
             android:layout_width="60px"
             android:layout_height="90px"
-            android:layout_marginLeft="6px"
-            android:layout_gravity="center_vertical" 
-            />
-       <com.joanzapata.pdfview.PDFView
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="6px" />
+
+        <ImageView
             android:id="@+id/preview3"
             android:layout_width="60px"
             android:layout_height="90px"
-            android:layout_marginLeft="6px"
-            android:layout_gravity="center_vertical" 
-            />
-        <com.joanzapata.pdfview.PDFView
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="6px" />
+
+        <ImageView
             android:id="@+id/preview2"
             android:layout_width="60px"
             android:layout_height="90px"
-            android:layout_marginLeft="6px"
-            android:layout_gravity="center_vertical" 
-            />
-        <com.joanzapata.pdfview.PDFView
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="6px" />
+
+        <ImageView
             android:id="@+id/preview1"
             android:layout_width="60px"
             android:layout_height="90px"
-            android:layout_marginLeft="6px"
-            android:layout_gravity="center_vertical" 
-            />
-        
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="6px" />
     </LinearLayout>
 
 </RelativeLayout>
