@@ -8,11 +8,10 @@ import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
+import android.widget.ImageView;
 
 import com.example.pdftest.R;
 import com.pdf.kouloub.adapters.BookMarkAdapter;
@@ -23,7 +22,8 @@ import com.pdf.kouloub.utils.MySuperScaler;
 
 public class BookMarkFragment extends ListFragment{
 
-	private Button btn_back;
+//	private Button btn_back;
+	private ImageView img_title;
 	private BookMarkAdapter adapter;
 	private ArrayList<BookMark> bookMarks = new ArrayList<BookMark>();
 	
@@ -61,14 +61,17 @@ public class BookMarkFragment extends ListFragment{
 		if(!(MySuperScaler.scaled))
 			MySuperScaler.scaleViewAndChildren(rootView, MySuperScaler.scale);
 
-		btn_back = (Button) rootView.findViewById(R.id.btn_back);
-		btn_back.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				getActivity().onBackPressed();
-			}
-		});
+		img_title = (ImageView) rootView.findViewById(R.id.img_title);
+		img_title.setBackgroundResource(R.drawable.fawassel);
+		
+//		btn_back = (Button) rootView.findViewById(R.id.btn_back);
+//		btn_back.setOnClickListener(new OnClickListener() {
+//			
+//			@Override
+//			public void onClick(View arg0) {
+//				getActivity().onBackPressed();
+//			}
+//		});
 		
 		adapter = new BookMarkAdapter(getActivity(), R.layout.bab_list_item, bookMarks);
 

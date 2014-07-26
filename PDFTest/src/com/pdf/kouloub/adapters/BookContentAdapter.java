@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.pdftest.R;
@@ -40,8 +41,10 @@ public class BookContentAdapter extends ArrayAdapter<BookPart> {
 			
 			// get the elements in the layout
 			holder.txv_title = (TextView) convertView.findViewById(R.id.txv_babTitle); 
+			holder.img_title = (ImageView) convertView.findViewById(R.id.Img_babTitle);
 			holder.txv_pageNb = (TextView) convertView.findViewById(R.id.txv_pageNb); 
 			
+			holder.img_title.setVisibility(View.GONE);
 			convertView.setTag(holder);
 		}
 		else {
@@ -62,6 +65,7 @@ public class BookContentAdapter extends ArrayAdapter<BookPart> {
 
 	class ViewHolder
 	{
+		ImageView img_title;
 		TextView txv_title; 
 		TextView txv_pageNb;
 	}

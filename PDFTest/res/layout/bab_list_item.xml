@@ -1,31 +1,42 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="70dp"
-    android:background="@android:color/white"
+    android:layout_width="720px"
+    android:layout_height="90px"
     android:layout_gravity="center" >
+    
+    <ImageView 
+        android:id="@+id/Img_babTitle"
+        android:layout_width="30px"
+        android:layout_height="30px"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20px"
+        android:background="@drawable/fawassel_suffix"/>
 
     <TextView
         android:id="@+id/txv_babTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="630px"
+        android:layout_height="80px"
         android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:paddingRight="10dp"
+        android:paddingRight="15px"
         android:textColor="#000"
         android:textSize="14sp"
+        android:textStyle="bold"
         android:gravity="right|center_vertical" 
+        android:layout_toLeftOf="@+id/Img_babTitle"
         android:layout_toRightOf="@+id/img_pageNb"
-        android:layout_marginLeft="5dp"/>
+        android:layout_marginLeft="10px"
+        android:layout_marginRight="10px"/>
 
     <TextView
         android:id="@+id/txv_pageNb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_width="30px"
+        android:layout_height="30px"
+        android:layout_margin="10px"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true" 
         android:textColor="#000"
         android:textSize="16sp"
+        android:textStyle="bold"
         android:contentDescription="@null"/>
 
 </RelativeLayout>

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.example.pdftest.R;
 import com.pdf.kouloub.adapters.BookContentAdapter;
@@ -25,7 +26,8 @@ public class BookContentFragment extends ListFragment{
 
 	public static final String ARG_AHADITH = "ahadith_type";
 	
-	private Button btn_back;
+//	private Button btn_back;
+	private ImageView img_title;
 	private BookContentAdapter adapter;
 	private ArrayList<BookPart> parts = new ArrayList<BookPart>();
 	
@@ -63,14 +65,16 @@ public class BookContentFragment extends ListFragment{
 		if(!(MySuperScaler.scaled))
 			MySuperScaler.scaleViewAndChildren(rootView, MySuperScaler.scale);
 
-		btn_back = (Button) rootView.findViewById(R.id.btn_back);
-		btn_back.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				getActivity().onBackPressed();
-			}
-		});
+		img_title = (ImageView) rootView.findViewById(R.id.img_title);
+		img_title.setBackgroundResource(R.drawable.mo7tawayat);
+//		btn_back = (Button) rootView.findViewById(R.id.btn_back);
+//		btn_back.setOnClickListener(new OnClickListener() {
+//			
+//			@Override
+//			public void onClick(View arg0) {
+//				getActivity().onBackPressed();
+//			}
+//		});
 		
 		adapter = new BookContentAdapter(getActivity(), R.layout.bab_list_item, parts);
 

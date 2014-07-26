@@ -1,35 +1,36 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_width="720px"
+    android:layout_height="1280px"
     android:layout_gravity="center"
-    android:background="@android:color/white" >
+    android:background="@drawable/mainscreen_bg" >
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/parts_header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="720px"
+        android:layout_height="110px"
         android:layout_gravity="center" >
 
-        <Button
-            android:id="@+id/btn_back"
-            android:layout_width="71px"
-            android:layout_height="71px"
-            android:layout_gravity="center_vertical"
-            android:layout_margin="20px"
-            android:background="@drawable/pdf_back" />
+<!--         <Button -->
+<!--             android:id="@+id/btn_back" -->
+<!--             android:layout_width="71px" -->
+<!--             android:layout_height="71px" -->
+<!--             android:layout_gravity="center_vertical" -->
+<!--             android:layout_margin="20px" -->
+<!--             android:background="@drawable/pdf_back" /> -->
 
         <ImageView
-            android:id="@+id/txv_title"
-            android:layout_width="match_parent"
-            android:layout_height="71px"
-            android:layout_gravity="center" 
-            android:background="@drawable/pdf_back"/>
-    </LinearLayout>
+            android:id="@+id/img_title"
+            android:layout_width="203px"
+            android:layout_height="102px"
+            android:background="@drawable/mo7tawayat"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="15px"/>
+    </RelativeLayout>
 
     <ListView
         android:id="@+id/android:list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="720px"
+        android:layout_height="1170px"
         android:layout_below="@+id/parts_header"
         android:layout_margin="10px"
         android:dividerHeight="5px"

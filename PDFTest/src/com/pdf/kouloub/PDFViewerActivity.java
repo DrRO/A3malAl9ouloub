@@ -156,10 +156,13 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 			@Override
 			public void onClick(View v) {
 
-				if(pdfDB.isBookMarked(book_id, pdf.getCurrentPage())){
+				boolean isBookMarked = pdfDB.isBookMarked(book_id, pdf.getCurrentPage());
+				if(isBookMarked){
 					pdfDB.removeFromBookMarks(book_id, pdf.getCurrentPage());
 				}else
 					pdfDB.addToBookMarks(book_id, pdf.getCurrentPage());
+				
+				toggleBookMarkButton(!isBookMarked, pdf.getCurrentPage());
 
 			}
 		});
@@ -174,11 +177,18 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 	}
 	@Override
 	public void onPageChanged(int page, int pageCount) {
-		// TODO Auto-generated method stub
-
+		
+		toggleBookMarkButton(pdfDB.isBookMarked(book_id, page), page);
+		
 	}
 
 
+	private void toggleBookMarkButton(boolean isBookMarked, int page) {
+		if(isBookMarked)
+			add_bookmark.setBackgroundResource(R.drawable.pdf_bookmark_added);
+		else
+			add_bookmark.setBackgroundResource(R.drawable.pdf_bookmark);
+	}
 	public Bitmap getBitmapFromAssets(String fileName) {
 
 		AssetManager assetManager = getAssets();
@@ -234,6 +244,7 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 			transaction.attach(fragment);
 		}
 
+		scaled = false;
 		transaction.commit();
 
 		toggleEnabledViews(false);
