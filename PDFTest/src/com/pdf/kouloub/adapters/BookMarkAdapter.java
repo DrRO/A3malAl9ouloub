@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.pdftest.R;
 import com.pdf.kouloub.externals.BookMark;
+import com.pdf.kouloub.utils.MySuperScaler;
 
 public class BookMarkAdapter extends ArrayAdapter<BookMark> {
 
@@ -38,6 +40,8 @@ public class BookMarkAdapter extends ArrayAdapter<BookMark> {
 			holder = new ViewHolder();
 			convertView = inflater.inflate(layoutResourceId, parent, false);
 			
+			MySuperScaler.scaleViewAndChildren(convertView, MySuperScaler.scale);
+			
 			// get the elements in the layout
 			holder.txv_title = (TextView) convertView.findViewById(R.id.txv_babTitle); 
 			holder.txv_pageNb = (TextView) convertView.findViewById(R.id.txv_pageNb); 
@@ -52,9 +56,20 @@ public class BookMarkAdapter extends ArrayAdapter<BookMark> {
 		 * Set the data for the list item. You can also set tags here if you
 		 * want.
 		 */
+		
+		int size = (int) MySuperScaler.screen_width / 30 ;
+		holder.txv_pageNb.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
+		
+		int size2 = (int) MySuperScaler.screen_width / 24 ;
+		holder.txv_title.setTextSize(TypedValue.COMPLEX_UNIT_PX, size2);
+		
+		
 		BookMark bMark = data.get(position);
 
 		holder.txv_title.setText(mContext.getString(R.string.page_num));
+		
+		
+		
 		holder.txv_pageNb.setText("" + bMark.getPageNb());
 
 		return convertView;

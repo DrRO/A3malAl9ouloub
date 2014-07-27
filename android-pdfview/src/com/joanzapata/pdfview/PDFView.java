@@ -263,7 +263,7 @@ public class PDFView extends SurfaceView {
 
         // Reset the zoom and center the page on the screen
         resetZoom();
-        animationManager.startXAnimation(calculateCenterOffsetForPage(pageNb), currentXOffset);
+        animationManager.startXAnimation( currentXOffset,calculateCenterOffsetForPage(pageNb));
         loadPages();
 
         if (onPageChangeListener != null) {

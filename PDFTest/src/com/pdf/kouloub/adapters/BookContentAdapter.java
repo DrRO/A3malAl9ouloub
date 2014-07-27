@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.pdftest.R;
 import com.pdf.kouloub.externals.BookPart;
+import com.pdf.kouloub.utils.MySuperScaler;
 
 public class BookContentAdapter extends ArrayAdapter<BookPart> {
 
@@ -39,12 +41,12 @@ public class BookContentAdapter extends ArrayAdapter<BookPart> {
 			holder = new ViewHolder();
 			convertView = inflater.inflate(layoutResourceId, parent, false);
 			
+			MySuperScaler.scaleViewAndChildren(convertView, MySuperScaler.scale);
+			
 			// get the elements in the layout
 			holder.txv_title = (TextView) convertView.findViewById(R.id.txv_babTitle); 
-			holder.img_title = (ImageView) convertView.findViewById(R.id.Img_babTitle);
 			holder.txv_pageNb = (TextView) convertView.findViewById(R.id.txv_pageNb); 
 			
-			holder.img_title.setVisibility(View.GONE);
 			convertView.setTag(holder);
 		}
 		else {
@@ -55,6 +57,14 @@ public class BookContentAdapter extends ArrayAdapter<BookPart> {
 		 * Set the data for the list item. You can also set tags here if you
 		 * want.
 		 */
+		
+		int size = (int) MySuperScaler.screen_width / 30 ;
+		holder.txv_pageNb.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
+		
+		int size2 = (int) MySuperScaler.screen_width / 24 ;
+		holder.txv_title.setTextSize(TypedValue.COMPLEX_UNIT_PX, size2);
+		
+		
 		BookPart part = data.get(position);
 
 		holder.txv_title.setText(part.getTitle());

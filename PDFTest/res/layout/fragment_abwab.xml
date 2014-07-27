@@ -4,35 +4,32 @@
     android:layout_gravity="center"
     android:background="@drawable/mainscreen_bg" >
 
-    <RelativeLayout
-        android:id="@+id/parts_header"
-        android:layout_width="720px"
-        android:layout_height="110px"
-        android:layout_gravity="center" >
-
-<!--         <Button -->
-<!--             android:id="@+id/btn_back" -->
-<!--             android:layout_width="71px" -->
-<!--             android:layout_height="71px" -->
-<!--             android:layout_gravity="center_vertical" -->
-<!--             android:layout_margin="20px" -->
-<!--             android:background="@drawable/pdf_back" /> -->
+      <Button
+            android:id="@+id/btn_back"
+            android:layout_width="71px"
+            android:layout_height="71px"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="30px"
+            android:background="@drawable/pdf_back" />
+    
 
         <ImageView
             android:id="@+id/img_title"
             android:layout_width="203px"
             android:layout_height="102px"
+            android:layout_marginTop="90px"
+            android:layout_centerHorizontal="true"
             android:background="@drawable/mo7tawayat"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="15px"/>
-    </RelativeLayout>
+            />
 
     <ListView
         android:id="@+id/android:list"
         android:layout_width="720px"
         android:layout_height="1170px"
-        android:layout_below="@+id/parts_header"
-        android:layout_margin="10px"
+        android:layout_below="@+id/img_title"
+        android:layout_marginTop="30px"
+        android:layout_marginRight="10px"
+        android:layout_marginLeft="10px"
         android:dividerHeight="5px"
         android:gravity="center"
         android:scrollingCache="false" />

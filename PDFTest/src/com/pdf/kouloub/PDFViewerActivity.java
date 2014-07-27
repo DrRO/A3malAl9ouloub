@@ -15,8 +15,12 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.Toast;
 
 import com.example.pdftest.R;
@@ -26,7 +30,7 @@ import com.joanzapata.pdfview.listener.OnPageChangeListener;
 import com.pdf.kouloub.externals.AKManager;
 import com.pdf.kouloub.utils.MySuperScaler;
 
-public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteListener, OnPageChangeListener {
+public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteListener, OnPageChangeListener, OnSeekBarChangeListener {
 
 	private PDFView pdf ;
 
@@ -41,12 +45,18 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 
 	private Button back, add_bookmark, bookmark_list, crop, list_summary ;
 
+	private int pdf_pages_number ;
+	private SeekBar bar ;
+	private Animation zoom_preview;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.pdf_shower);
 
 		pdf = (PDFView) findViewById(R.id.pdfView);
+		
+		zoom_preview = AnimationUtils.loadAnimation(this, R.anim.zoom_preview);
 
 		preview1 = (ImageView) findViewById(R.id.preview1);
 		preview2 = (ImageView) findViewById(R.id.preview2);
@@ -58,6 +68,7 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 		preview8 = (ImageView) findViewById(R.id.preview8);
 		preview9 = (ImageView) findViewById(R.id.preview9);
 		preview10 = (ImageView) findViewById(R.id.preview10);
+		
 
 		back = (Button) findViewById(R.id.pdf_back);
 		add_bookmark = (Button) findViewById(R.id.pdf_bookmark);
@@ -90,39 +101,25 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 		Bitmap bm10 = AKManager.originalResolution(this, "previews/"+book_to_read+"/10.png", preview1.getWidth(), preview10.getHeight());
 
 
-		//		Drawable d1 = new BitmapDrawable(getResources(), bm1);
-		//		Drawable d2 = new BitmapDrawable(getResources(), bm1);
-		//		Drawable d3 = new BitmapDrawable(getResources(), bm1);
-		//		Drawable d4 = new BitmapDrawable(getResources(), bm1);
-		//		Drawable d5 = new BitmapDrawable(getResources(), bm1);
-		//		Drawable d6 = new BitmapDrawable(getResources(), bm1);
-		//		Drawable d7 = new BitmapDrawable(getResources(), bm1);
-		//		Drawable d1 = new BitmapDrawable(getResources(), bm1);
-		//		Drawable d1 = new BitmapDrawable(getResources(), bm1);
 
 
-		preview1.setBackgroundDrawable(new BitmapDrawable(getResources(), bm1));
-		preview2.setBackgroundDrawable(new BitmapDrawable(getResources(), bm2));
-		preview3.setBackgroundDrawable(new BitmapDrawable(getResources(), bm3));
-		preview4.setBackgroundDrawable(new BitmapDrawable(getResources(), bm4));
-		preview5.setBackgroundDrawable(new BitmapDrawable(getResources(), bm5));
-		preview6.setBackgroundDrawable(new BitmapDrawable(getResources(), bm6));
-		preview7.setBackgroundDrawable(new BitmapDrawable(getResources(), bm7));
-		preview8.setBackgroundDrawable(new BitmapDrawable(getResources(), bm8));
-		preview9.setBackgroundDrawable(new BitmapDrawable(getResources(), bm9));
-		preview10.setBackgroundDrawable(new BitmapDrawable(getResources(), bm10));
+		preview1.setImageDrawable(new BitmapDrawable(getResources(), bm1));
+		preview2.setImageDrawable(new BitmapDrawable(getResources(), bm2));
+		preview3.setImageDrawable(new BitmapDrawable(getResources(), bm3));
+		preview4.setImageDrawable(new BitmapDrawable(getResources(), bm4));
+		preview5.setImageDrawable(new BitmapDrawable(getResources(), bm5));
+		preview6.setImageDrawable(new BitmapDrawable(getResources(), bm6));
+		preview7.setImageDrawable(new BitmapDrawable(getResources(), bm7));
+		preview8.setImageDrawable(new BitmapDrawable(getResources(), bm8));
+		preview9.setImageDrawable(new BitmapDrawable(getResources(), bm9));
+		preview10.setImageDrawable(new BitmapDrawable(getResources(), bm10));
 
-		//		preview1.setImageBitmap(getBitmapFromAssets("previews/"+book_to_read+"/1.png"));
-		//		preview2.setImageBitmap(getBitmapFromAssets("previews/"+book_to_read+"/2.png"));
-		//		preview3.setImageBitmap(getBitmapFromAssets("previews/"+book_to_read+"/3.png"));
-		//		preview4.setImageBitmap(getBitmapFromAssets("previews/"+book_to_read+"/4.png"));
-		//		preview5.setImageBitmap(getBitmapFromAssets("previews/"+book_to_read+"/5.png"));
-		//		preview6.setImageBitmap(getBitmapFromAssets("previews/"+book_to_read+"/6.png"));
-		//		preview7.setImageBitmap(getBitmapFromAssets("previews/"+book_to_read+"/7.png"));
-		//		preview8.setImageBitmap(getBitmapFromAssets("previews/"+book_to_read+"/8.png"));
-		//		preview9.setImageBitmap(getBitmapFromAssets("previews/"+book_to_read+"/9.png"));
-		//		preview10.setImageBitmap(getBitmapFromAssets("previews/"+book_to_read+"/10.png"));
 
+		bar = (SeekBar)findViewById(R.id.seekBar1); // make seekbar object
+        
+		bar.setRotation(180);
+		bar.setOnSeekBarChangeListener(this);
+		
 
 		back.setOnClickListener(new OnClickListener() {
 			@Override
@@ -172,13 +169,18 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 	@Override
 	public void loadComplete(int nbPages) {
 
-		Toast.makeText(getApplicationContext(), "PDF LOADED !", Toast.LENGTH_SHORT).show();
+		pdf_pages_number = pdf.getPageCount() ;
+		
+		bar.setMax(pdf_pages_number);
+		Log.e("NUMBER OF PAGES", pdf_pages_number +"");
 
 	}
 	@Override
 	public void onPageChanged(int page, int pageCount) {
 		
 		toggleBookMarkButton(pdfDB.isBookMarked(book_id, page), page);
+		
+		updatePreviews(page);
 		
 	}
 
@@ -232,19 +234,25 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 
 		if(fragment == null){
 			Log.i("", "new instance of views fragment................");
-			if(fragmentTAG.equals(PARTS_FRAGMENT))
+			if(fragmentTAG.equals(PARTS_FRAGMENT)){
 				fragment = new BookContentFragment(book_id);
+				transaction.add(R.id.fragment_view, fragment, fragmentTAG);
+			}
+				
 			else 
+			{
 				fragment = new BookMarkFragment(book_id);
-
-			transaction.replace(R.id.fragment_view, fragment, fragmentTAG);
+				transaction.replace(R.id.fragment_view, fragment, fragmentTAG);
+				scaled = false;
+			}
+			
 			transaction.addToBackStack(fragmentTAG);
 		}else{
 			Log.i("", "show the same instance");
 			transaction.attach(fragment);
 		}
 
-		scaled = false;
+		
 		transaction.commit();
 
 		toggleEnabledViews(false);
@@ -258,5 +266,95 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 		crop.setEnabled(enabled);
 		list_summary.setEnabled(enabled);
 	}
+	@Override
+	public void onProgressChanged(SeekBar arg0, int progress, boolean arg2) {
+
+		updatePreviews(progress);
+		pdf.jumpTo(progress);
+		
+		
+	}
+	@Override
+	public void onStartTrackingTouch(SeekBar arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void onStopTrackingTouch(SeekBar arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public void updatePreviews(int progress)
+	{
+float preview_part = (float) ((double) progress / pdf_pages_number) ;
+		
+		preview1.clearAnimation();
+		preview2.clearAnimation();
+		preview3.clearAnimation();
+		preview4.clearAnimation();
+		preview5.clearAnimation();
+		preview6.clearAnimation();
+		preview7.clearAnimation();
+		preview8.clearAnimation();
+		preview9.clearAnimation();
+		preview10.clearAnimation();
+		
+		
+		
+		if (preview_part < 0.1)
+			{
+			preview1.startAnimation(zoom_preview);
+			preview1.bringToFront();
+			}
+		else if (preview_part >= 0.1 && preview_part < 0.2)
+			{
+			preview2.startAnimation(zoom_preview);
+			preview2.bringToFront();
+			}
+		else if (preview_part >= 0.2 && preview_part < 0.3)
+			{
+			preview3.startAnimation(zoom_preview);
+			preview3.bringToFront();
+			}
+		else if (preview_part >= 0.3 && preview_part < 0.4)
+			{
+			preview4.startAnimation(zoom_preview);
+			preview4.bringToFront();
+			}
+		else if (preview_part >= 0.4 && preview_part < 0.5)
+			{
+			preview5.startAnimation(zoom_preview);
+			preview5.bringToFront();
+			}
+		else if (preview_part >= 0.5 && preview_part < 0.6)
+			{
+			preview6.startAnimation(zoom_preview);
+			preview6.bringToFront();
+			}
+		else if (preview_part >= 0.6 && preview_part < 0.7)
+			{
+			preview7.startAnimation(zoom_preview);
+			preview7.bringToFront();
+			}
+		else if (preview_part >= 0.7 && preview_part < 0.8)
+			{
+			preview8.startAnimation(zoom_preview);
+			preview8.bringToFront();
+			}
+		else if (preview_part >= 0.8 && preview_part < 0.9)
+			{
+			preview9.startAnimation(zoom_preview);
+			preview9.bringToFront();
+			}
+		else if (preview_part >= 0.9 && preview_part < 1)
+			{
+			preview10.startAnimation(zoom_preview);
+			preview10.bringToFront();
+			}
+		
+	
+	}
+	
 
 }
