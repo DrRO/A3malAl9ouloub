@@ -1,5 +1,6 @@
 package com.pdf.kouloub.externals;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -113,5 +114,12 @@ public class AKManager {
 		Config config = Config.ARGB_8888;
 		Bitmap bm = b.copy(config, false);
 		return new BitmapDrawable(mContext.getResources(), bm);
+	}
+	
+	public static void dirChecker(String dir) {
+		File f = new File(dir);
+		if (!f.isDirectory()) {
+			f.mkdirs();
+		}
 	}
 }

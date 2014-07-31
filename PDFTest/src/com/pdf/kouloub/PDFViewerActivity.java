@@ -1,14 +1,25 @@
 package com.pdf.kouloub;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.provider.MediaStore.Images;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -21,7 +32,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
-import android.widget.Toast;
 
 import com.example.pdftest.R;
 import com.joanzapata.pdfview.PDFView;
@@ -30,12 +40,19 @@ import com.joanzapata.pdfview.listener.OnPageChangeListener;
 import com.pdf.kouloub.externals.AKManager;
 import com.pdf.kouloub.utils.MySuperScaler;
 
+import eu.janmuller.android.simplecropimage.CropImage;
+
 public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteListener, OnPageChangeListener, OnSeekBarChangeListener {
 
 	private PDFView pdf ;
-
+	
+	public static final int REQUEST_CODE_CROP_IMAGE   	= 0x1;
+	public static final int REQUEST_CODE_SHARE   		= 0x2;
+	
 	private static final String PARTS_FRAGMENT = "parts_fragment";
 	private static final String BOOKMARKS_FRAGMENT = "bookmark_fragment";
+
+	private static final String TAG = null;
 	private Fragment fragment;
 
 	private int book_id;
@@ -48,6 +65,9 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 	private int pdf_pages_number ;
 	private SeekBar bar ;
 	private Animation zoom_preview;
+	
+	private String filePath;
+	private Uri resultUri;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +100,7 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 		final String book_to_read = b.getString("book");
 		book_id = b.getInt("book_id");
 
-
+		pdf.setDrawingCacheEnabled(true);
 		pdf.fromAsset(book_to_read + ".pdf")
 		.defaultPage(1)
 		.showMinimap(false)
@@ -88,7 +108,7 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 		.onLoad(this)
 		.onPageChange(this)
 		.load();
-
+		
 		Bitmap bm1 = AKManager.originalResolution(this, "previews/"+book_to_read+"/1.png", preview1.getWidth(), preview1.getHeight());
 		Bitmap bm2 = AKManager.originalResolution(this, "previews/"+book_to_read+"/2.png", preview1.getWidth(), preview2.getHeight());
 		Bitmap bm3 = AKManager.originalResolution(this, "previews/"+book_to_read+"/3.png", preview1.getWidth(), preview3.getHeight());
@@ -135,6 +155,14 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 
 				gotoFragment(PARTS_FRAGMENT);
 
+			}
+		});
+		
+		crop.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				
+				startCropImage();
 			}
 		});
 
@@ -221,7 +249,7 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 
 	public void onPageItemClicked(int pageTo){
 		onBackPressed();
-		pdf.jumpTo(pageTo + 1);
+		pdf.jumpTo(pageTo);
 	}
 
 	private void gotoFragment(String fragmentTAG){
@@ -352,9 +380,130 @@ float preview_part = (float) ((double) progress / pdf_pages_number) ;
 			preview10.startAnimation(zoom_preview);
 			preview10.bringToFront();
 			}
-		
 	
 	}
 	
+	 @Override
+	    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+	        if (resultCode != RESULT_OK) {
+
+	            return;
+	        }
+
+	        switch (requestCode) {
+	            case REQUEST_CODE_CROP_IMAGE:
+
+	                String path = data.getStringExtra(CropImage.IMAGE_PATH);
+	                if (path == null) {
+
+	                    return;
+	                }
+
+	                shareCroppedImage(filePath);
+	                break;
+	                
+	            case REQUEST_CODE_SHARE:
+	            	File f = new File(filePath);
+	            	if(f.exists())
+	            		f.delete();
+	            	break;
+	        }
+	        super.onActivityResult(requestCode, resultCode, data);
+	    }
+
+	
+	private void startCropImage() {
+		pdf.buildDrawingCache();
+		storeImage(pdf.getDrawingCache());
+		pdf.destroyDrawingCache();
+
+		Intent intent = new Intent(this, CropImage.class);
+		intent.putExtra(CropImage.IMAGE_PATH, filePath);
+		intent.putExtra(CropImage.SCALE, true);
+
+		intent.putExtra(CropImage.ASPECT_X, 3);
+		intent.putExtra(CropImage.ASPECT_Y, 2);
+
+		startActivityForResult(intent, REQUEST_CODE_CROP_IMAGE);
+	}
+	
+	private boolean storeImage(Bitmap imageData) {
+		//get path to external storage (SD card)
+		
+		String folder = getString(R.string.app_name);
+		
+		String paintsStoragePath = Environment.getExternalStorageDirectory() + File.separator + "Pictures" + File.separator + folder;
+		
+		//create storage directories, if they don't exist
+		AKManager.dirChecker(paintsStoragePath);
+		
+		try {
+			String filename = "ak_crop_" + System.currentTimeMillis();
+			filePath = paintsStoragePath + File.separator + filename + ".jpg";
+			FileOutputStream fileOutputStream = new FileOutputStream(filePath);
+
+			BufferedOutputStream bos = new BufferedOutputStream(fileOutputStream);
+
+			//choose another format if PNG doesn't suit you
+			imageData.compress(CompressFormat.JPEG, 100, bos);
+
+			bos.flush();
+			bos.close();
+			
+			ContentValues image = new ContentValues();
+            image.put(Images.Media.TITLE, folder);
+            image.put(Images.Media.DISPLAY_NAME, filename);
+            image.put(Images.Media.DESCRIPTION, filePath);
+            image.put(Images.Media.DATE_ADDED, System.currentTimeMillis());
+            image.put(Images.Media.MIME_TYPE, "image/jpeg");
+            image.put(Images.Media.ORIENTATION, 0);
+            File fName = new File(filePath);
+            File parent = fName.getParentFile();
+            image.put(Images.ImageColumns.BUCKET_ID, parent.toString()
+                    .toLowerCase().hashCode());
+            image.put(Images.ImageColumns.BUCKET_DISPLAY_NAME, parent.getName()
+                    .toLowerCase());
+            image.put(Images.Media.SIZE, fName.length());
+            image.put(Images.Media.DATA, fName.getAbsolutePath());
+            resultUri = getContentResolver().insert(
+                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI, image);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+            {
+                    Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                    File f = new File("file://"+ Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES));
+                    Uri contentUri = Uri.fromFile(f);
+                    mediaScanIntent.setData(contentUri);
+                    this.sendBroadcast(mediaScanIntent);
+            }
+            else
+            {
+                    sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://" + Environment.getExternalStorageDirectory())));
+            }
+            
+		} catch (FileNotFoundException e) {
+			Log.w("TAG", "Error saving image file: " + e.getMessage());
+			return false;
+		} catch (IOException e) {
+			Log.w("TAG", "Error saving image file: " + e.getMessage());
+			return false;
+		} catch (Exception e) {
+			Log.w("TAG", "Error creating image file: " + e.getMessage());
+			return false;
+		}
+
+		return true;
+	}
+	
+	private void shareCroppedImage(String imagePath){
+
+		Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+		sharingIntent.setType("image/jpeg");
+		sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.app_name));
+		sharingIntent.putExtra(android.content.Intent.EXTRA_STREAM, resultUri);
+		startActivityForResult(Intent.createChooser(sharingIntent, getString(R.string.share)), REQUEST_CODE_SHARE);
+
+	}
 
 }
