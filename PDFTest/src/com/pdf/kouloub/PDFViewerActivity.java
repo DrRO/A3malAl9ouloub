@@ -45,10 +45,10 @@ import eu.janmuller.android.simplecropimage.CropImage;
 public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteListener, OnPageChangeListener, OnSeekBarChangeListener {
 
 	private PDFView pdf ;
-	
+
 	public static final int REQUEST_CODE_CROP_IMAGE   	= 0x1;
 	public static final int REQUEST_CODE_SHARE   		= 0x2;
-	
+
 	private static final String PARTS_FRAGMENT = "parts_fragment";
 	private static final String BOOKMARKS_FRAGMENT = "bookmark_fragment";
 
@@ -65,17 +65,18 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 	private int pdf_pages_number ;
 	private SeekBar bar ;
 	private Animation zoom_preview;
-	
+
 	private String filePath;
 	private Uri resultUri;
-	
+	private String baseStoragePath;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.pdf_shower);
 
 		pdf = (PDFView) findViewById(R.id.pdfView);
-		
+
 		zoom_preview = AnimationUtils.loadAnimation(this, R.anim.zoom_preview);
 
 		preview1 = (ImageView) findViewById(R.id.preview1);
@@ -88,7 +89,7 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 		preview8 = (ImageView) findViewById(R.id.preview8);
 		preview9 = (ImageView) findViewById(R.id.preview9);
 		preview10 = (ImageView) findViewById(R.id.preview10);
-		
+
 
 		back = (Button) findViewById(R.id.pdf_back);
 		add_bookmark = (Button) findViewById(R.id.pdf_bookmark);
@@ -108,7 +109,7 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 		.onLoad(this)
 		.onPageChange(this)
 		.load();
-		
+
 		Bitmap bm1 = AKManager.originalResolution(this, "previews/"+book_to_read+"/1.png", preview1.getWidth(), preview1.getHeight());
 		Bitmap bm2 = AKManager.originalResolution(this, "previews/"+book_to_read+"/2.png", preview1.getWidth(), preview2.getHeight());
 		Bitmap bm3 = AKManager.originalResolution(this, "previews/"+book_to_read+"/3.png", preview1.getWidth(), preview3.getHeight());
@@ -136,10 +137,10 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 
 
 		bar = (SeekBar)findViewById(R.id.seekBar1); // make seekbar object
-        
+
 		bar.setRotation(180);
 		bar.setOnSeekBarChangeListener(this);
-		
+
 
 		back.setOnClickListener(new OnClickListener() {
 			@Override
@@ -157,11 +158,11 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 
 			}
 		});
-		
+
 		crop.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				
+
 				startCropImage();
 			}
 		});
@@ -186,7 +187,7 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 					pdfDB.removeFromBookMarks(book_id, pdf.getCurrentPage());
 				}else
 					pdfDB.addToBookMarks(book_id, pdf.getCurrentPage());
-				
+
 				toggleBookMarkButton(!isBookMarked, pdf.getCurrentPage());
 
 			}
@@ -198,18 +199,18 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 	public void loadComplete(int nbPages) {
 
 		pdf_pages_number = pdf.getPageCount() ;
-		
+
 		bar.setMax(pdf_pages_number);
 		Log.e("NUMBER OF PAGES", pdf_pages_number +"");
 
 	}
 	@Override
 	public void onPageChanged(int page, int pageCount) {
-		
+
 		toggleBookMarkButton(pdfDB.isBookMarked(book_id, page), page);
-		
+
 		updatePreviews(page);
-		
+
 	}
 
 
@@ -266,21 +267,21 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 				fragment = new BookContentFragment(book_id);
 				transaction.add(R.id.fragment_view, fragment, fragmentTAG);
 			}
-				
+
 			else 
 			{
 				fragment = new BookMarkFragment(book_id);
 				transaction.replace(R.id.fragment_view, fragment, fragmentTAG);
 				scaled = false;
 			}
-			
+
 			transaction.addToBackStack(fragmentTAG);
 		}else{
 			Log.i("", "show the same instance");
 			transaction.attach(fragment);
 		}
 
-		
+
 		transaction.commit();
 
 		toggleEnabledViews(false);
@@ -299,24 +300,24 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 
 		updatePreviews(progress);
 		pdf.jumpTo(progress);
-		
-		
+
+
 	}
 	@Override
 	public void onStartTrackingTouch(SeekBar arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 	@Override
 	public void onStopTrackingTouch(SeekBar arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	public void updatePreviews(int progress)
 	{
-float preview_part = (float) ((double) progress / pdf_pages_number) ;
-		
+		float preview_part = (float) ((double) progress / pdf_pages_number) ;
+
 		preview1.clearAnimation();
 		preview2.clearAnimation();
 		preview3.clearAnimation();
@@ -327,92 +328,86 @@ float preview_part = (float) ((double) progress / pdf_pages_number) ;
 		preview8.clearAnimation();
 		preview9.clearAnimation();
 		preview10.clearAnimation();
-		
-		
-		
+
+
+
 		if (preview_part < 0.1)
-			{
+		{
 			preview1.startAnimation(zoom_preview);
 			preview1.bringToFront();
-			}
+		}
 		else if (preview_part >= 0.1 && preview_part < 0.2)
-			{
+		{
 			preview2.startAnimation(zoom_preview);
 			preview2.bringToFront();
-			}
+		}
 		else if (preview_part >= 0.2 && preview_part < 0.3)
-			{
+		{
 			preview3.startAnimation(zoom_preview);
 			preview3.bringToFront();
-			}
+		}
 		else if (preview_part >= 0.3 && preview_part < 0.4)
-			{
+		{
 			preview4.startAnimation(zoom_preview);
 			preview4.bringToFront();
-			}
+		}
 		else if (preview_part >= 0.4 && preview_part < 0.5)
-			{
+		{
 			preview5.startAnimation(zoom_preview);
 			preview5.bringToFront();
-			}
+		}
 		else if (preview_part >= 0.5 && preview_part < 0.6)
-			{
+		{
 			preview6.startAnimation(zoom_preview);
 			preview6.bringToFront();
-			}
+		}
 		else if (preview_part >= 0.6 && preview_part < 0.7)
-			{
+		{
 			preview7.startAnimation(zoom_preview);
 			preview7.bringToFront();
-			}
+		}
 		else if (preview_part >= 0.7 && preview_part < 0.8)
-			{
+		{
 			preview8.startAnimation(zoom_preview);
 			preview8.bringToFront();
-			}
+		}
 		else if (preview_part >= 0.8 && preview_part < 0.9)
-			{
+		{
 			preview9.startAnimation(zoom_preview);
 			preview9.bringToFront();
-			}
+		}
 		else if (preview_part >= 0.9 && preview_part < 1)
-			{
+		{
 			preview10.startAnimation(zoom_preview);
 			preview10.bringToFront();
-			}
-	
+		}
+
 	}
-	
-	 @Override
-	    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-	        if (resultCode != RESULT_OK) {
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-	            return;
-	        }
+		if (resultCode != RESULT_OK) {
 
-	        switch (requestCode) {
-	            case REQUEST_CODE_CROP_IMAGE:
+			return;
+		}
 
-	                String path = data.getStringExtra(CropImage.IMAGE_PATH);
-	                if (path == null) {
+		switch (requestCode) {
+		case REQUEST_CODE_CROP_IMAGE:
 
-	                    return;
-	                }
+			String path = data.getStringExtra(CropImage.IMAGE_PATH);
+			if (path == null) {
 
-	                shareCroppedImage(filePath);
-	                break;
-	                
-	            case REQUEST_CODE_SHARE:
-	            	File f = new File(filePath);
-	            	if(f.exists())
-	            		f.delete();
-	            	break;
-	        }
-	        super.onActivityResult(requestCode, resultCode, data);
-	    }
+				return;
+			}
 
-	
+			shareCroppedImage(filePath);
+			break;
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+
+
 	private void startCropImage() {
 		pdf.buildDrawingCache();
 		storeImage(pdf.getDrawingCache());
@@ -427,20 +422,20 @@ float preview_part = (float) ((double) progress / pdf_pages_number) ;
 
 		startActivityForResult(intent, REQUEST_CODE_CROP_IMAGE);
 	}
-	
+
 	private boolean storeImage(Bitmap imageData) {
 		//get path to external storage (SD card)
-		
+
 		String folder = getString(R.string.app_name);
-		
-		String paintsStoragePath = Environment.getExternalStorageDirectory() + File.separator + "Pictures" + File.separator + folder;
-		
+
+		baseStoragePath = Environment.getExternalStorageDirectory() + File.separator + "Pictures" + File.separator + folder;
+
 		//create storage directories, if they don't exist
-		AKManager.dirChecker(paintsStoragePath);
-		
+		AKManager.dirChecker(baseStoragePath);
+
 		try {
 			String filename = "ak_crop_" + System.currentTimeMillis();
-			filePath = paintsStoragePath + File.separator + filename + ".jpg";
+			filePath = baseStoragePath + File.separator + filename + ".jpg";
 			FileOutputStream fileOutputStream = new FileOutputStream(filePath);
 
 			BufferedOutputStream bos = new BufferedOutputStream(fileOutputStream);
@@ -450,38 +445,38 @@ float preview_part = (float) ((double) progress / pdf_pages_number) ;
 
 			bos.flush();
 			bos.close();
-			
-			ContentValues image = new ContentValues();
-            image.put(Images.Media.TITLE, folder);
-            image.put(Images.Media.DISPLAY_NAME, filename);
-            image.put(Images.Media.DESCRIPTION, filePath);
-            image.put(Images.Media.DATE_ADDED, System.currentTimeMillis());
-            image.put(Images.Media.MIME_TYPE, "image/jpeg");
-            image.put(Images.Media.ORIENTATION, 0);
-            File fName = new File(filePath);
-            File parent = fName.getParentFile();
-            image.put(Images.ImageColumns.BUCKET_ID, parent.toString()
-                    .toLowerCase().hashCode());
-            image.put(Images.ImageColumns.BUCKET_DISPLAY_NAME, parent.getName()
-                    .toLowerCase());
-            image.put(Images.Media.SIZE, fName.length());
-            image.put(Images.Media.DATA, fName.getAbsolutePath());
-            resultUri = getContentResolver().insert(
-                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI, image);
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
-            {
-                    Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-                    File f = new File("file://"+ Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES));
-                    Uri contentUri = Uri.fromFile(f);
-                    mediaScanIntent.setData(contentUri);
-                    this.sendBroadcast(mediaScanIntent);
-            }
-            else
-            {
-                    sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://" + Environment.getExternalStorageDirectory())));
-            }
-            
+			ContentValues image = new ContentValues();
+			image.put(Images.Media.TITLE, folder);
+			image.put(Images.Media.DISPLAY_NAME, filename);
+			image.put(Images.Media.DESCRIPTION, filePath);
+			image.put(Images.Media.DATE_ADDED, System.currentTimeMillis());
+			image.put(Images.Media.MIME_TYPE, "image/jpeg");
+			image.put(Images.Media.ORIENTATION, 0);
+			File fName = new File(filePath);
+			File parent = fName.getParentFile();
+			image.put(Images.ImageColumns.BUCKET_ID, parent.toString()
+					.toLowerCase().hashCode());
+			image.put(Images.ImageColumns.BUCKET_DISPLAY_NAME, parent.getName()
+					.toLowerCase());
+			image.put(Images.Media.SIZE, fName.length());
+			image.put(Images.Media.DATA, fName.getAbsolutePath());
+			resultUri = getContentResolver().insert(
+					MediaStore.Images.Media.EXTERNAL_CONTENT_URI, image);
+
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+			{
+				Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+				File f = new File("file://"+ Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES));
+				Uri contentUri = Uri.fromFile(f);
+				mediaScanIntent.setData(contentUri);
+				this.sendBroadcast(mediaScanIntent);
+			}
+			else
+			{
+				sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://" + Environment.getExternalStorageDirectory())));
+			}
+
 		} catch (FileNotFoundException e) {
 			Log.w("TAG", "Error saving image file: " + e.getMessage());
 			return false;
@@ -495,15 +490,35 @@ float preview_part = (float) ((double) progress / pdf_pages_number) ;
 
 		return true;
 	}
-	
+
 	private void shareCroppedImage(String imagePath){
 
 		Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
 		sharingIntent.setType("image/jpeg");
 		sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.app_name));
 		sharingIntent.putExtra(android.content.Intent.EXTRA_STREAM, resultUri);
-		startActivityForResult(Intent.createChooser(sharingIntent, getString(R.string.share)), REQUEST_CODE_SHARE);
+		startActivity(Intent.createChooser(sharingIntent, getString(R.string.share)));
 
+	}
+
+	private void clearAllFiles(){
+		try{
+			File dir = new File(baseStoragePath);
+			for(File fd : dir.listFiles()){
+				if(fd.isFile())
+					fd.delete();
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		
+		if(baseStoragePath != null)
+			clearAllFiles();
 	}
 
 }

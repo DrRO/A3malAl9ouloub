@@ -48,6 +48,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.Toast;
 
 
@@ -88,6 +89,7 @@ public class CropImage extends MonitoredActivity {
     private ContentResolver mContentResolver;
     private Bitmap          mBitmap;
     private String          mImagePath;
+    private Button 			btn_cancel, btn_save;
 
     boolean       mWaitingToPick; // Whether we are wait the user to pick a face.
     boolean       mSaving;  // Whether the "save" button is already clicked.
@@ -110,6 +112,11 @@ public class CropImage extends MonitoredActivity {
         setContentView(R.layout.cropimage);
 
         mImageView = (CropImageView) findViewById(R.id.image);
+        btn_cancel = (Button) findViewById(R.id.discard);
+        btn_save = (Button) findViewById(R.id.save);
+        
+        btn_cancel.bringToFront();
+        btn_save.bringToFront();
 
         showStorageToast(this);
 
@@ -164,7 +171,7 @@ public class CropImage extends MonitoredActivity {
         // Make UI fullscreen.
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        findViewById(R.id.discard).setOnClickListener(
+        btn_cancel.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
 
@@ -173,7 +180,7 @@ public class CropImage extends MonitoredActivity {
                     }
                 });
 
-        findViewById(R.id.save).setOnClickListener(
+        btn_save.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
 
