@@ -24,10 +24,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -79,6 +77,7 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 	private String baseStoragePath;
 	
 	int last ;
+	private boolean fromSeekBar = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -227,7 +226,7 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 			}
 		});
 
-		last =0;
+		last = 0;
 
 	}
 	@Override
@@ -252,10 +251,14 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 		Log.e("LAST", last+"");
 		Log.e("***PAGE", page+"");
 		
-		if (page == 1) showTopBottom() ;
-		else if (page != last )hideTopBottom();
-		else if (pdf.getCurrentPage() == page - 1) toggleTopBottom();
+		if(!fromSeekBar)
+		{
+			if (page == 1) showTopBottom() ;
+			else if (page != last )hideTopBottom();
+			else if (pdf.getCurrentPage() == page - 1) toggleTopBottom();
+		}
 		
+		fromSeekBar = false;
 		last = page;
 	}
 
@@ -344,6 +347,7 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 	@Override
 	public void onProgressChanged(SeekBar arg0, int progress, boolean arg2) {
 
+		fromSeekBar = true;
 		updatePreviews(progress);
 		pdf.jumpTo(progress);
 
@@ -351,7 +355,6 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 	}
 	@Override
 	public void onStartTrackingTouch(SeekBar arg0) {
-		// TODO Auto-generated method stub
 
 	}
 	@Override
