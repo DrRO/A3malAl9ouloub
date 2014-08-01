@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Bitmap.Config;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
@@ -32,18 +32,18 @@ public class AKManager {
 		settings = PreferenceManager.getDefaultSharedPreferences(context);
 		editor = settings.edit();
 		
-		books.add(new Book(1, "covers/book1.png", "mhbbat-eklas-1"));
-		books.add(new Book(2, "covers/book2.png", "mhbbat-twkl-2"));
-		books.add(new Book(3, "covers/book3.png", "mhbbat-mhbh-3"));
-		books.add(new Book(4, "covers/book4.png", "mhbbat-kuf-4"));
-		books.add(new Book(5, "covers/book5.png", "mhbbat-rja-5"));
-		books.add(new Book(6, "covers/book6.png", "mhbbat-t8wa-6"));
-		books.add(new Book(7, "covers/book7.png", "mhbbat-rda-7"));
-		books.add(new Book(8, "covers/book8.png", "mhbbat-shkr-8"));
-		books.add(new Book(9, "covers/book9.png", "mhbbat-sabr-9"));
-		books.add(new Book(10, "covers/book10.png", "mhbbat-war3-10"));
-		books.add(new Book(11, "covers/book11.png", "mhbbat-tfkor-11"));
-		books.add(new Book(12, "covers/book12.png", "mhbbat-mohasba-12"));
+		books.add(new Book(1, "covers/book1.png", "mhbbat-eklas-1", 64));
+		books.add(new Book(2, "covers/book2.png", "mhbbat-twkl-2", 64));
+		books.add(new Book(3, "covers/book3.png", "mhbbat-mhbh-3", 62));
+		books.add(new Book(4, "covers/book4.png", "mhbbat-kuf-4", 64));
+		books.add(new Book(5, "covers/book5.png", "mhbbat-rja-5", 64));
+		books.add(new Book(6, "covers/book6.png", "mhbbat-t8wa-6", 64));
+		books.add(new Book(7, "covers/book7.png", "mhbbat-rda-7", 64));
+		books.add(new Book(8, "covers/book8.png", "mhbbat-shkr-8", 64));
+		books.add(new Book(9, "covers/book9.png", "mhbbat-sabr-9", 64));
+		books.add(new Book(10, "covers/book10.png", "mhbbat-war3-10", 60));
+		books.add(new Book(11, "covers/book11.png", "mhbbat-tfkor-11", 64));
+		books.add(new Book(12, "covers/book12.png", "mhbbat-mohasba-12", 64));
 		
 	}
 

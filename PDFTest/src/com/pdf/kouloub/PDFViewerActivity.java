@@ -75,6 +75,7 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 	private String filePath;
 	private Uri resultUri;
 	private String baseStoragePath;
+	private AKManager akManager;
 	
 	int last ;
 	private boolean fromSeekBar = false;
@@ -84,6 +85,7 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.pdf_shower);
 
+		akManager = AKManager.getInstance(this);
 		pdf = (PDFView) findViewById(R.id.pdfView);
 
 		zoom_preview = AnimationUtils.loadAnimation(this, R.anim.zoom_preview);
@@ -113,15 +115,18 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 		Bundle b = getIntent().getExtras();
 		final String book_to_read = b.getString("book");
 		book_id = b.getInt("book_id");
+		int totalPages = akManager.getBooks().get(book_id - 1).getPagesNumber();
 
 		pdf.setDrawingCacheEnabled(true);
 		pdf.fromAsset(book_to_read + ".pdf")
-		.defaultPage(1)
+		.pages(getPageNumbers(totalPages))
+		.defaultPage(totalPages-1)
 		.showMinimap(false)
 		.enableSwipe(true)
 		.onLoad(this)
 		.onPageChange(this)
 		.load();
+		
 
 		Bitmap bm1 = AKManager.originalResolution(this, "previews/"+book_to_read+"/1.png", preview1.getWidth(), preview1.getHeight());
 		Bitmap bm2 = AKManager.originalResolution(this, "previews/"+book_to_read+"/2.png", preview1.getWidth(), preview2.getHeight());
@@ -236,20 +241,19 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 		pdf_pages_number = pdf.getPageCount() ;
 
 		bar.setMax(pdf_pages_number);
+		pdf.jumpTo(nbPages);
 		Log.e("NUMBER OF PAGES", pdf_pages_number +"");
 
 	}
 	@Override
 	public void onPageChanged(int page, int pageCount) {
 
-		
-		
 		toggleBookMarkButton(pdfDB.isBookMarked(book_id, page), page);
 
 		updatePreviews(page);
 		
-		Log.e("LAST", last+"");
-		Log.e("***PAGE", page+"");
+//		Log.e("LAST", last+"");
+//		Log.e("***PAGE", page+"");
 		
 		if(!fromSeekBar)
 		{
@@ -588,4 +592,13 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 			clearAllFiles();
 	}
 
+	private int[] getPageNumbers(int totalPages){
+		int[] pages = new int[totalPages];
+		int counter = 0;
+		for (int i = totalPages-1; i >=0; i--) {
+			pages[counter++] = i;
+		}
+		
+		return pages;
+	}
 }

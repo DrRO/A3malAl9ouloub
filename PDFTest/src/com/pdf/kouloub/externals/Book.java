@@ -5,15 +5,17 @@ public class Book {
 	private int id;
 	private String cover;
 	private String pdfFile;
+	private int pagesNumber;
 	
 	public Book() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Book(int id, String cover, String pdfFile){
+	public Book(int id, String cover, String pdfFile, int pagesNumber){
 		this.id = id;
 		this.cover = cover;
 		this.pdfFile = pdfFile;
+		this.pagesNumber = pagesNumber;
 	}
 	
 	public int getId() {
@@ -33,6 +35,14 @@ public class Book {
 	}
 	public void setPdfFile(String pdfFile) {
 		this.pdfFile = pdfFile;
+	}
+
+	public int getPagesNumber() {
+		return pagesNumber;
+	}
+
+	public void setPagesNumber(int pagesNumber) {
+		this.pagesNumber = pagesNumber;
 	}
 	
 	

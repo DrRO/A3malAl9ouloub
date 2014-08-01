@@ -18,14 +18,16 @@
  */
 package com.joanzapata.pdfview;
 
+import static com.joanzapata.pdfview.util.Constants.Pinch.MAXIMUM_ZOOM;
+import static com.joanzapata.pdfview.util.Constants.Pinch.MINIMUM_ZOOM;
+import static com.joanzapata.pdfview.util.Constants.Pinch.QUICK_MOVE_THRESHOLD_DISTANCE;
+import static com.joanzapata.pdfview.util.Constants.Pinch.QUICK_MOVE_THRESHOLD_TIME;
 import android.graphics.PointF;
-import com.joanzapata.pdfview.PDFView;
+
 import com.joanzapata.pdfview.util.DragPinchListener;
 import com.joanzapata.pdfview.util.DragPinchListener.OnDoubleTapListener;
 import com.joanzapata.pdfview.util.DragPinchListener.OnDragListener;
 import com.joanzapata.pdfview.util.DragPinchListener.OnPinchListener;
-
-import static com.joanzapata.pdfview.util.Constants.Pinch.*;
 
 /**
  * @author Joan Zapata
