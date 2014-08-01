@@ -24,12 +24,17 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
@@ -61,7 +66,10 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 	preview6, preview7, preview8, preview9, preview10 ;
 
 	private Button back, add_bookmark, bookmark_list, crop, list_summary ;
+	private RelativeLayout  bottom_layout ;
 
+	FrameLayout frame_layout;
+	private LinearLayout top_layout;
 	private int pdf_pages_number ;
 	private SeekBar bar ;
 	private Animation zoom_preview;
@@ -69,6 +77,8 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 	private String filePath;
 	private Uri resultUri;
 	private String baseStoragePath;
+	
+	int last ;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +88,10 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 		pdf = (PDFView) findViewById(R.id.pdfView);
 
 		zoom_preview = AnimationUtils.loadAnimation(this, R.anim.zoom_preview);
+
+		top_layout = (LinearLayout) findViewById(R.id.top_layout);
+		bottom_layout = (RelativeLayout) findViewById(R.id.bottom_layout);
+		frame_layout = (FrameLayout) findViewById(R.id.fragment_view);
 
 		preview1 = (ImageView) findViewById(R.id.preview1);
 		preview2 = (ImageView) findViewById(R.id.preview2);
@@ -122,7 +136,27 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 		Bitmap bm10 = AKManager.originalResolution(this, "previews/"+book_to_read+"/10.png", preview1.getWidth(), preview10.getHeight());
 
 
-
+//		frame_layout.setOnTouchListener(new OnTouchListener() {
+//
+//			@Override
+//			public boolean onTouch(View v, MotionEvent event) {
+//				switch (event.getAction()) {
+//				case MotionEvent.ACTION_DOWN: {
+//					
+//					toggleTopBottom();
+//					
+//					break;
+//				}
+//				case MotionEvent.ACTION_UP: {
+//
+//				}
+//				case MotionEvent.ACTION_CANCEL: {
+//					break;
+//				}
+//				}
+//				return true;
+//			}
+//		});
 
 		preview1.setImageDrawable(new BitmapDrawable(getResources(), bm1));
 		preview2.setImageDrawable(new BitmapDrawable(getResources(), bm2));
@@ -193,11 +227,13 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 			}
 		});
 
+		last =0;
 
 	}
 	@Override
 	public void loadComplete(int nbPages) {
 
+		showTopBottom();
 		pdf_pages_number = pdf.getPageCount() ;
 
 		bar.setMax(pdf_pages_number);
@@ -207,10 +243,20 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 	@Override
 	public void onPageChanged(int page, int pageCount) {
 
+		
+		
 		toggleBookMarkButton(pdfDB.isBookMarked(book_id, page), page);
 
 		updatePreviews(page);
-
+		
+		Log.e("LAST", last+"");
+		Log.e("***PAGE", page+"");
+		
+		if (page == 1) showTopBottom() ;
+		else if (page != last )hideTopBottom();
+		else if (pdf.getCurrentPage() == page - 1) toggleTopBottom();
+		
+		last = page;
 	}
 
 
@@ -512,11 +558,29 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 			e.printStackTrace();
 		}
 	}
-	
+
+	private void hideTopBottom(){
+		top_layout.setVisibility(View.GONE);
+		bottom_layout.setVisibility(View.GONE);
+	}
+
+	private void showTopBottom(){
+		top_layout.setVisibility(View.VISIBLE);
+		bottom_layout.setVisibility(View.VISIBLE);
+	}
+
+	private void toggleTopBottom(){
+		if (top_layout.getVisibility() == View.VISIBLE && bottom_layout.getVisibility() == View.VISIBLE )
+			hideTopBottom();
+		else
+			showTopBottom();
+	}
+
+
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		
+
 		if(baseStoragePath != null)
 			clearAllFiles();
 	}

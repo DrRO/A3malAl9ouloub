@@ -23,7 +23,8 @@
             <RelativeLayout
                 android:id="@+id/stage1"
                 android:layout_width="720px"
-                android:layout_height="380px">
+                android:layout_height="380px"
+                android:background="@drawable/stage">
 
                 <ImageView
                     android:id="@+id/book_1"
@@ -45,7 +46,8 @@
             <RelativeLayout
                 android:id="@+id/stage2"
                 android:layout_width="720px"
-                android:layout_height="380px">
+                android:layout_height="380px"
+                android:background="@drawable/stage">
 
                 <ImageView
                     android:id="@+id/book_3"
@@ -67,7 +69,8 @@
             <RelativeLayout
                 android:id="@+id/stage3"
                 android:layout_width="720px"
-                android:layout_height="380px" >
+                android:layout_height="380px" 
+                android:background="@drawable/stage">
 
                 <ImageView
                     android:id="@+id/book_5"
@@ -89,7 +92,8 @@
             <RelativeLayout
                 android:id="@+id/stage4"
                 android:layout_width="720px"
-                android:layout_height="380px" >
+                android:layout_height="380px" 
+                android:background="@drawable/stage">
 
                 <ImageView
                     android:id="@+id/book_7"
@@ -111,7 +115,8 @@
             <RelativeLayout
                 android:id="@+id/stage5"
                 android:layout_width="720px"
-                android:layout_height="380px">
+                android:layout_height="380px"
+                android:background="@drawable/stage">
 
                 <ImageView
                     android:id="@+id/book_9"
@@ -133,7 +138,8 @@
             <RelativeLayout
                 android:id="@+id/stage6"
                 android:layout_width="720px"
-                android:layout_height="380px" >
+                android:layout_height="380px" 
+                android:background="@drawable/stage">
 
                 <ImageView
                     android:id="@+id/book_11"

@@ -6,6 +6,7 @@
     android:background="@drawable/pdf_bg" >
 
     <LinearLayout
+        android:id="@+id/top_layout"
         android:layout_width="720px"
         android:layout_height="83px"
         android:layout_marginTop="40px"
@@ -60,27 +61,28 @@
         android:layout_marginTop="130px"
         android:background="@drawable/pdf_bg" />
 
-    <SeekBar
-        android:id="@+id/seekBar1"
-        android:layout_width="720px"
-        android:layout_height="156px"
-        android:layout_alignParentBottom="true"
-        android:background="@android:color/transparent"
-        android:progressDrawable="@android:color/transparent"
-        android:thumb="@android:color/transparent" >
-    </SeekBar>
-
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/bottom_layout"
         android:layout_width="720px"
         android:layout_height="150px"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal" >
 
+        <SeekBar
+            android:id="@+id/seekBar1"
+            android:layout_width="720px"
+            android:layout_height="156px"
+            android:layout_alignParentBottom="true"
+            android:background="@android:color/transparent"
+            android:progressDrawable="@android:color/transparent"
+            android:thumb="@android:color/transparent" >
+        </SeekBar>
+
         <ImageView
             android:id="@+id/preview10"
             android:layout_width="60px"
             android:layout_height="85px"
-            android:layout_gravity="center_vertical"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="35px"
             android:background="#000000"
             android:padding="1dp" />
@@ -89,8 +91,8 @@
             android:id="@+id/preview9"
             android:layout_width="60px"
             android:layout_height="85px"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="6px"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="101px"
             android:background="#000000"
             android:padding="1dp" />
 
@@ -98,8 +100,8 @@
             android:id="@+id/preview8"
             android:layout_width="60px"
             android:layout_height="85px"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="6px"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="167px"
             android:background="#000000"
             android:padding="1dp" />
 
@@ -107,8 +109,8 @@
             android:id="@+id/preview7"
             android:layout_width="60px"
             android:layout_height="85px"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="6px"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="233px"
             android:background="#000000"
             android:padding="1dp" />
 
@@ -116,8 +118,8 @@
             android:id="@+id/preview6"
             android:layout_width="60px"
             android:layout_height="85px"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="6px"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="299px"
             android:background="#000000"
             android:padding="1dp" />
 
@@ -125,8 +127,8 @@
             android:id="@+id/preview5"
             android:layout_width="60px"
             android:layout_height="85px"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="6px"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="365px"
             android:background="#000000"
             android:padding="1dp" />
 
@@ -134,8 +136,8 @@
             android:id="@+id/preview4"
             android:layout_width="60px"
             android:layout_height="85px"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="6px"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="431px"
             android:background="#000000"
             android:padding="1dp" />
 
@@ -143,8 +145,8 @@
             android:id="@+id/preview3"
             android:layout_width="60px"
             android:layout_height="85px"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="6px"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="497px"
             android:background="#000000"
             android:padding="1dp" />
 
@@ -152,8 +154,8 @@
             android:id="@+id/preview2"
             android:layout_width="60px"
             android:layout_height="85px"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="6px"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="563px"
             android:background="#000000"
             android:padding="1dp" />
 
@@ -161,11 +163,11 @@
             android:id="@+id/preview1"
             android:layout_width="60px"
             android:layout_height="85px"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="6px"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="629px"
             android:background="#000000"
             android:padding="1dp" />
-    </LinearLayout>
+    </RelativeLayout>
 
     <FrameLayout
         android:id="@+id/fragment_view"

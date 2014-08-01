@@ -36,7 +36,7 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 	private ImageView book_1, book_2, book_3, book_4 ,book_5 ,book_6 ,
 						book_7,book_8 , book_9 , book_10 ,book_11, book_12 , new_back, img_cover;
 	
-	private RelativeLayout stage1, stage2, stage3, stage4, stage5, stage6;
+//	private RelativeLayout stage1, stage2, stage3, stage4, stage5, stage6;
 
 	private ArrayList<Book> books;
 	
@@ -91,21 +91,21 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 		
 		info = (Button) findViewById(R.id.info);
 		
-		stage1 = (RelativeLayout) findViewById(R.id.stage1);
-		stage2 = (RelativeLayout) findViewById(R.id.stage2);
-		stage3 = (RelativeLayout) findViewById(R.id.stage3);
-		stage4 = (RelativeLayout) findViewById(R.id.stage4);
-		stage5 = (RelativeLayout) findViewById(R.id.stage5); 
-		stage6 = (RelativeLayout) findViewById(R.id.stage6);
+//		stage1 = (RelativeLayout) findViewById(R.id.stage1);
+//		stage2 = (RelativeLayout) findViewById(R.id.stage2);
+//		stage3 = (RelativeLayout) findViewById(R.id.stage3);
+//		stage4 = (RelativeLayout) findViewById(R.id.stage4);
+//		stage5 = (RelativeLayout) findViewById(R.id.stage5); 
+//		stage6 = (RelativeLayout) findViewById(R.id.stage6);
 		
-		Bitmap bmStage = AKManager.originalResolution(this, "covers/stage.png", stage1.getWidth(), stage1.getHeight());
-		Drawable dStage = new BitmapDrawable(getResources(), bmStage);
-		stage1.setBackgroundDrawable(dStage);
-		stage2.setBackgroundDrawable(akManager.createCopy(bmStage));
-		stage3.setBackgroundDrawable(akManager.createCopy(bmStage));
-		stage4.setBackgroundDrawable(akManager.createCopy(bmStage));
-		stage5.setBackgroundDrawable(akManager.createCopy(bmStage));
-		stage6.setBackgroundDrawable(akManager.createCopy(bmStage));
+//		Bitmap bmStage = AKManager.originalResolution(this, "covers/stage.png", stage1.getWidth(), stage1.getHeight());
+//		Drawable dStage = new BitmapDrawable(getResources(), bmStage);
+//		stage1.setBackgroundDrawable(dStage);
+//		stage2.setBackgroundDrawable(akManager.createCopy(bmStage));
+//		stage3.setBackgroundDrawable(akManager.createCopy(bmStage));
+//		stage4.setBackgroundDrawable(akManager.createCopy(bmStage));
+//		stage5.setBackgroundDrawable(akManager.createCopy(bmStage));
+//		stage6.setBackgroundDrawable(akManager.createCopy(bmStage));
 		
 		
 		
@@ -186,19 +186,6 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 			}
 		}
 		
-//		book_1.setOnClickListener( new OnClickListener() {
-//			@Override
-//			public void onClick(View view) {
-//				 Intent i = new Intent(MainBookChoice.this, PDFViewerActivity.class);
-//                 Bundle b = null;
-//                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-//                     Bitmap bitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
-//                     b = ActivityOptions.makeThumbnailScaleUpAnimation(view, bitmap, 0, 0).toBundle();
-//                 }
-//                 startActivity(i, b);
-//				
-//			}
-//		});
 		
 		book_1.setOnClickListener(this);
 		book_2.setOnClickListener(this);

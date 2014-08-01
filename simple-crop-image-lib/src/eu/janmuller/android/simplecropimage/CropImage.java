@@ -24,6 +24,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.concurrent.CountDownLatch;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -55,6 +56,7 @@ import android.widget.Toast;
 /**
  * The activity can crop specific region of interest from an image.
  */
+@SuppressLint("NewApi")
 public class CropImage extends MonitoredActivity {
 
     final int IMAGE_MAX_SIZE = 1024;
