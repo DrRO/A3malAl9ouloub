@@ -34,6 +34,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
+import android.widget.Toast;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
 import com.example.pdftest.R;
@@ -79,6 +80,9 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 	
 	int last ;
 	private boolean fromSeekBar = false;
+	private boolean seeking = false;
+	public static int inversed_page ;
+	boolean enable64 = false ;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -140,27 +144,7 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 		Bitmap bm10 = AKManager.originalResolution(this, "previews/"+book_to_read+"/10.png", preview1.getWidth(), preview10.getHeight());
 
 
-//		frame_layout.setOnTouchListener(new OnTouchListener() {
-//
-//			@Override
-//			public boolean onTouch(View v, MotionEvent event) {
-//				switch (event.getAction()) {
-//				case MotionEvent.ACTION_DOWN: {
-//					
-//					toggleTopBottom();
-//					
-//					break;
-//				}
-//				case MotionEvent.ACTION_UP: {
-//
-//				}
-//				case MotionEvent.ACTION_CANCEL: {
-//					break;
-//				}
-//				}
-//				return true;
-//			}
-//		});
+
 
 		preview1.setImageDrawable(new BitmapDrawable(getResources(), bm1));
 		preview2.setImageDrawable(new BitmapDrawable(getResources(), bm2));
@@ -176,7 +160,6 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 
 		bar = (SeekBar)findViewById(R.id.seekBar1); // make seekbar object
 
-		bar.setRotation(180);
 		bar.setOnSeekBarChangeListener(this);
 
 
@@ -220,13 +203,13 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 			@Override
 			public void onClick(View v) {
 
-				boolean isBookMarked = pdfDB.isBookMarked(book_id, pdf.getCurrentPage());
+				boolean isBookMarked = pdfDB.isBookMarked(book_id, inversed_page);
 				if(isBookMarked){
-					pdfDB.removeFromBookMarks(book_id, pdf.getCurrentPage());
+					pdfDB.removeFromBookMarks(book_id, inversed_page);
 				}else
-					pdfDB.addToBookMarks(book_id, pdf.getCurrentPage());
+					pdfDB.addToBookMarks(book_id, inversed_page);
 
-				toggleBookMarkButton(!isBookMarked, pdf.getCurrentPage());
+				toggleBookMarkButton(!isBookMarked);
 
 			}
 		});
@@ -248,16 +231,20 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 	@Override
 	public void onPageChanged(int page, int pageCount) {
 
-		toggleBookMarkButton(pdfDB.isBookMarked(book_id, page), page);
+		toggleBookMarkButton(pdfDB.isBookMarked(book_id, page));
 
 		updatePreviews(page);
+		inversed_page = pdf_pages_number - page + 1 ;
 		
-//		Log.e("LAST", last+"");
-//		Log.e("***PAGE", page+"");
+		if (inversed_page > 0 && inversed_page < pdf_pages_number) enable64 = true ;
+		
+		if(!seeking && inversed_page > 0 && enable64){
+		Toast.makeText(PDFViewerActivity.this, " صفحة "+inversed_page+" من "+pdf_pages_number, Toast.LENGTH_SHORT).show();
+		}
 		
 		if(!fromSeekBar)
 		{
-			if (page == 1) showTopBottom() ;
+			if (inversed_page == 1) showTopBottom() ;
 			else if (page != last )hideTopBottom();
 			else if (pdf.getCurrentPage() == page - 1) toggleTopBottom();
 		}
@@ -267,7 +254,7 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 	}
 
 
-	private void toggleBookMarkButton(boolean isBookMarked, int page) {
+	private void toggleBookMarkButton(boolean isBookMarked) {
 		if(isBookMarked)
 			add_bookmark.setBackgroundResource(R.drawable.pdf_bookmark_added);
 		else
@@ -303,7 +290,8 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 
 	public void onPageItemClicked(int pageTo){
 		onBackPressed();
-		pdf.jumpTo(pageTo);
+		int inversed = pdf_pages_number - pageTo + 1 ;
+		pdf.jumpTo(inversed);
 	}
 
 	private void gotoFragment(String fragmentTAG){
@@ -359,12 +347,12 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 	}
 	@Override
 	public void onStartTrackingTouch(SeekBar arg0) {
-
+		seeking = true ;
 	}
 	@Override
 	public void onStopTrackingTouch(SeekBar arg0) {
-		// TODO Auto-generated method stub
-
+		seeking = false ;
+		Toast.makeText(PDFViewerActivity.this, " صفحة "+inversed_page+" من "+pdf_pages_number, Toast.LENGTH_SHORT).show();
 	}
 
 	public void updatePreviews(int progress)
@@ -386,53 +374,53 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 
 		if (preview_part < 0.1)
 		{
-			preview1.startAnimation(zoom_preview);
-			preview1.bringToFront();
+			preview10.startAnimation(zoom_preview);
+			preview10.bringToFront();
 		}
 		else if (preview_part >= 0.1 && preview_part < 0.2)
-		{
-			preview2.startAnimation(zoom_preview);
-			preview2.bringToFront();
-		}
-		else if (preview_part >= 0.2 && preview_part < 0.3)
-		{
-			preview3.startAnimation(zoom_preview);
-			preview3.bringToFront();
-		}
-		else if (preview_part >= 0.3 && preview_part < 0.4)
-		{
-			preview4.startAnimation(zoom_preview);
-			preview4.bringToFront();
-		}
-		else if (preview_part >= 0.4 && preview_part < 0.5)
-		{
-			preview5.startAnimation(zoom_preview);
-			preview5.bringToFront();
-		}
-		else if (preview_part >= 0.5 && preview_part < 0.6)
-		{
-			preview6.startAnimation(zoom_preview);
-			preview6.bringToFront();
-		}
-		else if (preview_part >= 0.6 && preview_part < 0.7)
-		{
-			preview7.startAnimation(zoom_preview);
-			preview7.bringToFront();
-		}
-		else if (preview_part >= 0.7 && preview_part < 0.8)
-		{
-			preview8.startAnimation(zoom_preview);
-			preview8.bringToFront();
-		}
-		else if (preview_part >= 0.8 && preview_part < 0.9)
 		{
 			preview9.startAnimation(zoom_preview);
 			preview9.bringToFront();
 		}
-		else if (preview_part >= 0.9 && preview_part < 1)
+		else if (preview_part >= 0.2 && preview_part < 0.3)
 		{
-			preview10.startAnimation(zoom_preview);
-			preview10.bringToFront();
+			preview8.startAnimation(zoom_preview);
+			preview8.bringToFront();
+		}
+		else if (preview_part >= 0.3 && preview_part < 0.4)
+		{
+			preview7.startAnimation(zoom_preview);
+			preview7.bringToFront();
+		}
+		else if (preview_part >= 0.4 && preview_part < 0.5)
+		{
+			preview6.startAnimation(zoom_preview);
+			preview6.bringToFront();
+		}
+		else if (preview_part >= 0.5 && preview_part < 0.6)
+		{
+			preview5.startAnimation(zoom_preview);
+			preview5.bringToFront();
+		}
+		else if (preview_part >= 0.6 && preview_part < 0.7)
+		{
+			preview4.startAnimation(zoom_preview);
+			preview4.bringToFront();
+		}
+		else if (preview_part >= 0.7 && preview_part < 0.8)
+		{
+			preview3.startAnimation(zoom_preview);
+			preview3.bringToFront();
+		}
+		else if (preview_part >= 0.8 && preview_part < 0.9)
+		{
+			preview2.startAnimation(zoom_preview);
+			preview2.bringToFront();
+		}
+		else if (preview_part >= 0.9 && preview_part <= 1)
+		{
+			preview1.startAnimation(zoom_preview);
+			preview1.bringToFront();
 		}
 
 	}

@@ -5,6 +5,14 @@
     android:layout_gravity="center"
     android:background="@drawable/pdf_bg" >
 
+      <com.joanzapata.pdfview.PDFView
+        android:id="@+id/pdfView"
+        android:layout_width="720px"
+        android:layout_height="1280px"
+        android:layout_centerInParent="true"
+        android:background="@drawable/pdf_bg"
+        />
+    
     <LinearLayout
         android:id="@+id/top_layout"
         android:layout_width="720px"
@@ -53,13 +61,6 @@
             android:background="@drawable/pdf_bookmark_list" />
     </LinearLayout>
 
-    <com.joanzapata.pdfview.PDFView
-        android:id="@+id/pdfView"
-        android:layout_width="720px"
-        android:layout_height="1000px"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="130px"
-        android:background="@drawable/pdf_bg" />
 
     <RelativeLayout
         android:id="@+id/bottom_layout"
