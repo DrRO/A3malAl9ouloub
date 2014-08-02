@@ -231,10 +231,9 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 	@Override
 	public void onPageChanged(int page, int pageCount) {
 
-		toggleBookMarkButton(pdfDB.isBookMarked(book_id, page));
-
 		updatePreviews(page);
 		inversed_page = pdf_pages_number - page + 1 ;
+		toggleBookMarkButton(pdfDB.isBookMarked(book_id, inversed_page));
 		
 		if (inversed_page > 0 && inversed_page < pdf_pages_number) enable64 = true ;
 		
