@@ -1,6 +1,8 @@
 package com.pdf.kouloub.externals;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -62,6 +64,49 @@ public class AKManager {
 		return mInstance;
 	}
 	
+	
+	public static Bitmap originalResolutionFromSDCard(String path, int width, int height)   {
+		Bitmap bm = null;
+		BitmapFactory.Options bfOptions=new BitmapFactory.Options();
+		bfOptions.inDither=false;                     //Disable Dithering mode
+		bfOptions.inPurgeable=true;                   //Tell to gc that whether it needs free memory, the Bitmap can be cleared
+		bfOptions.inInputShareable=true;              //Which kind of reference will be used to recover the Bitmap data after being clear, when it will be used in the future
+		bfOptions.inTempStorage=new byte[32 * 1024]; 
+
+		// Calculate inSampleSize
+		bfOptions.inSampleSize = calculateInSampleSize(bfOptions, width, height);
+
+		// Decode bitmap with inSampleSize set
+		bfOptions.inJustDecodeBounds = false;    
+
+		File file=new File(path);
+		FileInputStream fs=null;
+		try {
+			fs = new FileInputStream(file);
+		} catch (FileNotFoundException e) {
+			//TODO do something intelligent
+			e.printStackTrace();
+		}
+
+		try {
+			if(fs!=null) bm=BitmapFactory.decodeFileDescriptor(fs.getFD(), null, bfOptions);
+		} catch (IOException e) {
+			//TODO do something intelligent
+			e.printStackTrace();
+		} finally{ 
+			if(fs!=null) {
+				try {
+					fs.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return bm;
+
+	}
 	
 	public static Bitmap originalResolution(Context context, String path, int width, int height)   {
 		Bitmap bm = null;

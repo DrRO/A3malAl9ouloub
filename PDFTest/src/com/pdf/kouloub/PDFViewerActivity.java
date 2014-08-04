@@ -34,8 +34,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
-import android.widget.Toast;
 import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.Toast;
 
 import com.example.pdftest.R;
 import com.joanzapata.pdfview.PDFView;
@@ -43,8 +43,6 @@ import com.joanzapata.pdfview.listener.OnLoadCompleteListener;
 import com.joanzapata.pdfview.listener.OnPageChangeListener;
 import com.pdf.kouloub.externals.AKManager;
 import com.pdf.kouloub.utils.MySuperScaler;
-
-import eu.janmuller.android.simplecropimage.CropImage;
 
 public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteListener, OnPageChangeListener, OnSeekBarChangeListener {
 
@@ -435,9 +433,8 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 		switch (requestCode) {
 		case REQUEST_CODE_CROP_IMAGE:
 
-			String path = data.getStringExtra(CropImage.IMAGE_PATH);
+			String path = data.getStringExtra(ImageCropActivity.IMAGE_PATH);
 			if (path == null) {
-
 				return;
 			}
 
@@ -453,12 +450,12 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 		storeImage(pdf.getDrawingCache());
 		pdf.destroyDrawingCache();
 
-		Intent intent = new Intent(this, CropImage.class);
-		intent.putExtra(CropImage.IMAGE_PATH, filePath);
-		intent.putExtra(CropImage.SCALE, true);
-
-		intent.putExtra(CropImage.ASPECT_X, 3);
-		intent.putExtra(CropImage.ASPECT_Y, 2);
+		Intent intent = new Intent(this, ImageCropActivity.class);
+		intent.putExtra(ImageCropActivity.IMAGE_PATH, filePath);
+//		intent.putExtra(CropImage.SCALE, true);
+//
+//		intent.putExtra(CropImage.ASPECT_X, 3);
+//		intent.putExtra(CropImage.ASPECT_Y, 2);
 
 		startActivityForResult(intent, REQUEST_CODE_CROP_IMAGE);
 	}
