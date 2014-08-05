@@ -12,12 +12,16 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -34,7 +38,7 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 
 	private Button info ;
 	private ImageView book_1, book_2, book_3, book_4 ,book_5 ,book_6 ,
-						book_7,book_8 , book_9 , book_10 ,book_11, book_12 , new_back, img_cover;
+						book_7,book_8 , book_9 , book_10 ,book_11, book_12 , new_back, img_cover, img_cover_small;
 	
 //	private RelativeLayout stage1, stage2, stage3, stage4, stage5, stage6;
 
@@ -45,9 +49,18 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 	private String pdfFile ;
 	private int book_id;
  	
-	private AnimationSet animationSet;
-	private Animation zoomin, alpha;
+	private AnimationSet animationSet, animationSet2;
+	private TranslateAnimation translate;
+	private Animation zoomin, alpha, alphaToHide;
 	private AKManager akManager;
+	
+	private Handler mHandler = new Handler() {
+		public void handleMessage(Message msg) {
+			img_cover.setVisibility(View.VISIBLE);
+//			img_cover.bringToFront();
+			img_cover.startAnimation(zoomin);
+		};
+	};
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -59,15 +72,13 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 		
 		zoomin = AnimationUtils.loadAnimation(this, R.anim.zoom_in);
 		alpha = AnimationUtils.loadAnimation(this, R.anim.alpha);
-
-		animationSet = new AnimationSet(true);
-		animationSet.addAnimation(zoomin);
-		animationSet.addAnimation(alpha);
-		animationSet.setFillAfter(true);
-		animationSet.setAnimationListener(new AnimationListener() {
+		alphaToHide = AnimationUtils.loadAnimation(this, R.anim.alphatohide);
+		
+		zoomin.setAnimationListener(new AnimationListener() {
 
 			@Override
 			public void onAnimationStart(Animation arg0) {
+				img_cover_small.setVisibility(View.GONE);
 			}
 
 			@Override
@@ -84,9 +95,34 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 			}
 		});
 
+//		animationSet2 = new AnimationSet(true);
+//		animationSet2.addAnimation(zoomin);
+//		animationSet2.addAnimation(alpha);
+//		animationSet2.setFillAfter(true);
+//		animationSet2.setAnimationListener(new AnimationListener() {
+//
+//			@Override
+//			public void onAnimationStart(Animation arg0) {
+//			}
+//
+//			@Override
+//			public void onAnimationRepeat(Animation arg0) {
+//			}
+//
+//			@Override
+//			public void onAnimationEnd(Animation arg0) {
+//
+//				Message msg =  Message.obtain();
+//				msg.what = 1;
+//				splashHandler.sendMessageDelayed(msg, 2000);
+//
+//			}
+//		});
+
 		principal_layout = (RelativeLayout) findViewById(R.id.principal_layout);
 		new_back = (ImageView) findViewById(R.id.new_back);
 		img_cover = (ImageView) findViewById(R.id.img_cover);
+		img_cover_small = (ImageView) findViewById(R.id.img_cover_small);
 		
 		
 		info = (Button) findViewById(R.id.info);
@@ -234,6 +270,7 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 			super.handleMessage(msg);
 		}
 	};
+	private TranslateAnimation translate2;
 
 	@Override
 	public void onClick(final View v) {
@@ -243,9 +280,120 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 		book_id = books.get(selectedPosition).getId();
 		
 		img_cover.setBackgroundDrawable(v.getBackground());
-		img_cover.startAnimation(animationSet);
-		img_cover.bringToFront();
+		img_cover_small.setBackgroundDrawable(v.getBackground());
+		img_cover_small.bringToFront();
+		
+		int[] locations = new int[2];
+		v.getLocationOnScreen(locations);
+		int x = locations[0];
+		int y = locations[1];
+		
+		Log.i("", "locations:  X " + x + " ... Y " + y);
+		setMargins(img_cover_small, x, y);
+		
+		animCounter = 0;
+		moveViewToScreenCenter(img_cover_small);
 
+	}
+	
+	int animCounter = 0;
+	private void moveViewToScreenCenter( final View view )
+	{
+	    DisplayMetrics dm = new DisplayMetrics();
+	    this.getWindowManager().getDefaultDisplay().getMetrics( dm );
+	    int statusBarOffset = dm.heightPixels - principal_layout.getMeasuredHeight();
+
+	    int originalPos[] = new int[2];
+	    view.getLocationOnScreen( originalPos );
+
+	    int xDest = dm.widthPixels/2;
+	    xDest -= (view.getMeasuredWidth()/2);
+	    int yDest = dm.heightPixels/2 - (view.getMeasuredHeight()/2) - statusBarOffset;
+
+	    translate = new TranslateAnimation( 0, xDest - originalPos[0] , 0, yDest - originalPos[1] );
+	    translate.setDuration(1500);
+	    translate.setFillAfter( true );
+	    
+	    translate.setAnimationListener(new AnimationListener() {
+			
+			@Override
+			public void onAnimationStart(Animation animation) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onAnimationRepeat(Animation animation) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onAnimationEnd(Animation animation) {
+				if(animCounter == 0)
+				{
+					moveViewToScreenCenter(view);
+					animCounter++;
+				}
+//				else
+//				{
+//					view.setLayoutParams(new RelativeLayout.LayoutParams(screen_width, screen_height));
+//					view.startAnimation(zoomin);
+//				}
+			}
+		});
+	    
+	    AlphaAnimation alphaFictive = new AlphaAnimation( 0, 0);
+	    alphaFictive.setDuration(1000);
+	    alphaFictive.setFillAfter( false );
+	    
+	    animationSet = new AnimationSet(true);
+		animationSet.addAnimation(alphaFictive);
+		animationSet.addAnimation(translate);
+		animationSet.setFillAfter(false);
+		animationSet.setAnimationListener(new AnimationListener() {
+
+			@Override
+			public void onAnimationStart(Animation arg0) {
+			}
+
+			@Override
+			public void onAnimationRepeat(Animation arg0) {
+			}
+
+			@Override
+			public void onAnimationEnd(Animation arg0) {
+				view.startAnimation(translate);
+				mHandler.sendMessageDelayed(new Message(), 1000);
+			}
+		});
+		
+//		animationSet2 = new AnimationSet(true);
+//		animationSet2.addAnimation(translate);
+//		animationSet2.addAnimation(alphaToHide);
+//		animationSet2.setFillAfter(true);
+//		animationSet2.setAnimationListener(new AnimationListener() {
+//
+//			@Override
+//			public void onAnimationStart(Animation arg0) {
+//			}
+//
+//			@Override
+//			public void onAnimationRepeat(Animation arg0) {
+//			}
+//
+//			@Override
+//			public void onAnimationEnd(Animation arg0) {
+//
+//				Message msg =  Message.obtain();
+//				msg.what = 1;
+//				splashHandler.sendMessageDelayed(msg, 2000);
+//
+//			}
+//		});
+		
+	    view.startAnimation(animationSet);
+	    
 	}
 	
 	@Override
