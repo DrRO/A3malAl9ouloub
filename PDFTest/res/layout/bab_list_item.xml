@@ -23,20 +23,17 @@
             android:layout_toLeftOf="@id/Img_babTitle"
             android:gravity="right|center_vertical"
             android:paddingRight="15px"
-            android:textColor="#000"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textColor="#000"/>
 
     <TextView
         android:id="@+id/txv_pageNb"
-        android:layout_width="30px"
-        android:layout_height="30px"
+        android:layout_width="wrap_content"
+        android:layout_height="60px"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_margin="10px"
         android:contentDescription="@null"
         android:textColor="#000"
-        android:textSize="14sp"
         android:textStyle="bold" />
 
 </RelativeLayout>

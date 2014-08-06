@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
 import android.content.Context;
@@ -12,6 +13,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
@@ -154,7 +156,63 @@ public class AKManager {
 		}
 		return inSampleSize;
 	}
+	
+	public Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
+	    int width = bm.getWidth();
+	    int height = bm.getHeight();
+	    float scaleWidth = ((float) newWidth) / width;
+	    float scaleHeight = ((float) newHeight) / height;
+	    // CREATE A MATRIX FOR THE MANIPULATION
+	    Matrix matrix = new Matrix();
+	    // RESIZE THE BIT MAP
+	    matrix.postScale(scaleWidth, scaleHeight);
 
+	    // "RECREATE" THE NEW BITMAP
+	    Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
+	    return resizedBitmap;
+	}
+	
+	public static Bitmap decodeSampledBitmapFromDescriptor(
+			Bitmap bmp, int reqWidth, int reqHeight) {
+
+		//Decode with inSampleSize
+		BitmapFactory.Options o2 = new BitmapFactory.Options();
+		o2.inPurgeable = true;
+		o2.inInputShareable = true;
+		o2.inSampleSize = calculateInSampleSize(bmp, reqWidth, reqHeight);
+		//o2.inSampleSize = scale;
+		o2.inJustDecodeBounds = false;
+
+		int bytes = bmp.getHeight() * bmp.getWidth() * 4;
+
+		ByteBuffer buffer = ByteBuffer.allocate(bytes);
+
+		bmp.copyPixelsToBuffer(buffer);
+
+		byte[] array = buffer.array();
+
+		return BitmapFactory.decodeByteArray(array, 0, bytes, o2);
+	}
+
+	public static int calculateInSampleSize(
+			Bitmap bmp, int reqWidth, int reqHeight) {
+
+		// Raw height and width of image
+		final int height = bmp.getHeight();
+		final int width = bmp.getWidth();
+
+		int inSampleSize = 1;
+
+		if (height > reqHeight || width > reqWidth) {
+			if (width > height) {
+				inSampleSize = Math.round((float)height / (float)reqHeight);
+			} else {
+				inSampleSize = Math.round((float)width / (float)reqWidth);
+			}
+		}
+
+		return inSampleSize;
+	}
 	public Drawable createCopy(Bitmap b){
 		Config config = Config.ARGB_8888;
 		Bitmap bm = b.copy(config, false);

@@ -13,11 +13,16 @@ import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.provider.MediaStore.Images;
 import android.support.v4.app.Fragment;
@@ -27,6 +32,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -54,7 +60,6 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 	private static final String PARTS_FRAGMENT = "parts_fragment";
 	private static final String BOOKMARKS_FRAGMENT = "bookmark_fragment";
 
-	private static final String TAG = null;
 	private Fragment fragment;
 
 	private int book_id;
@@ -69,7 +74,6 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 	private LinearLayout top_layout;
 	private int pdf_pages_number ;
 	private SeekBar bar ;
-	private Animation zoom_preview;
 
 	private String filePath;
 	private Uri resultUri;
@@ -81,6 +85,16 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 	private boolean seeking = false;
 	public static int inversed_page ;
 	boolean enable64 = false ;
+	private boolean enableJump = false;
+	
+	private Animation fadein, fadeout;
+	
+	private Handler mHandler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			updatePreviews();
+		}
+	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +104,50 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 		akManager = AKManager.getInstance(this);
 		pdf = (PDFView) findViewById(R.id.pdfView);
 
-		zoom_preview = AnimationUtils.loadAnimation(this, R.anim.zoom_preview);
+		fadein = AnimationUtils.loadAnimation(this, R.anim.fadein);
+		fadeout = AnimationUtils.loadAnimation(this, R.anim.fadeout);
+		
+		fadein.setAnimationListener(new AnimationListener() {
+			
+			@Override
+			public void onAnimationStart(Animation animation) {
+				top_layout.setVisibility(View.VISIBLE);
+				bottom_layout.setVisibility(View.VISIBLE);
+				
+			}
+			
+			@Override
+			public void onAnimationRepeat(Animation animation) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onAnimationEnd(Animation animation) {
+				
+			}
+		});
+		
+		fadeout.setAnimationListener(new AnimationListener() {
+			
+			@Override
+			public void onAnimationStart(Animation animation) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onAnimationRepeat(Animation animation) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onAnimationEnd(Animation animation) {
+				top_layout.setVisibility(View.GONE);
+				bottom_layout.setVisibility(View.GONE);
+			}
+		});
 
 		top_layout = (LinearLayout) findViewById(R.id.top_layout);
 		bottom_layout = (RelativeLayout) findViewById(R.id.bottom_layout);
@@ -157,9 +214,7 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 
 
 		bar = (SeekBar)findViewById(R.id.seekBar1); // make seekbar object
-
-		bar.setOnSeekBarChangeListener(this);
-
+		bar.bringToFront();
 
 		back.setOnClickListener(new OnClickListener() {
 			@Override
@@ -212,16 +267,18 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 			}
 		});
 
-		last = 0;
+		last = totalPages - 1;
 
 	}
 	@Override
 	public void loadComplete(int nbPages) {
 
 		showTopBottom();
-		pdf_pages_number = pdf.getPageCount() ;
+		pdf_pages_number = nbPages ;
 
+		bar.setOnSeekBarChangeListener(this);
 		bar.setMax(pdf_pages_number);
+		bar.setProgress(pdf_pages_number);
 		pdf.jumpTo(nbPages);
 		Log.e("NUMBER OF PAGES", pdf_pages_number +"");
 
@@ -229,25 +286,31 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 	@Override
 	public void onPageChanged(int page, int pageCount) {
 
-		updatePreviews(page);
 		inversed_page = pdf_pages_number - page + 1 ;
 		toggleBookMarkButton(pdfDB.isBookMarked(book_id, inversed_page));
 		
 		if (inversed_page > 0 && inversed_page < pdf_pages_number) enable64 = true ;
 		
 		if(!seeking && inversed_page > 0 && enable64){
-		Toast.makeText(PDFViewerActivity.this, " صفحة "+inversed_page+" من "+pdf_pages_number, Toast.LENGTH_SHORT).show();
+			Toast.makeText(PDFViewerActivity.this, " صفحة "+inversed_page+" من "+pdf_pages_number, Toast.LENGTH_SHORT).show();
 		}
 		
 		if(!fromSeekBar)
 		{
-			if (inversed_page == 1) showTopBottom() ;
-			else if (page != last )hideTopBottom();
-			else if (pdf.getCurrentPage() == page - 1) toggleTopBottom();
+//			if (inversed_page == 1) showTopBottom() ;
+//			else 
+				if (page != last )hideTopBottom();
+			else 
+				if (pdf.getCurrentPage() == page - 1) toggleTopBottom();
 		}
+		
+		mHandler.sendMessageDelayed(new Message(), 500);
+		
+		bar.setProgress(page);
 		
 		fromSeekBar = false;
 		last = page;
+		
 	}
 
 
@@ -333,95 +396,51 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 		crop.setEnabled(enabled);
 		list_summary.setEnabled(enabled);
 	}
+	
 	@Override
 	public void onProgressChanged(SeekBar arg0, int progress, boolean arg2) {
-
 		fromSeekBar = true;
-		updatePreviews(progress);
-		pdf.jumpTo(progress);
-
-
 	}
 	@Override
 	public void onStartTrackingTouch(SeekBar arg0) {
 		seeking = true ;
+		enableJump = true;
 	}
 	@Override
 	public void onStopTrackingTouch(SeekBar arg0) {
-		seeking = false ;
+		
+		if(enableJump)
+		{
+			pdf.jumpTo(arg0.getProgress());
+			enableJump = false;
+		}
 		Toast.makeText(PDFViewerActivity.this, " صفحة "+inversed_page+" من "+pdf_pages_number, Toast.LENGTH_SHORT).show();
+		seeking = false ;
 	}
 
-	public void updatePreviews(int progress)
+	public void updatePreviews()
 	{
-		float preview_part = (float) ((double) progress / pdf_pages_number) ;
 
-		preview1.clearAnimation();
-		preview2.clearAnimation();
-		preview3.clearAnimation();
-		preview4.clearAnimation();
-		preview5.clearAnimation();
-		preview6.clearAnimation();
-		preview7.clearAnimation();
-		preview8.clearAnimation();
-		preview9.clearAnimation();
-		preview10.clearAnimation();
-
-
-
-		if (preview_part < 0.1)
-		{
-			preview10.startAnimation(zoom_preview);
-			preview10.bringToFront();
+		pdf.buildDrawingCache();
+		if(pdf.getDrawingCache() != null){
+			int width = (int)(75*scale);
+			int height = (int)(110*scale);
+			Bitmap bm = Bitmap.createScaledBitmap(pdf.getDrawingCache(), width, height, false);
+			Drawable d = new BitmapDrawable(getResources(), addGrayBorder(bm, 1));
+			bar.setThumb(d);
 		}
-		else if (preview_part >= 0.1 && preview_part < 0.2)
-		{
-			preview9.startAnimation(zoom_preview);
-			preview9.bringToFront();
-		}
-		else if (preview_part >= 0.2 && preview_part < 0.3)
-		{
-			preview8.startAnimation(zoom_preview);
-			preview8.bringToFront();
-		}
-		else if (preview_part >= 0.3 && preview_part < 0.4)
-		{
-			preview7.startAnimation(zoom_preview);
-			preview7.bringToFront();
-		}
-		else if (preview_part >= 0.4 && preview_part < 0.5)
-		{
-			preview6.startAnimation(zoom_preview);
-			preview6.bringToFront();
-		}
-		else if (preview_part >= 0.5 && preview_part < 0.6)
-		{
-			preview5.startAnimation(zoom_preview);
-			preview5.bringToFront();
-		}
-		else if (preview_part >= 0.6 && preview_part < 0.7)
-		{
-			preview4.startAnimation(zoom_preview);
-			preview4.bringToFront();
-		}
-		else if (preview_part >= 0.7 && preview_part < 0.8)
-		{
-			preview3.startAnimation(zoom_preview);
-			preview3.bringToFront();
-		}
-		else if (preview_part >= 0.8 && preview_part < 0.9)
-		{
-			preview2.startAnimation(zoom_preview);
-			preview2.bringToFront();
-		}
-		else if (preview_part >= 0.9 && preview_part <= 1)
-		{
-			preview1.startAnimation(zoom_preview);
-			preview1.bringToFront();
-		}
-
+		pdf.destroyDrawingCache();
+		
 	}
 
+	private Bitmap addGrayBorder(Bitmap bmp, int borderSize) {
+	    Bitmap bmpWithBorder = Bitmap.createBitmap(bmp.getWidth() + borderSize * 2, bmp.getHeight() + borderSize * 2, bmp.getConfig());
+	    Canvas canvas = new Canvas(bmpWithBorder);
+	    canvas.drawColor(Color.GRAY);
+	    canvas.drawBitmap(bmp, borderSize, borderSize, null);
+	    return bmpWithBorder;
+	}
+	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -452,10 +471,6 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 
 		Intent intent = new Intent(this, ImageCropActivity.class);
 		intent.putExtra(ImageCropActivity.IMAGE_PATH, filePath);
-//		intent.putExtra(CropImage.SCALE, true);
-//
-//		intent.putExtra(CropImage.ASPECT_X, 3);
-//		intent.putExtra(CropImage.ASPECT_Y, 2);
 
 		startActivityForResult(intent, REQUEST_CODE_CROP_IMAGE);
 	}
@@ -551,13 +566,16 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 	}
 
 	private void hideTopBottom(){
-		top_layout.setVisibility(View.GONE);
-		bottom_layout.setVisibility(View.GONE);
+		if (top_layout.getVisibility() == View.VISIBLE && bottom_layout.getVisibility() == View.VISIBLE )
+		{
+			top_layout.startAnimation(fadeout);
+			bottom_layout.startAnimation(fadeout);
+		}
 	}
 
 	private void showTopBottom(){
-		top_layout.setVisibility(View.VISIBLE);
-		bottom_layout.setVisibility(View.VISIBLE);
+		top_layout.startAnimation(fadein);
+		bottom_layout.startAnimation(fadein);
 	}
 
 	private void toggleTopBottom(){
@@ -585,4 +603,5 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 		
 		return pages;
 	}
+	
 }

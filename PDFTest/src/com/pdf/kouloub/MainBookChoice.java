@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -25,6 +26,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 
 import com.example.pdftest.R;
 import com.pdf.kouloub.externals.AKManager;
@@ -45,20 +47,22 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 	private ArrayList<Book> books;
 	
 	private RelativeLayout principal_layout ;
+	private ScrollView scrollView;
 	
 	private String pdfFile ;
 	private int book_id;
  	
-	private AnimationSet animationSet, animationSet2;
+	private AnimationSet animationSet, animationSet2, animationSet3;
 	private TranslateAnimation translate;
 	private Animation zoomin, alpha, alphaToHide;
 	private AKManager akManager;
 	
 	private Handler mHandler = new Handler() {
 		public void handleMessage(Message msg) {
+			img_cover_small.setVisibility(View.GONE);
+			img_cover.startAnimation(animationSet3);
 			img_cover.setVisibility(View.VISIBLE);
-//			img_cover.bringToFront();
-			img_cover.startAnimation(zoomin);
+			img_cover.bringToFront();
 		};
 	};
 	
@@ -73,12 +77,15 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 		zoomin = AnimationUtils.loadAnimation(this, R.anim.zoom_in);
 		alpha = AnimationUtils.loadAnimation(this, R.anim.alpha);
 		alphaToHide = AnimationUtils.loadAnimation(this, R.anim.alphatohide);
-		
-		zoomin.setAnimationListener(new AnimationListener() {
+
+		animationSet3 = new AnimationSet(true);
+		animationSet3.addAnimation(zoomin);
+		animationSet3.addAnimation(alpha);
+		animationSet3.setFillAfter(true);
+		animationSet3.setAnimationListener(new AnimationListener() {
 
 			@Override
 			public void onAnimationStart(Animation arg0) {
-				img_cover_small.setVisibility(View.GONE);
 			}
 
 			@Override
@@ -95,55 +102,14 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 			}
 		});
 
-//		animationSet2 = new AnimationSet(true);
-//		animationSet2.addAnimation(zoomin);
-//		animationSet2.addAnimation(alpha);
-//		animationSet2.setFillAfter(true);
-//		animationSet2.setAnimationListener(new AnimationListener() {
-//
-//			@Override
-//			public void onAnimationStart(Animation arg0) {
-//			}
-//
-//			@Override
-//			public void onAnimationRepeat(Animation arg0) {
-//			}
-//
-//			@Override
-//			public void onAnimationEnd(Animation arg0) {
-//
-//				Message msg =  Message.obtain();
-//				msg.what = 1;
-//				splashHandler.sendMessageDelayed(msg, 2000);
-//
-//			}
-//		});
-
 		principal_layout = (RelativeLayout) findViewById(R.id.principal_layout);
 		new_back = (ImageView) findViewById(R.id.new_back);
 		img_cover = (ImageView) findViewById(R.id.img_cover);
 		img_cover_small = (ImageView) findViewById(R.id.img_cover_small);
+		scrollView = (ScrollView) findViewById(R.id.scrollView);
 		
 		
 		info = (Button) findViewById(R.id.info);
-		
-//		stage1 = (RelativeLayout) findViewById(R.id.stage1);
-//		stage2 = (RelativeLayout) findViewById(R.id.stage2);
-//		stage3 = (RelativeLayout) findViewById(R.id.stage3);
-//		stage4 = (RelativeLayout) findViewById(R.id.stage4);
-//		stage5 = (RelativeLayout) findViewById(R.id.stage5); 
-//		stage6 = (RelativeLayout) findViewById(R.id.stage6);
-		
-//		Bitmap bmStage = AKManager.originalResolution(this, "covers/stage.png", stage1.getWidth(), stage1.getHeight());
-//		Drawable dStage = new BitmapDrawable(getResources(), bmStage);
-//		stage1.setBackgroundDrawable(dStage);
-//		stage2.setBackgroundDrawable(akManager.createCopy(bmStage));
-//		stage3.setBackgroundDrawable(akManager.createCopy(bmStage));
-//		stage4.setBackgroundDrawable(akManager.createCopy(bmStage));
-//		stage5.setBackgroundDrawable(akManager.createCopy(bmStage));
-//		stage6.setBackgroundDrawable(akManager.createCopy(bmStage));
-		
-		
 		
 		book_1 = (ImageView) findViewById(R.id.book_1);
 		book_2 = (ImageView) findViewById(R.id.book_2);
@@ -274,6 +240,27 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 
 	@Override
 	public void onClick(final View v) {
+		
+		Rect scrollBounds = new Rect();
+		scrollView.getHitRect(scrollBounds);
+		if (v.getLocalVisibleRect(scrollBounds)) {
+		    // Any portion of the imageView, even a single pixel, is within the visible window
+			Log.i(""," view in bounds " + scrollBounds.toShortString());
+			Log.i(""," left " + scrollBounds.left + 
+					" ... top " + scrollBounds.top + 
+					" ... right " + scrollBounds.right + 
+					" ... bottom " + scrollBounds.bottom);
+			if(scrollBounds.bottom < scrollBounds.right)
+			{
+				scrollView.smoothScrollBy(0, (int) (216*scale));
+				return;
+			}
+			
+		} else {
+		    // NONE of the imageView is within the visible window
+			Log.i(""," view out of bounds");
+			return;
+		}
 
 		int selectedPosition = (Integer) v.getTag();
 		pdfFile = books.get(selectedPosition).getPdfFile();
@@ -311,7 +298,7 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 	    int yDest = dm.heightPixels/2 - (view.getMeasuredHeight()/2) - statusBarOffset;
 
 	    translate = new TranslateAnimation( 0, xDest - originalPos[0] , 0, yDest - originalPos[1] );
-	    translate.setDuration(1500);
+	    translate.setDuration(100);
 	    translate.setFillAfter( true );
 	    
 	    translate.setAnimationListener(new AnimationListener() {
@@ -335,16 +322,11 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 					moveViewToScreenCenter(view);
 					animCounter++;
 				}
-//				else
-//				{
-//					view.setLayoutParams(new RelativeLayout.LayoutParams(screen_width, screen_height));
-//					view.startAnimation(zoomin);
-//				}
 			}
 		});
 	    
 	    AlphaAnimation alphaFictive = new AlphaAnimation( 0, 0);
-	    alphaFictive.setDuration(1000);
+	    alphaFictive.setDuration(100);
 	    alphaFictive.setFillAfter( false );
 	    
 	    animationSet = new AnimationSet(true);
@@ -363,34 +345,17 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 
 			@Override
 			public void onAnimationEnd(Animation arg0) {
-				view.startAnimation(translate);
-				mHandler.sendMessageDelayed(new Message(), 1000);
+				translate.setDuration(1500);
+				animationSet2.addAnimation(translate);
+				
+				view.startAnimation(animationSet2);
+				mHandler.sendMessageDelayed(new Message(), 300);
 			}
 		});
 		
-//		animationSet2 = new AnimationSet(true);
-//		animationSet2.addAnimation(translate);
-//		animationSet2.addAnimation(alphaToHide);
-//		animationSet2.setFillAfter(true);
-//		animationSet2.setAnimationListener(new AnimationListener() {
-//
-//			@Override
-//			public void onAnimationStart(Animation arg0) {
-//			}
-//
-//			@Override
-//			public void onAnimationRepeat(Animation arg0) {
-//			}
-//
-//			@Override
-//			public void onAnimationEnd(Animation arg0) {
-//
-//				Message msg =  Message.obtain();
-//				msg.what = 1;
-//				splashHandler.sendMessageDelayed(msg, 2000);
-//
-//			}
-//		});
+		animationSet2 = new AnimationSet(true);
+		animationSet2.addAnimation(alphaToHide);
+		animationSet2.setFillAfter(true);
 		
 	    view.startAnimation(animationSet);
 	    

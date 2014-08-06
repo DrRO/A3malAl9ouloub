@@ -3,22 +3,22 @@
     android:layout_width="720px"
     android:layout_height="1280px"
     android:layout_gravity="center"
-    android:background="@drawable/pdf_bg" >
+    android:background="#fff" >
 
       <com.joanzapata.pdfview.PDFView
         android:id="@+id/pdfView"
         android:layout_width="720px"
         android:layout_height="1280px"
         android:layout_centerInParent="true"
-        android:background="@drawable/pdf_bg"
+        android:background="#fff"
         />
     
     <LinearLayout
         android:id="@+id/top_layout"
         android:layout_width="720px"
-        android:layout_height="83px"
-        android:layout_marginTop="40px"
-        android:orientation="horizontal" >
+        android:layout_height="100px"
+        android:orientation="horizontal"
+        android:background="@drawable/top_bar_bg" >
 
         <Button
             android:id="@+id/pdf_back"
@@ -67,16 +67,21 @@
         android:layout_width="720px"
         android:layout_height="150px"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:background="@drawable/bottom_bar_bg" >
 
         <SeekBar
             android:id="@+id/seekBar1"
-            android:layout_width="720px"
-            android:layout_height="156px"
+            android:layout_width="680px"
+            android:layout_height="120px"
+            android:layout_marginBottom="15px"
             android:layout_alignParentBottom="true"
             android:background="@android:color/transparent"
             android:progressDrawable="@android:color/transparent"
-            android:thumb="@android:color/transparent" >
+            android:thumb="@android:color/transparent"
+            android:layout_centerHorizontal="true" 
+            android:layout_marginRight="30px"
+            android:layout_marginLeft="30px">
         </SeekBar>
 
         <ImageView
@@ -85,7 +90,7 @@
             android:layout_height="85px"
             android:layout_centerVertical="true"
             android:layout_marginLeft="35px"
-            android:background="#000000"
+            android:background="@android:color/darker_gray"
             android:padding="1dp" />
 
         <ImageView
@@ -94,7 +99,7 @@
             android:layout_height="85px"
             android:layout_centerVertical="true"
             android:layout_marginLeft="101px"
-            android:background="#000000"
+            android:background="@android:color/darker_gray"
             android:padding="1dp" />
 
         <ImageView
@@ -103,7 +108,7 @@
             android:layout_height="85px"
             android:layout_centerVertical="true"
             android:layout_marginLeft="167px"
-            android:background="#000000"
+            android:background="@android:color/darker_gray"
             android:padding="1dp" />
 
         <ImageView
@@ -112,7 +117,7 @@
             android:layout_height="85px"
             android:layout_centerVertical="true"
             android:layout_marginLeft="233px"
-            android:background="#000000"
+           	android:background="@android:color/darker_gray"
             android:padding="1dp" />
 
         <ImageView
@@ -121,7 +126,7 @@
             android:layout_height="85px"
             android:layout_centerVertical="true"
             android:layout_marginLeft="299px"
-            android:background="#000000"
+            android:background="@android:color/darker_gray"
             android:padding="1dp" />
 
         <ImageView
@@ -130,7 +135,7 @@
             android:layout_height="85px"
             android:layout_centerVertical="true"
             android:layout_marginLeft="365px"
-            android:background="#000000"
+            android:background="@android:color/darker_gray"
             android:padding="1dp" />
 
         <ImageView
@@ -139,7 +144,7 @@
             android:layout_height="85px"
             android:layout_centerVertical="true"
             android:layout_marginLeft="431px"
-            android:background="#000000"
+            android:background="@android:color/darker_gray"
             android:padding="1dp" />
 
         <ImageView
@@ -148,7 +153,7 @@
             android:layout_height="85px"
             android:layout_centerVertical="true"
             android:layout_marginLeft="497px"
-            android:background="#000000"
+            android:background="@android:color/darker_gray"
             android:padding="1dp" />
 
         <ImageView
@@ -157,7 +162,7 @@
             android:layout_height="85px"
             android:layout_centerVertical="true"
             android:layout_marginLeft="563px"
-            android:background="#000000"
+            android:background="@android:color/darker_gray"
             android:padding="1dp" />
 
         <ImageView
@@ -166,7 +171,7 @@
             android:layout_height="85px"
             android:layout_centerVertical="true"
             android:layout_marginLeft="629px"
-            android:background="#000000"
+            android:background="@android:color/darker_gray"
             android:padding="1dp" />
     </RelativeLayout>
 

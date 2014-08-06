@@ -58,7 +58,7 @@ public class BookContentAdapter extends ArrayAdapter<BookPart> {
 		 * want.
 		 */
 		
-		int size = (int) MySuperScaler.screen_width / 30 ;
+		int size = (int) MySuperScaler.screen_width / 24 ;
 		holder.txv_pageNb.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
 		
 		int size2 = (int) MySuperScaler.screen_width / 24 ;
