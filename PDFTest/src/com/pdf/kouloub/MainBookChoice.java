@@ -26,6 +26,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
 import android.widget.ScrollView;
 
 import com.example.pdftest.R;
@@ -40,7 +41,7 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 
 	private Button info ;
 	private ImageView book_1, book_2, book_3, book_4 ,book_5 ,book_6 ,
-						book_7,book_8 , book_9 , book_10 ,book_11, book_12 , new_back, img_cover, img_cover_small;
+						book_7,book_8 , book_9 , book_10 ,book_11, book_12 , new_back, img_cover;
 	
 //	private RelativeLayout stage1, stage2, stage3, stage4, stage5, stage6;
 
@@ -59,10 +60,9 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 	
 	private Handler mHandler = new Handler() {
 		public void handleMessage(Message msg) {
-			img_cover_small.setVisibility(View.GONE);
+			LayoutParams params = new RelativeLayout.LayoutParams(720, 1280);
+			img_cover.setLayoutParams(params);
 			img_cover.startAnimation(animationSet3);
-			img_cover.setVisibility(View.VISIBLE);
-			img_cover.bringToFront();
 		};
 	};
 	
@@ -77,7 +77,7 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 		zoomin = AnimationUtils.loadAnimation(this, R.anim.zoom_in);
 		alpha = AnimationUtils.loadAnimation(this, R.anim.alpha);
 		alphaToHide = AnimationUtils.loadAnimation(this, R.anim.alphatohide);
-
+		
 		animationSet3 = new AnimationSet(true);
 		animationSet3.addAnimation(zoomin);
 		animationSet3.addAnimation(alpha);
@@ -105,7 +105,6 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 		principal_layout = (RelativeLayout) findViewById(R.id.principal_layout);
 		new_back = (ImageView) findViewById(R.id.new_back);
 		img_cover = (ImageView) findViewById(R.id.img_cover);
-		img_cover_small = (ImageView) findViewById(R.id.img_cover_small);
 		scrollView = (ScrollView) findViewById(R.id.scrollView);
 		
 		
@@ -214,9 +213,9 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 		
 		
 	}
-	public static void setMargins (View v, int myNewX, int myNewY) {
+	public static void setMargins (View v, View srcView, int myNewX, int myNewY) {
 		RelativeLayout.LayoutParams absParams = 
-				(RelativeLayout.LayoutParams)v.getLayoutParams();
+				(RelativeLayout.LayoutParams)srcView.getLayoutParams();
 		absParams.leftMargin = 	myNewX ;
 		absParams.topMargin = myNewY ;
 		v.setLayoutParams(absParams);
@@ -267,8 +266,10 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 		book_id = books.get(selectedPosition).getId();
 		
 		img_cover.setBackgroundDrawable(v.getBackground());
-		img_cover_small.setBackgroundDrawable(v.getBackground());
-		img_cover_small.bringToFront();
+		img_cover.bringToFront();
+		img_cover.setVisibility(View.VISIBLE);
+//		img_cover_small.setBackgroundDrawable(v.getBackground());
+//		img_cover_small.bringToFront();
 		
 		int[] locations = new int[2];
 		v.getLocationOnScreen(locations);
@@ -276,10 +277,10 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 		int y = locations[1];
 		
 		Log.i("", "locations:  X " + x + " ... Y " + y);
-		setMargins(img_cover_small, x, y);
+		setMargins(img_cover, v, x, y);
 		
 		animCounter = 0;
-		moveViewToScreenCenter(img_cover_small);
+		moveViewToScreenCenter(img_cover);
 
 	}
 	
@@ -349,7 +350,7 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 				animationSet2.addAnimation(translate);
 				
 				view.startAnimation(animationSet2);
-				mHandler.sendMessageDelayed(new Message(), 300);
+				mHandler.sendMessageDelayed(new Message(), 1400);
 			}
 		});
 		

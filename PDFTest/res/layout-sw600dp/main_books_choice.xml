@@ -6,6 +6,7 @@
     android:background="@drawable/mainscreen_bg" >
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="1440px"
         android:layout_height="wrap_content" >
 
@@ -166,8 +167,9 @@
     <ImageView
         android:id="@+id/img_cover"
         android:layout_width="1440px"
-        android:layout_height="2560px" />
-
+        android:layout_height="2560px" 
+        android:visibility="gone"/>
+    
     <Button
         android:id="@+id/info"
         android:layout_width="120px"
