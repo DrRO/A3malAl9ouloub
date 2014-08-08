@@ -1,0 +1,8 @@
+<RelativeLayout
+       xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="800px"
+    android:layout_height="1422px"
+        android:layout_gravity="center" 
+        android:background="@drawable/splash">
+
+</RelativeLayout>
