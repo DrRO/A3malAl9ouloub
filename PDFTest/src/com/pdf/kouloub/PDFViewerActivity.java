@@ -339,9 +339,10 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 	@Override
 	public void onBackPressed() {
 
-		if(fragment == null)
+		if(fragment == null){
 			startActivity(new Intent( PDFViewerActivity.this, MainBookChoice.class));
-		else{
+			overridePendingTransition(R.anim.right_in, R.anim.right_out);
+		}else{
 			toggleEnabledViews(true);
 			fragment = null;
 		}

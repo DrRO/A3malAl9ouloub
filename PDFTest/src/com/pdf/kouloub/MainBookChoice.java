@@ -60,7 +60,7 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 	
 	private Handler mHandler = new Handler() {
 		public void handleMessage(Message msg) {
-			LayoutParams params = new RelativeLayout.LayoutParams(720, 1280);
+			LayoutParams params = new RelativeLayout.LayoutParams(screen_width, screen_height);
 			img_cover.setLayoutParams(params);
 			img_cover.startAnimation(animationSet3);
 		};
@@ -230,12 +230,12 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 			i.putExtra("book_id", book_id);
 			
 			startActivity(i);
+			overridePendingTransition(R.anim.left_in, R.anim.left_out);
 			finish();
 
 			super.handleMessage(msg);
 		}
 	};
-	private TranslateAnimation translate2;
 
 	@Override
 	public void onClick(final View v) {
@@ -360,6 +360,14 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 		
 	    view.startAnimation(animationSet);
 	    
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+		
+		img_cover.clearAnimation();
+		img_cover.setVisibility(View.GONE);
 	}
 	
 	@Override
