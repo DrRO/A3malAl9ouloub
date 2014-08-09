@@ -29,6 +29,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
@@ -41,6 +42,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pdftest.R;
@@ -74,6 +76,7 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 	private LinearLayout top_layout;
 	private int pdf_pages_number ;
 	private SeekBar bar ;
+	private TextView txt_pages ;
 
 	private String filePath;
 	private Uri resultUri;
@@ -152,7 +155,13 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 		top_layout = (LinearLayout) findViewById(R.id.top_layout);
 		bottom_layout = (RelativeLayout) findViewById(R.id.bottom_layout);
 		frame_layout = (FrameLayout) findViewById(R.id.fragment_view);
+		txt_pages = (TextView) findViewById(R.id.pages);
 
+		int size = (int) screen_width / 23 ;
+		txt_pages.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
+		txt_pages.bringToFront();
+		
+		
 		preview1 = (ImageView) findViewById(R.id.preview1);
 		preview2 = (ImageView) findViewById(R.id.preview2);
 		preview3 = (ImageView) findViewById(R.id.preview3);
@@ -292,7 +301,9 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 		if (inversed_page > 0 && inversed_page < pdf_pages_number) enable64 = true ;
 		
 		if(!seeking && inversed_page > 0 && enable64){
-			Toast.makeText(PDFViewerActivity.this, " صفحة "+inversed_page+" من "+pdf_pages_number, Toast.LENGTH_SHORT).show();
+		//	Toast.makeText(PDFViewerActivity.this, " صفحة "+inversed_page+" من "+pdf_pages_number, Toast.LENGTH_SHORT).show();
+			txt_pages.setText(" صفحة "+inversed_page+" من "+pdf_pages_number);
+		
 		}
 		
 		if(!fromSeekBar)
@@ -401,11 +412,13 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 	@Override
 	public void onProgressChanged(SeekBar arg0, int progress, boolean arg2) {
 		fromSeekBar = true;
+		txt_pages.setText(" صفحة "+inversed_page+" من "+pdf_pages_number);
 	}
 	@Override
 	public void onStartTrackingTouch(SeekBar arg0) {
 		seeking = true ;
 		enableJump = true;
+		txt_pages.setText(" صفحة "+inversed_page+" من "+pdf_pages_number);
 	}
 	@Override
 	public void onStopTrackingTouch(SeekBar arg0) {
@@ -415,7 +428,9 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 			pdf.jumpTo(arg0.getProgress());
 			enableJump = false;
 		}
-		Toast.makeText(PDFViewerActivity.this, " صفحة "+inversed_page+" من "+pdf_pages_number, Toast.LENGTH_SHORT).show();
+	//	Toast.makeText(PDFViewerActivity.this, " صفحة "+inversed_page+" من "+pdf_pages_number, Toast.LENGTH_SHORT).show();
+		txt_pages.setText(" صفحة "+inversed_page+" من "+pdf_pages_number);
+		
 		seeking = false ;
 	}
 
