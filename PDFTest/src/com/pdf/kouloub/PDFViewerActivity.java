@@ -412,13 +412,14 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 	@Override
 	public void onProgressChanged(SeekBar arg0, int progress, boolean arg2) {
 		fromSeekBar = true;
-		txt_pages.setText(" صفحة "+inversed_page+" من "+pdf_pages_number);
+		int inversedProgress = pdf_pages_number - progress + 1 ;
+		txt_pages.setText(" صفحة "+inversedProgress+" من "+pdf_pages_number);
 	}
 	@Override
 	public void onStartTrackingTouch(SeekBar arg0) {
 		seeking = true ;
 		enableJump = true;
-		txt_pages.setText(" صفحة "+inversed_page+" من "+pdf_pages_number);
+//		txt_pages.setText(" صفحة "+inversed_page+" من "+pdf_pages_number);
 	}
 	@Override
 	public void onStopTrackingTouch(SeekBar arg0) {
@@ -429,7 +430,7 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 			enableJump = false;
 		}
 	//	Toast.makeText(PDFViewerActivity.this, " صفحة "+inversed_page+" من "+pdf_pages_number, Toast.LENGTH_SHORT).show();
-		txt_pages.setText(" صفحة "+inversed_page+" من "+pdf_pages_number);
+//		txt_pages.setText(" صفحة "+inversed_page+" من "+pdf_pages_number);
 		
 		seeking = false ;
 	}
