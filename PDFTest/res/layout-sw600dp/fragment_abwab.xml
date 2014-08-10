@@ -24,7 +24,7 @@
 
     <ListView
         android:id="@+id/android:list"
-        android:layout_width="680px"
+        android:layout_width="800px"
         android:layout_height="1422px"
         android:layout_below="@+id/img_title"
         android:layout_marginTop="30px"

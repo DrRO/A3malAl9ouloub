@@ -15,7 +15,7 @@
     <LinearLayout
         android:id="@+id/top_layout"
         android:layout_width="800px"
-        android:layout_height="100px"
+        android:layout_height="160px"
         android:background="@drawable/gradient_shape"
         android:orientation="horizontal" >
 
@@ -94,105 +94,149 @@
             android:thumb="@android:color/transparent" >
         </SeekBar>
 
+        
+        
         <ImageView
-            android:id="@+id/preview10"
-            android:layout_width="60px"
-            android:layout_height="85px"
+            android:id="@+id/preview14"
+            android:layout_width="45px"
+            android:layout_height="63px"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="40px"
-            android:layout_marginLeft="35px"
+            android:layout_marginLeft="30px"
+            android:background="@android:color/darker_gray"
+            android:padding="1dp" />
+
+        <ImageView
+            android:id="@+id/preview13"
+            android:layout_width="45px"
+            android:layout_height="63px"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="40px"
+            android:layout_marginLeft="83px"
+            android:background="@android:color/darker_gray"
+            android:padding="1dp" />
+
+        <ImageView
+            android:id="@+id/preview12"
+           android:layout_width="45px"
+            android:layout_height="63px"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="40px"
+            android:layout_marginLeft="136px"
+            android:background="@android:color/darker_gray"
+            android:padding="1dp" />
+
+        <ImageView
+            android:id="@+id/preview11"
+            android:layout_width="45px"
+            android:layout_height="63px"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="40px"
+            android:layout_marginLeft="189px"
+            android:background="@android:color/darker_gray"
+            android:padding="1dp" />
+
+        <ImageView
+            android:id="@+id/preview10"
+            android:layout_width="45px"
+            android:layout_height="63px"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="40px"
+            android:layout_marginLeft="242px"
             android:background="@android:color/darker_gray"
             android:padding="1dp" />
 
         <ImageView
             android:id="@+id/preview9"
-            android:layout_width="60px"
-            android:layout_height="85px"
+            android:layout_width="45px"
+            android:layout_height="63px"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="40px"
-            android:layout_marginLeft="101px"
+            android:layout_marginLeft="295px"
             android:background="@android:color/darker_gray"
             android:padding="1dp" />
 
         <ImageView
             android:id="@+id/preview8"
-            android:layout_width="60px"
-            android:layout_height="85px"
+            android:layout_width="45px"
+            android:layout_height="63px"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="40px"
-            android:layout_marginLeft="167px"
+            android:layout_marginLeft="348px"
             android:background="@android:color/darker_gray"
             android:padding="1dp" />
 
         <ImageView
             android:id="@+id/preview7"
-            android:layout_width="60px"
-            android:layout_height="85px"
+            android:layout_width="45px"
+            android:layout_height="63px"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="40px"
-            android:layout_marginLeft="233px"
+            android:layout_marginLeft="401px"
             android:background="@android:color/darker_gray"
             android:padding="1dp" />
 
         <ImageView
             android:id="@+id/preview6"
-            android:layout_width="60px"
-            android:layout_height="85px"
+            android:layout_width="45px"
+            android:layout_height="63px"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="40px"
-            android:layout_marginLeft="299px"
+            android:layout_marginLeft="454px"
             android:background="@android:color/darker_gray"
             android:padding="1dp" />
 
         <ImageView
             android:id="@+id/preview5"
-            android:layout_width="60px"
-            android:layout_height="85px"
+            android:layout_width="45px"
+            android:layout_height="63px"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="40px"
-            android:layout_marginLeft="365px"
+            android:layout_marginLeft="507px"
             android:background="@android:color/darker_gray"
             android:padding="1dp" />
-
+        
         <ImageView
             android:id="@+id/preview4"
-            android:layout_width="60px"
-            android:layout_height="85px"
+            android:layout_width="45px"
+            android:layout_height="63px"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="40px"
-            android:layout_marginLeft="431px"
+            android:layout_marginLeft="560px"
             android:background="@android:color/darker_gray"
             android:padding="1dp" />
-
+        
         <ImageView
             android:id="@+id/preview3"
-            android:layout_width="60px"
-            android:layout_height="85px"
+            android:layout_width="45px"
+            android:layout_height="63px"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="40px"
-            android:layout_marginLeft="497px"
+            android:layout_marginLeft="613px"
             android:background="@android:color/darker_gray"
             android:padding="1dp" />
-
+        
         <ImageView
             android:id="@+id/preview2"
-            android:layout_width="60px"
-            android:layout_height="85px"
+            android:layout_width="45px"
+            android:layout_height="63px"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="40px"
-            android:layout_marginLeft="563px"
+            android:layout_marginLeft="667px"
             android:background="@android:color/darker_gray"
             android:padding="1dp" />
-
+        
         <ImageView
             android:id="@+id/preview1"
-            android:layout_width="60px"
-            android:layout_height="85px"
+            android:layout_width="45px"
+            android:layout_height="63px"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="40px"
-            android:layout_marginLeft="629px"
+            android:layout_marginLeft="720px"
             android:background="@android:color/darker_gray"
             android:padding="1dp" />
+        
+        
     </RelativeLayout>
 
     <FrameLayout

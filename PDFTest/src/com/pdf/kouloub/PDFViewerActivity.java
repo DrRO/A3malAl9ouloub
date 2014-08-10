@@ -67,7 +67,7 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 	private int book_id;
 
 	private ImageView preview1, preview2, preview3, preview4, preview5, 
-	preview6, preview7, preview8, preview9, preview10 ;
+	preview6, preview7, preview8, preview9, preview10, preview11, preview12, preview13, preview14 ;
 
 	private Button back, add_bookmark, bookmark_list, crop, list_summary ;
 	private RelativeLayout  bottom_layout ;
@@ -173,6 +173,13 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 		preview9 = (ImageView) findViewById(R.id.preview9);
 		preview10 = (ImageView) findViewById(R.id.preview10);
 
+		if (isTablet(PDFViewerActivity.this)){
+			preview11 = (ImageView) findViewById(R.id.preview11);
+			preview12 = (ImageView) findViewById(R.id.preview12);
+			preview13 = (ImageView) findViewById(R.id.preview13);
+			preview14 = (ImageView) findViewById(R.id.preview14);
+		}
+		
 
 		back = (Button) findViewById(R.id.pdf_back);
 		add_bookmark = (Button) findViewById(R.id.pdf_bookmark);
@@ -202,12 +209,25 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 		Bitmap bm4 = AKManager.originalResolution(this, "previews/"+book_to_read+"/4.png", preview1.getWidth(), preview4.getHeight());
 		Bitmap bm5 = AKManager.originalResolution(this, "previews/"+book_to_read+"/5.png", preview1.getWidth(), preview5.getHeight());
 		Bitmap bm6 = AKManager.originalResolution(this, "previews/"+book_to_read+"/6.png", preview1.getWidth(), preview6.getHeight());
+		
 		Bitmap bm7 = AKManager.originalResolution(this, "previews/"+book_to_read+"/7.png", preview1.getWidth(), preview7.getHeight());
 		Bitmap bm8 = AKManager.originalResolution(this, "previews/"+book_to_read+"/8.png", preview1.getWidth(), preview8.getHeight());
-		Bitmap bm9 = AKManager.originalResolution(this, "previews/"+book_to_read+"/9.png", preview1.getWidth(), preview9.getHeight());
-		Bitmap bm10 = AKManager.originalResolution(this, "previews/"+book_to_read+"/10.png", preview1.getWidth(), preview10.getHeight());
+		Bitmap bm9 = AKManager.originalResolution(this, "previews/"+book_to_read+"/4.png", preview1.getWidth(), preview4.getHeight());
+		Bitmap bm10 = AKManager.originalResolution(this, "previews/"+book_to_read+"/5.png", preview1.getWidth(), preview5.getHeight());
 
-
+		if (isTablet(PDFViewerActivity.this)){
+			Bitmap bm11 = AKManager.originalResolution(this, "previews/"+book_to_read+"/7.png", preview7.getWidth(), preview7.getHeight());
+			Bitmap bm12 = AKManager.originalResolution(this, "previews/"+book_to_read+"/8.png", preview8.getWidth(), preview8.getHeight());
+			Bitmap bm13 = AKManager.originalResolution(this, "previews/"+book_to_read+"/9.png", preview9.getWidth(), preview9.getHeight());
+			Bitmap bm14 = AKManager.originalResolution(this, "previews/"+book_to_read+"/10.png", preview10.getWidth(), preview10.getHeight());
+		
+			preview11.setImageDrawable(new BitmapDrawable(getResources(), bm11));
+			preview12.setImageDrawable(new BitmapDrawable(getResources(), bm12));
+			preview13.setImageDrawable(new BitmapDrawable(getResources(), bm13));
+			preview14.setImageDrawable(new BitmapDrawable(getResources(), bm14));
+		
+		}
+		
 
 
 		preview1.setImageDrawable(new BitmapDrawable(getResources(), bm1));
