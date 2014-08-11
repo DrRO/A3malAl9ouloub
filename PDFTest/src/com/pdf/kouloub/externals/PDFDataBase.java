@@ -82,11 +82,12 @@ public class PDFDataBase extends SQLiteAssetHelper {
 
 		String sqlTable = TABLE_BOOKMARK;
 		String whereClause = COL_BOOK_ID +  " = ?";
+		String orderBy = COL_PAGE_NUMBER;
 		
 		String[] whereArgs = {String.valueOf(bookId)};
 		
 		qb.setTables(sqlTable);
-		Cursor c = qb.query(db, null, whereClause, whereArgs, null, null, null);
+		Cursor c = qb.query(db, null, whereClause, whereArgs, null, null, orderBy);
 
 		ArrayList<BookMark> bookMarks = new ArrayList<BookMark>();
 		if(c.moveToFirst())
