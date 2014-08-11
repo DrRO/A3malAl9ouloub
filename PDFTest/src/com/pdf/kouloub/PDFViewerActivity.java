@@ -43,7 +43,6 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.pdftest.R;
 import com.joanzapata.pdfview.PDFView;
@@ -117,6 +116,8 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 				top_layout.setVisibility(View.VISIBLE);
 				bottom_layout.setVisibility(View.VISIBLE);
 				
+				toggleViewEnable(true);
+				
 			}
 			
 			@Override
@@ -149,6 +150,8 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 			public void onAnimationEnd(Animation animation) {
 				top_layout.setVisibility(View.GONE);
 				bottom_layout.setVisibility(View.GONE);
+				
+				toggleViewEnable(false);
 			}
 		});
 
@@ -621,6 +624,17 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 		else
 			showTopBottom();
 	}
+	
+	private void toggleViewEnable(boolean enabled){
+		back.setEnabled(enabled);
+		add_bookmark.setEnabled(enabled);
+		bookmark_list.setEnabled(enabled);
+		crop.setEnabled(enabled);
+		list_summary.setEnabled(enabled);
+		
+		bar.setEnabled(enabled);
+	}
+
 
 
 	@Override
