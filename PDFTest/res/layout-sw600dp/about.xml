@@ -1,6 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="1422px"
-    android:layout_width="800px"
+    android:layout_width="880px"
     android:layout_gravity="center"
     android:background="@drawable/about_bg" >
 
@@ -10,8 +10,8 @@
         android:layout_height="129px"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="80px"
-        android:layout_marginRight="25px"
+        android:layout_marginBottom="100px"
+        android:layout_marginRight="80px"
         android:background="@drawable/share_selector" />
 
         <Button
@@ -20,8 +20,8 @@
         android:layout_height="129px"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="80px"
-        android:layout_marginLeft="25px"
+        android:layout_marginBottom="100px"
+        android:layout_marginLeft="80px"
         android:background="@drawable/more_apps_selector" />
     
     

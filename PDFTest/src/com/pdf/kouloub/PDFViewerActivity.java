@@ -160,7 +160,7 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 		frame_layout = (FrameLayout) findViewById(R.id.fragment_view);
 		txt_pages = (TextView) findViewById(R.id.pages);
 
-		int size = (int) screen_width / 23 ;
+		int size = (int) screen_width / 25 ;
 		txt_pages.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
 		txt_pages.bringToFront();
 		

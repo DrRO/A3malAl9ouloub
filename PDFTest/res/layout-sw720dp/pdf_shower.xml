@@ -1,20 +1,20 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/principal_layout"
-    android:layout_width="800px"
+    android:layout_width="900px"
     android:layout_height="1422px"
     android:layout_gravity="center"
     android:background="#fff" >
 
     <com.joanzapata.pdfview.PDFView
         android:id="@+id/pdfView"
-        android:layout_width="800px"
+        android:layout_width="900px"
         android:layout_height="1422px"
         android:layout_centerInParent="true"
         android:background="#fff" />
 
     <LinearLayout
         android:id="@+id/top_layout"
-        android:layout_width="800px"
+        android:layout_width="900px"
         android:layout_height="160px"
         android:background="@drawable/gradient_shape"
         android:orientation="horizontal" >
@@ -24,7 +24,7 @@
             android:layout_width="71px"
             android:layout_height="71px"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="80px"
+            android:layout_marginLeft="130px"
             android:background="@drawable/pdf_back" />
 
         <Button
@@ -62,31 +62,34 @@
 
     <RelativeLayout
         android:id="@+id/bottom_layout"
-        android:layout_width="800px"
+        android:layout_width="900px"
         android:layout_height="320px"
         android:layout_alignParentBottom="true"
         android:background="@drawable/bottom_bar_bg"
         android:orientation="horizontal" >
 
-         <TextView
+        <TextView
             android:id="@+id/pages"
             android:layout_width="280px"
             android:layout_height="80px"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="170px" 
             android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:textColor="#ffffff"
+            android:layout_marginBottom="170px"
             android:background="#99000000"
-            android:text="xxxxxx"/>
-        
+            android:gravity="center"
+            android:text="xxxxxx"
+            android:textColor="#ffffff" />
+
         <SeekBar
             android:id="@+id/seekBar1"
-            android:layout_width="720px"
+            android:layout_width="900px"
             android:layout_height="120px"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="15px"
+            android:layout_marginBottom="20px"
+            android:paddingLeft="30px"
+            android:paddingRight="40px"
+            android:thumbOffset="0px"
             android:layout_marginLeft="30px"
             android:layout_marginRight="30px"
             android:background="@android:color/transparent"
@@ -94,154 +97,130 @@
             android:thumb="@android:color/transparent" >
         </SeekBar>
 
-        
-        
-        <ImageView
-            android:id="@+id/preview14"
-            android:layout_width="45px"
-            android:layout_height="63px"
+        <RelativeLayout
+            android:layout_width="900px"
+            android:layout_height="80px"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="40px"
-            android:layout_marginLeft="30px"
-            android:background="@android:color/darker_gray"
-            android:padding="1dp" />
+            android:layout_marginBottom="30px"
+            android:layout_marginLeft="50px" >
 
-        <ImageView
-            android:id="@+id/preview13"
-            android:layout_width="45px"
-            android:layout_height="63px"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="40px"
-            android:layout_marginLeft="83px"
-            android:background="@android:color/darker_gray"
-            android:padding="1dp" />
+            <ImageView
+                android:id="@+id/preview14"
+                android:layout_width="45px"
+                android:layout_height="63px"
+                android:background="@android:color/darker_gray"
+                android:layout_marginLeft="30px"
+                android:padding="1dp" />
 
-        <ImageView
-            android:id="@+id/preview12"
-           android:layout_width="45px"
-            android:layout_height="63px"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="40px"
-            android:layout_marginLeft="136px"
-            android:background="@android:color/darker_gray"
-            android:padding="1dp" />
+            <ImageView
+                android:id="@+id/preview13"
+                android:layout_width="45px"
+                android:layout_height="63px"
+                android:layout_marginLeft="83px"
+                android:background="@android:color/darker_gray"
+                android:padding="1dp" />
 
-        <ImageView
-            android:id="@+id/preview11"
-            android:layout_width="45px"
-            android:layout_height="63px"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="40px"
-            android:layout_marginLeft="189px"
-            android:background="@android:color/darker_gray"
-            android:padding="1dp" />
+            <ImageView
+                android:id="@+id/preview12"
+                android:layout_width="45px"
+                android:layout_height="63px"
+                android:layout_marginLeft="136px"
+                android:background="@android:color/darker_gray"
+                android:padding="1dp" />
 
-        <ImageView
-            android:id="@+id/preview10"
-            android:layout_width="45px"
-            android:layout_height="63px"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="40px"
-            android:layout_marginLeft="242px"
-            android:background="@android:color/darker_gray"
-            android:padding="1dp" />
+            <ImageView
+                android:id="@+id/preview11"
+                android:layout_width="45px"
+                android:layout_height="63px"
+                android:layout_marginLeft="189px"
+                android:background="@android:color/darker_gray"
+                android:padding="1dp" />
 
-        <ImageView
-            android:id="@+id/preview9"
-            android:layout_width="45px"
-            android:layout_height="63px"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="40px"
-            android:layout_marginLeft="295px"
-            android:background="@android:color/darker_gray"
-            android:padding="1dp" />
+            <ImageView
+                android:id="@+id/preview10"
+                android:layout_width="45px"
+                android:layout_height="63px"
+                android:layout_marginLeft="242px"
+                android:background="@android:color/darker_gray"
+                android:padding="1dp" />
 
-        <ImageView
-            android:id="@+id/preview8"
-            android:layout_width="45px"
-            android:layout_height="63px"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="40px"
-            android:layout_marginLeft="348px"
-            android:background="@android:color/darker_gray"
-            android:padding="1dp" />
+            <ImageView
+                android:id="@+id/preview9"
+                android:layout_width="45px"
+                android:layout_height="63px"
+                android:layout_marginLeft="295px"
+                android:background="@android:color/darker_gray"
+                android:padding="1dp" />
 
-        <ImageView
-            android:id="@+id/preview7"
-            android:layout_width="45px"
-            android:layout_height="63px"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="40px"
-            android:layout_marginLeft="401px"
-            android:background="@android:color/darker_gray"
-            android:padding="1dp" />
+            <ImageView
+                android:id="@+id/preview8"
+                android:layout_width="45px"
+                android:layout_height="63px"
+                android:layout_marginLeft="348px"
+                android:background="@android:color/darker_gray"
+                android:padding="1dp" />
 
-        <ImageView
-            android:id="@+id/preview6"
-            android:layout_width="45px"
-            android:layout_height="63px"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="40px"
-            android:layout_marginLeft="454px"
-            android:background="@android:color/darker_gray"
-            android:padding="1dp" />
+            <ImageView
+                android:id="@+id/preview7"
+                android:layout_width="45px"
+                android:layout_height="63px"
+                android:layout_marginLeft="401px"
+                android:background="@android:color/darker_gray"
+                android:padding="1dp" />
 
-        <ImageView
-            android:id="@+id/preview5"
-            android:layout_width="45px"
-            android:layout_height="63px"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="40px"
-            android:layout_marginLeft="507px"
-            android:background="@android:color/darker_gray"
-            android:padding="1dp" />
-        
-        <ImageView
-            android:id="@+id/preview4"
-            android:layout_width="45px"
-            android:layout_height="63px"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="40px"
-            android:layout_marginLeft="560px"
-            android:background="@android:color/darker_gray"
-            android:padding="1dp" />
-        
-        <ImageView
-            android:id="@+id/preview3"
-            android:layout_width="45px"
-            android:layout_height="63px"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="40px"
-            android:layout_marginLeft="613px"
-            android:background="@android:color/darker_gray"
-            android:padding="1dp" />
-        
-        <ImageView
-            android:id="@+id/preview2"
-            android:layout_width="45px"
-            android:layout_height="63px"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="40px"
-            android:layout_marginLeft="667px"
-            android:background="@android:color/darker_gray"
-            android:padding="1dp" />
-        
-        <ImageView
-            android:id="@+id/preview1"
-            android:layout_width="45px"
-            android:layout_height="63px"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="40px"
-            android:layout_marginLeft="720px"
-            android:background="@android:color/darker_gray"
-            android:padding="1dp" />
-        
-        
+            <ImageView
+                android:id="@+id/preview6"
+                android:layout_width="45px"
+                android:layout_height="63px"
+                android:layout_marginLeft="454px"
+                android:background="@android:color/darker_gray"
+                android:padding="1dp" />
+
+            <ImageView
+                android:id="@+id/preview5"
+                android:layout_width="45px"
+                android:layout_height="63px"
+                android:layout_marginLeft="507px"
+                android:background="@android:color/darker_gray"
+                android:padding="1dp" />
+
+            <ImageView
+                android:id="@+id/preview4"
+                android:layout_width="45px"
+                android:layout_height="63px"
+                android:layout_marginLeft="560px"
+                android:background="@android:color/darker_gray"
+                android:padding="1dp" />
+
+            <ImageView
+                android:id="@+id/preview3"
+                android:layout_width="45px"
+                android:layout_height="63px"
+                android:layout_marginLeft="613px"
+                android:background="@android:color/darker_gray"
+                android:padding="1dp" />
+
+            <ImageView
+                android:id="@+id/preview2"
+                android:layout_width="45px"
+                android:layout_height="63px"
+                android:layout_marginLeft="667px"
+                android:background="@android:color/darker_gray"
+                android:padding="1dp" />
+
+            <ImageView
+                android:id="@+id/preview1"
+                android:layout_width="45px"
+                android:layout_height="63px"
+                android:layout_marginLeft="720px"
+                android:background="@android:color/darker_gray"
+                android:padding="1dp" />
+        </RelativeLayout>
     </RelativeLayout>
 
     <FrameLayout
         android:id="@+id/fragment_view"
-        android:layout_width="800px"
+        android:layout_width="900px"
         android:layout_height="1422px" >
     </FrameLayout>
 
