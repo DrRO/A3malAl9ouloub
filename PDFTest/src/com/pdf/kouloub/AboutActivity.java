@@ -48,75 +48,15 @@ public class AboutActivity extends MySuperScaler{
 				
 			}
 		});
-//		more_apps.setOnTouchListener(new OnTouchListener() {
-//
-//			@Override
-//			public boolean onTouch(View v, MotionEvent event) {
-//				switch (event.getAction()) {
-//				case MotionEvent.ACTION_DOWN: {
-//					Button view = (Button) v;
-//					view.getBackground().setColorFilter(0x77000000, PorterDuff.Mode.SRC_ATOP);
-//					v.invalidate();
-//					break;
-//				}
-//				case MotionEvent.ACTION_UP: {
-//					// Your action here on button click
-//
-//					startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://alnour.ws/zadapp/")));  
-//
-//				}
-//				case MotionEvent.ACTION_CANCEL: {
-//					Button view = (Button) v;
-//					view.getBackground().clearColorFilter();
-//					view.invalidate();
-//					break;
-//				}
-//				}
-//				return true;
-//			}
-//		});
-//
-//
-//
-//		share.setOnTouchListener(new OnTouchListener() {
-//
-//			@Override
-//			public boolean onTouch(View v, MotionEvent event) {
-//				switch (event.getAction()) {
-//				case MotionEvent.ACTION_DOWN: {
-//					Button view = (Button) v;
-//					view.getBackground().setColorFilter(0x77000000, PorterDuff.Mode.SRC_ATOP);
-//					v.invalidate();
-//					break;
-//				}
-//				case MotionEvent.ACTION_UP: {
-//					// Your action here on button click
-//					String shareBody = " *** TO DEFINE ***";
-//					Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-//					sharingIntent.setType("text/plain");
-//					sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.app_name));
-//					sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-//					startActivity(Intent.createChooser(sharingIntent, getString(R.string.share)));
-//
-//
-//				}
-//				case MotionEvent.ACTION_CANCEL: {
-//					Button view = (Button) v;
-//					view.getBackground().clearColorFilter();
-//					view.invalidate();
-//					break;
-//				}
-//				}
-//				return true;
-//			}
-//		});
 
 	}
 
 
 	@Override
 	public void onBackPressed() {
+		startActivity(new Intent (AboutActivity.this,MainBookChoice.class));
+		overridePendingTransition(R.anim.right_in, R.anim.right_out);
 		super.onBackPressed();
-		finish();
+		
 	}
 }

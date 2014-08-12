@@ -211,6 +211,8 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 			public void onClick(View arg0) {
 
 				startActivity(new Intent(MainBookChoice.this, AboutActivity.class));
+				overridePendingTransition(R.anim.left_in, R.anim.left_out);
+				finish();
 			}
 		});
 		

@@ -136,13 +136,11 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 			
 			@Override
 			public void onAnimationStart(Animation animation) {
-				// TODO Auto-generated method stub
 				
 			}
 			
 			@Override
 			public void onAnimationRepeat(Animation animation) {
-				// TODO Auto-generated method stub
 				
 			}
 			

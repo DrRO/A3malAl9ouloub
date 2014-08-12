@@ -75,7 +75,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="170px"
-            android:background="#99000000"
+            android:background="@drawable/rounded_background"
             android:gravity="center"
             android:text="xxxxxx"
             android:textColor="#ffffff" />
