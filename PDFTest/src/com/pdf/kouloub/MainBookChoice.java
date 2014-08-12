@@ -58,6 +58,8 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 	private Animation zoomin, alpha, alphaToHide;
 	private AKManager akManager;
 	
+	private static boolean isTablet;
+	
 	private Handler mHandler = new Handler() {
 		public void handleMessage(Message msg) {
 			LayoutParams params = new RelativeLayout.LayoutParams(screen_width, screen_height);
@@ -70,6 +72,8 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_books_choice);
+		
+		isTablet = (boolean) getResources().getBoolean(R.bool.isTablet);
 		
 		akManager = AKManager.getInstance(this);
 		books = akManager.getBooks();
@@ -216,8 +220,13 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 	public static void setMargins (View v, View srcView, int myNewX, int myNewY) {
 		RelativeLayout.LayoutParams absParams = 
 				(RelativeLayout.LayoutParams)srcView.getLayoutParams();
-		absParams.leftMargin = 	myNewX ;
-		absParams.topMargin = myNewY ;
+		absParams.leftMargin = myNewX;
+		
+		if(!isTablet)
+			absParams.topMargin = myNewY;
+		else
+			absParams.bottomMargin = screen_height - myNewY;
+		
 		v.setLayoutParams(absParams);
 	}
 
@@ -236,7 +245,7 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 			super.handleMessage(msg);
 		}
 	};
-
+	
 	@Override
 	public void onClick(final View v) {
 		
@@ -265,11 +274,10 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 		pdfFile = books.get(selectedPosition).getPdfFile();
 		book_id = books.get(selectedPosition).getId();
 		
+		v.setVisibility(View.INVISIBLE);
 		img_cover.setBackgroundDrawable(v.getBackground());
 		img_cover.bringToFront();
 		img_cover.setVisibility(View.VISIBLE);
-//		img_cover_small.setBackgroundDrawable(v.getBackground());
-//		img_cover_small.bringToFront();
 		
 		int[] locations = new int[2];
 		v.getLocationOnScreen(locations);
