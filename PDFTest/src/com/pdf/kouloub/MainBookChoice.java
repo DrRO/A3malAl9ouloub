@@ -43,8 +43,6 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 	private ImageView book_1, book_2, book_3, book_4 ,book_5 ,book_6 ,
 						book_7,book_8 , book_9 , book_10 ,book_11, book_12 , new_back, img_cover;
 	
-//	private RelativeLayout stage1, stage2, stage3, stage4, stage5, stage6;
-
 	private ArrayList<Book> books;
 	
 	private RelativeLayout principal_layout ;
@@ -59,6 +57,8 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 	private AKManager akManager;
 	
 	private static boolean isTablet;
+	private boolean isFinished = false;
+	private boolean isClickEnabled = true;
 	
 	private Handler mHandler = new Handler() {
 		public void handleMessage(Message msg) {
@@ -99,10 +99,11 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 			@Override
 			public void onAnimationEnd(Animation arg0) {
 
-				Message msg =  Message.obtain();
-				msg.what = 1;
-				splashHandler.sendMessageDelayed(msg, 2000);
-
+				if(!isFinished){
+					Message msg =  Message.obtain();
+					msg.what = 1;
+					splashHandler.sendMessageDelayed(msg, 2000);
+				}
 			}
 		});
 
@@ -227,7 +228,7 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 		if(!isTablet)
 			absParams.topMargin = myNewY;
 		else
-			absParams.bottomMargin = screen_height - myNewY;
+			absParams.bottomMargin = (int)(screen_height - myNewY + srcView.getHeight() - 587*scale);
 		
 		v.setLayoutParams(absParams);
 	}
@@ -250,6 +251,9 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 	
 	@Override
 	public void onClick(final View v) {
+		
+		if(!isClickEnabled)
+			return;
 		
 		Rect scrollBounds = new Rect();
 		scrollView.getHitRect(scrollBounds);
@@ -286,11 +290,13 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 		int x = locations[0];
 		int y = locations[1];
 		
-		Log.i("", "locations:  X " + x + " ... Y " + y);
+		Log.i("", "locations:  X " + x + " ... Y " + y );
 		setMargins(img_cover, v, x, y);
 		
 		animCounter = 0;
 		moveViewToScreenCenter(img_cover);
+		
+		isClickEnabled = false;
 
 	}
 	
@@ -401,5 +407,13 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 		
 		img_cover = null;
 		new_back = null;
+	}
+	
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		
+		isFinished = true;
+		
 	}
 }
