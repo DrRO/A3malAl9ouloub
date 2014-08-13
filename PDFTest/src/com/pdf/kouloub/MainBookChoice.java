@@ -41,7 +41,7 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 
 	private Button info ;
 	private ImageView book_1, book_2, book_3, book_4 ,book_5 ,book_6 ,
-						book_7,book_8 , book_9 , book_10 ,book_11, book_12 , new_back, img_cover;
+						book_7,book_8 , book_9 , book_10 ,book_11, book_12 , img_cover;
 	
 	private ArrayList<Book> books;
 	
@@ -56,7 +56,6 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 	private Animation zoomin, alpha, alphaToHide;
 	private AKManager akManager;
 	
-	private static boolean isTablet;
 	private boolean isFinished = false;
 	private boolean isClickEnabled = true;
 	
@@ -68,12 +67,11 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 		};
 	};
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_books_choice);
-		
-		isTablet = (boolean) getResources().getBoolean(R.bool.isTablet);
 		
 		akManager = AKManager.getInstance(this);
 		books = akManager.getBooks();
@@ -108,7 +106,6 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 		});
 
 		principal_layout = (RelativeLayout) findViewById(R.id.principal_layout);
-		new_back = (ImageView) findViewById(R.id.new_back);
 		img_cover = (ImageView) findViewById(R.id.img_cover);
 		scrollView = (ScrollView) findViewById(R.id.scrollView);
 		
@@ -406,7 +403,6 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 		book_12 = null;
 		
 		img_cover = null;
-		new_back = null;
 	}
 	
 	@Override

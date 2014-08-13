@@ -9,6 +9,7 @@ import android.graphics.Bitmap.Config;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Debug;
 import android.support.v4.app.FragmentActivity;
@@ -19,7 +20,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.TextView;
 
 import com.pdf.kouloub.externals.PDFDataBase;
 
@@ -56,9 +56,7 @@ public class MySuperScaler extends FragmentActivity  {
 		
 		memoryAnalyser();
 		
-		Display display = getWindowManager().getDefaultDisplay();
-		Point size = new Point();
-		display.getSize(size);
+		Point size = getSize();
 		screen_width = size.x;
 		screen_height = size.y;
 		
@@ -279,5 +277,19 @@ public class MySuperScaler extends FragmentActivity  {
 		Config config = Config.ARGB_8888;
 		Bitmap bm = b.copy(config, false);
 		return new BitmapDrawable(getResources(), bm);
+	}
+	
+	protected Point getSize() {
+	    final Point point = new Point();
+
+	    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+	        getWindowManager().getDefaultDisplay().getSize(point);
+	    }
+	    else {
+	        final Display display = getWindowManager().getDefaultDisplay();
+	        point.x = display.getWidth();
+	        point.y = display.getHeight();
+	    }
+	    return point;
 	}
 }
