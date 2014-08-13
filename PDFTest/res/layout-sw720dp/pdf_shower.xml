@@ -98,7 +98,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:background="@android:color/transparent"
@@ -121,7 +121,7 @@
             <ImageView
                 android:id="@+id/preview14"
                 android:layout_width="wrap_content"
-                android:layout_height="60dp"
+                android:layout_height="70dp"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
                 android:background="@android:color/darker_gray"
@@ -131,7 +131,7 @@
             <ImageView
                 android:id="@+id/preview13"
                 android:layout_width="wrap_content"
-                android:layout_height="60dp"
+                android:layout_height="70dp"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
                 android:background="@android:color/darker_gray"
@@ -141,7 +141,7 @@
             <ImageView
                 android:id="@+id/preview12"
                 android:layout_width="wrap_content"
-                android:layout_height="60dp"
+                android:layout_height="70dp"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
                 android:background="@android:color/darker_gray"
@@ -151,7 +151,7 @@
             <ImageView
                 android:id="@+id/preview11"
                 android:layout_width="wrap_content"
-                android:layout_height="60dp"
+                android:layout_height="70dp"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
                 android:background="@android:color/darker_gray"
@@ -161,7 +161,7 @@
             <ImageView
                 android:id="@+id/preview10"
                 android:layout_width="wrap_content"
-                android:layout_height="60dp"
+                android:layout_height="70dp"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
                 android:background="@android:color/darker_gray"
@@ -171,7 +171,7 @@
             <ImageView
                 android:id="@+id/preview9"
                 android:layout_width="wrap_content"
-                android:layout_height="60dp"
+                android:layout_height="70dp"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
                 android:background="@android:color/darker_gray"
@@ -181,7 +181,7 @@
             <ImageView
                 android:id="@+id/preview8"
                 android:layout_width="wrap_content"
-                android:layout_height="60dp"
+                android:layout_height="70dp"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
                 android:background="@android:color/darker_gray"
@@ -191,7 +191,7 @@
             <ImageView
                 android:id="@+id/preview7"
                 android:layout_width="wrap_content"
-                android:layout_height="60dp"
+                android:layout_height="70dp"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
                 android:background="@android:color/darker_gray"
@@ -201,7 +201,7 @@
             <ImageView
                 android:id="@+id/preview6"
                 android:layout_width="wrap_content"
-                android:layout_height="60dp"
+                android:layout_height="70dp"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
                 android:background="@android:color/darker_gray"
@@ -211,7 +211,7 @@
             <ImageView
                 android:id="@+id/preview5"
                 android:layout_width="wrap_content"
-                android:layout_height="60dp"
+                android:layout_height="70dp"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
                 android:background="@android:color/darker_gray"
@@ -221,7 +221,7 @@
             <ImageView
                 android:id="@+id/preview4"
                 android:layout_width="wrap_content"
-                android:layout_height="60dp"
+                android:layout_height="70dp"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
                 android:background="@android:color/darker_gray"
@@ -231,7 +231,7 @@
             <ImageView
                 android:id="@+id/preview3"
                 android:layout_width="wrap_content"
-                android:layout_height="60dp"
+                android:layout_height="70dp"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
                 android:background="@android:color/darker_gray"
@@ -241,7 +241,7 @@
             <ImageView
                 android:id="@+id/preview2"
                 android:layout_width="wrap_content"
-                android:layout_height="60dp"
+                android:layout_height="70dp"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
                 android:background="@android:color/darker_gray"
@@ -251,7 +251,7 @@
             <ImageView
                 android:id="@+id/preview1"
                 android:layout_width="wrap_content"
-                android:layout_height="60dp"
+                android:layout_height="70dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
