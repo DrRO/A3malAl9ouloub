@@ -100,7 +100,7 @@ public class MySuperScaler extends FragmentActivity  {
 			float xScale = (float) container.getWidth() / rootView.getWidth();
 			float yScale = (float) container.getHeight() / rootView.getHeight();
 			 scale = Math.min(xScale, yScale);
-			scaleViewAndChildren(rootView, scale);
+//			scaleViewAndChildren(rootView, scale);
 			
 			
 			
@@ -111,83 +111,83 @@ public class MySuperScaler extends FragmentActivity  {
 		}
 
 	}
-
-	public static void scaleViewAndChildren(View root, float scale) {
-		ViewGroup.LayoutParams layoutParams = root.getLayoutParams();
-
-		scaled = false ;
-		
-		if (layoutParams.width != ViewGroup.LayoutParams.MATCH_PARENT
-				&& layoutParams.width != ViewGroup.LayoutParams.WRAP_CONTENT) {
-			layoutParams.width *= scale;
-		}
-		if (layoutParams.height != ViewGroup.LayoutParams.MATCH_PARENT
-				&& layoutParams.height != ViewGroup.LayoutParams.WRAP_CONTENT) {
-			layoutParams.height *= scale;
-		}
-
-		if (layoutParams instanceof ViewGroup.MarginLayoutParams) {
-			ViewGroup.MarginLayoutParams marginParams = (ViewGroup.MarginLayoutParams) layoutParams;
-			marginParams.leftMargin *= scale;
-			marginParams.rightMargin *= scale;
-			marginParams.topMargin *= scale;
-			marginParams.bottomMargin *= scale;
-		}
-
-		root.setLayoutParams(layoutParams);
-
-		root.setPadding((int) (root.getPaddingLeft() * scale),
-				(int) (root.getPaddingTop() * scale),
-				(int) (root.getPaddingRight() * scale),
-				(int) (root.getPaddingBottom() * scale));
-
-
-		if (root instanceof ViewGroup) {
-			ViewGroup groupView = (ViewGroup) root;
-			for (int cnt = 0; cnt < groupView.getChildCount(); ++cnt)
-				scaleViewAndChildren(groupView.getChildAt(cnt), scale);
-		}
-	}
-
-	public static void scaleBackViewAndChildren(View root, float scale) {
-		ViewGroup.LayoutParams layoutParams = root.getLayoutParams();
-
-		if (layoutParams.width != ViewGroup.LayoutParams.MATCH_PARENT
-				&& layoutParams.width != ViewGroup.LayoutParams.WRAP_CONTENT) {
-			layoutParams.width /= scale;
-		}
-		if (layoutParams.height != ViewGroup.LayoutParams.MATCH_PARENT
-				&& layoutParams.height != ViewGroup.LayoutParams.WRAP_CONTENT) {
-			layoutParams.height /= scale;
-		}
-
-		if (layoutParams instanceof ViewGroup.MarginLayoutParams) {
-			ViewGroup.MarginLayoutParams marginParams = (ViewGroup.MarginLayoutParams) layoutParams;
-			marginParams.leftMargin /= scale;
-			marginParams.rightMargin /= scale;
-			marginParams.topMargin /= scale;
-			marginParams.bottomMargin /= scale;
-		}
-
-		root.setLayoutParams(layoutParams);
-
-		root.setPadding((int) (root.getPaddingLeft() / scale),
-				(int) (root.getPaddingTop() / scale),
-				(int) (root.getPaddingRight() / scale),
-				(int) (root.getPaddingBottom() / scale));
-
-//		if (root instanceof TextView) {
-//			TextView textView = (TextView) root;
-//			textView.setTextSize(textView.getTextSize() / scale);
+//
+//	public static void scaleViewAndChildren(View root, float scale) {
+//		ViewGroup.LayoutParams layoutParams = root.getLayoutParams();
+//
+//		scaled = false ;
+//		
+//		if (layoutParams.width != ViewGroup.LayoutParams.MATCH_PARENT
+//				&& layoutParams.width != ViewGroup.LayoutParams.WRAP_CONTENT) {
+//			layoutParams.width *= scale;
 //		}
-		
-
-		if (root instanceof ViewGroup) {
-			ViewGroup groupView = (ViewGroup) root;
-			for (int cnt = 0; cnt < groupView.getChildCount(); ++cnt)
-				scaleViewAndChildren(groupView.getChildAt(cnt), scale);
-		}
-	}
+//		if (layoutParams.height != ViewGroup.LayoutParams.MATCH_PARENT
+//				&& layoutParams.height != ViewGroup.LayoutParams.WRAP_CONTENT) {
+//			layoutParams.height *= scale;
+//		}
+//
+//		if (layoutParams instanceof ViewGroup.MarginLayoutParams) {
+//			ViewGroup.MarginLayoutParams marginParams = (ViewGroup.MarginLayoutParams) layoutParams;
+//			marginParams.leftMargin *= scale;
+//			marginParams.rightMargin *= scale;
+//			marginParams.topMargin *= scale;
+//			marginParams.bottomMargin *= scale;
+//		}
+//
+//		root.setLayoutParams(layoutParams);
+//
+//		root.setPadding((int) (root.getPaddingLeft() * scale),
+//				(int) (root.getPaddingTop() * scale),
+//				(int) (root.getPaddingRight() * scale),
+//				(int) (root.getPaddingBottom() * scale));
+//
+//
+//		if (root instanceof ViewGroup) {
+//			ViewGroup groupView = (ViewGroup) root;
+//			for (int cnt = 0; cnt < groupView.getChildCount(); ++cnt)
+//				scaleViewAndChildren(groupView.getChildAt(cnt), scale);
+//		}
+//	}
+//
+//	public static void scaleBackViewAndChildren(View root, float scale) {
+//		ViewGroup.LayoutParams layoutParams = root.getLayoutParams();
+//
+//		if (layoutParams.width != ViewGroup.LayoutParams.MATCH_PARENT
+//				&& layoutParams.width != ViewGroup.LayoutParams.WRAP_CONTENT) {
+//			layoutParams.width /= scale;
+//		}
+//		if (layoutParams.height != ViewGroup.LayoutParams.MATCH_PARENT
+//				&& layoutParams.height != ViewGroup.LayoutParams.WRAP_CONTENT) {
+//			layoutParams.height /= scale;
+//		}
+//
+//		if (layoutParams instanceof ViewGroup.MarginLayoutParams) {
+//			ViewGroup.MarginLayoutParams marginParams = (ViewGroup.MarginLayoutParams) layoutParams;
+//			marginParams.leftMargin /= scale;
+//			marginParams.rightMargin /= scale;
+//			marginParams.topMargin /= scale;
+//			marginParams.bottomMargin /= scale;
+//		}
+//
+//		root.setLayoutParams(layoutParams);
+//
+//		root.setPadding((int) (root.getPaddingLeft() / scale),
+//				(int) (root.getPaddingTop() / scale),
+//				(int) (root.getPaddingRight() / scale),
+//				(int) (root.getPaddingBottom() / scale));
+//
+////		if (root instanceof TextView) {
+////			TextView textView = (TextView) root;
+////			textView.setTextSize(textView.getTextSize() / scale);
+////		}
+//		
+//
+//		if (root instanceof ViewGroup) {
+//			ViewGroup groupView = (ViewGroup) root;
+//			for (int cnt = 0; cnt < groupView.getChildCount(); ++cnt)
+//				scaleViewAndChildren(groupView.getChildAt(cnt), scale);
+//		}
+//	}
 		
 		
 		

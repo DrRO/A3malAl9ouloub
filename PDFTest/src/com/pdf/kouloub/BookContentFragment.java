@@ -20,7 +20,6 @@ import com.example.pdftest.R;
 import com.pdf.kouloub.adapters.BookContentAdapter;
 import com.pdf.kouloub.externals.BookPart;
 import com.pdf.kouloub.externals.PDFDataBase;
-import com.pdf.kouloub.utils.MySuperScaler;
 
 
 @SuppressLint("ValidFragment")
@@ -63,9 +62,6 @@ public class BookContentFragment extends ListFragment{
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_abwab, container, false);
-
-		if(!(MySuperScaler.scaled))
-			MySuperScaler.scaleViewAndChildren(rootView, MySuperScaler.scale);
 
 		img_title = (ImageView) rootView.findViewById(R.id.img_title);
 		img_title.setBackgroundResource(R.drawable.mo7tawayat);

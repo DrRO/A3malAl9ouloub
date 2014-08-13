@@ -18,10 +18,10 @@ import android.widget.Button;
 import com.edmodo.cropper.CropImageView;
 import com.example.pdftest.R;
 import com.pdf.kouloub.externals.AKManager;
-import com.pdf.kouloub.utils.MySuperMonitoredScaler;
-import com.pdf.kouloub.utils.Util;
+import com.pdf.kouloub.utils.MonitoredActivity;
+import com.pdf.kouloub.utils.CropUtil;
 
-public class ImageCropActivity extends MySuperMonitoredScaler{
+public class ImageCropActivity extends MonitoredActivity{
 	
 	public static final  String IMAGE_PATH 				= "image-path";
 	public static final  String IMAGE_BITMAP 			= "image-bitmap";
@@ -107,7 +107,7 @@ public class ImageCropActivity extends MySuperMonitoredScaler{
 			public void onClick(View arg0) {
 				croppedImage = cropImageView.getCroppedImage();
 				final Bitmap b = croppedImage;
-	            Util.startBackgroundJob(ImageCropActivity.this, null, getString(R.string.saving_image),
+	            CropUtil.startBackgroundJob(ImageCropActivity.this, null, getString(R.string.saving_image),
 	                    new Runnable() {
 	                        public void run() {
 
@@ -141,7 +141,7 @@ public class ImageCropActivity extends MySuperMonitoredScaler{
                 return;
             } finally {
 
-                Util.closeSilently(outputStream);
+                CropUtil.closeSilently(outputStream);
             }
 
             Bundle extras = new Bundle();

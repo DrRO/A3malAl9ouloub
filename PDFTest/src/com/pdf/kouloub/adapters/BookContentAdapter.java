@@ -41,7 +41,7 @@ public class BookContentAdapter extends ArrayAdapter<BookPart> {
 			holder = new ViewHolder();
 			convertView = inflater.inflate(layoutResourceId, parent, false);
 			
-			MySuperScaler.scaleViewAndChildren(convertView, MySuperScaler.scale);
+//			MySuperScaler.scaleViewAndChildren(convertView, MySuperScaler.scale);
 			
 			// get the elements in the layout
 			holder.txv_title = (TextView) convertView.findViewById(R.id.txv_babTitle); 

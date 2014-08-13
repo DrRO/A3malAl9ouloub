@@ -20,7 +20,6 @@ import com.example.pdftest.R;
 import com.pdf.kouloub.adapters.BookMarkAdapter;
 import com.pdf.kouloub.externals.BookMark;
 import com.pdf.kouloub.externals.PDFDataBase;
-import com.pdf.kouloub.utils.MySuperScaler;
 
 
 @SuppressLint("ValidFragment")
@@ -62,9 +61,6 @@ public class BookMarkFragment extends ListFragment{
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_abwab, container, false);
 
-		if(!(MySuperScaler.scaled))
-			MySuperScaler.scaleViewAndChildren(rootView, MySuperScaler.scale);
-
 		img_title = (ImageView) rootView.findViewById(R.id.img_title);
 		img_title.setBackgroundResource(R.drawable.fawassel);
 		
@@ -76,8 +72,6 @@ public class BookMarkFragment extends ListFragment{
 				getActivity().onBackPressed();
 			}
 		});
-		
-		
 		
 		adapter = new BookMarkAdapter(getActivity(), R.layout.bab_list_item, bookMarks);
 

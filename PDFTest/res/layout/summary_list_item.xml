@@ -1,12 +1,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="720px"
-    android:layout_height="75px"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
     android:layout_gravity="center" >
 
     <TextView
         android:id="@+id/txv_babTitle"
         android:layout_width="wrap_content"
-        android:layout_height="60px"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginLeft="10px"
@@ -18,10 +18,10 @@
     <TextView
         android:id="@+id/txv_pageNb"
         android:layout_width="wrap_content"
-        android:layout_height="60px"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:layout_margin="10px"
+        android:layout_margin="5dp"
         android:textColor="#000"
         android:textStyle="bold" />
 

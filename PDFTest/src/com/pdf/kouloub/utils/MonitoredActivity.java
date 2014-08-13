@@ -27,49 +27,49 @@ import com.pdf.kouloub.externals.PDFDataBase;
  * This is Super Scaler
  *
  */
-public class MySuperMonitoredScaler extends Activity  {
+public class MonitoredActivity extends Activity  {
 	
 	private final ArrayList<LifeCycleListener> mListeners =
             new ArrayList<LifeCycleListener>();
 
     public static interface LifeCycleListener {
 
-        public void onActivityCreated(MySuperMonitoredScaler activity);
+        public void onActivityCreated(MonitoredActivity activity);
 
-        public void onActivityDestroyed(MySuperMonitoredScaler activity);
+        public void onActivityDestroyed(MonitoredActivity activity);
 
-        public void onActivityPaused(MySuperMonitoredScaler activity);
+        public void onActivityPaused(MonitoredActivity activity);
 
-        public void onActivityResumed(MySuperMonitoredScaler activity);
+        public void onActivityResumed(MonitoredActivity activity);
 
-        public void onActivityStarted(MySuperMonitoredScaler activity);
+        public void onActivityStarted(MonitoredActivity activity);
 
-        public void onActivityStopped(MySuperMonitoredScaler activity);
+        public void onActivityStopped(MonitoredActivity activity);
     }
 
     public static class LifeCycleAdapter implements LifeCycleListener {
 
-        public void onActivityCreated(MySuperMonitoredScaler activity) {
+        public void onActivityCreated(MonitoredActivity activity) {
 
         }
 
-        public void onActivityDestroyed(MySuperMonitoredScaler activity) {
+        public void onActivityDestroyed(MonitoredActivity activity) {
 
         }
 
-        public void onActivityPaused(MySuperMonitoredScaler activity) {
+        public void onActivityPaused(MonitoredActivity activity) {
 
         }
 
-        public void onActivityResumed(MySuperMonitoredScaler activity) {
+        public void onActivityResumed(MonitoredActivity activity) {
 
         }
 
-        public void onActivityStarted(MySuperMonitoredScaler activity) {
+        public void onActivityStarted(MonitoredActivity activity) {
 
         }
 
-        public void onActivityStopped(MySuperMonitoredScaler activity) {
+        public void onActivityStopped(MonitoredActivity activity) {
 
         }
     }
@@ -85,7 +85,7 @@ public class MySuperMonitoredScaler extends Activity  {
         mListeners.remove(listener);
     }
 	
-	private static final String TAG = MySuperMonitoredScaler.class.getSimpleName();
+	private static final String TAG = MonitoredActivity.class.getSimpleName();
 	public static float scale ;
 	public static boolean scaled = false;
 	
@@ -157,110 +157,6 @@ public class MySuperMonitoredScaler extends Activity  {
 		memoryAnalyser();
 	}
 
-	@Override
-	public void onWindowFocusChanged(boolean hasFocus) {
-		
-		super.onWindowFocusChanged(hasFocus);
-		View container=getWindow().getDecorView().findViewById(android.R.id.content);
-
-		if(container.getTag()==null){
-			View rootView=((ViewGroup)container).getChildAt(0);
-			float xScale = (float) container.getWidth() / rootView.getWidth();
-			float yScale = (float) container.getHeight() / rootView.getHeight();
-			 scale = Math.min(xScale, yScale);
-			scaleViewAndChildren(rootView, scale);
-			
-			
-			
-			container.setTag("IsScaled");
-		
-			
-			Log.e("SCALEEEEED", Boolean.toString(scaled));
-		}
-
-	}
-
-	public static void scaleViewAndChildren(View root, float scale) {
-		ViewGroup.LayoutParams layoutParams = root.getLayoutParams();
-
-		scaled = false ;
-		
-		if (layoutParams.width != ViewGroup.LayoutParams.MATCH_PARENT
-				&& layoutParams.width != ViewGroup.LayoutParams.WRAP_CONTENT) {
-			layoutParams.width *= scale;
-		}
-		if (layoutParams.height != ViewGroup.LayoutParams.MATCH_PARENT
-				&& layoutParams.height != ViewGroup.LayoutParams.WRAP_CONTENT) {
-			layoutParams.height *= scale;
-		}
-
-		if (layoutParams instanceof ViewGroup.MarginLayoutParams) {
-			ViewGroup.MarginLayoutParams marginParams = (ViewGroup.MarginLayoutParams) layoutParams;
-			marginParams.leftMargin *= scale;
-			marginParams.rightMargin *= scale;
-			marginParams.topMargin *= scale;
-			marginParams.bottomMargin *= scale;
-		}
-
-		root.setLayoutParams(layoutParams);
-
-		root.setPadding((int) (root.getPaddingLeft() * scale),
-				(int) (root.getPaddingTop() * scale),
-				(int) (root.getPaddingRight() * scale),
-				(int) (root.getPaddingBottom() * scale));
-
-		if (root instanceof TextView) {
-			TextView textView = (TextView) root;
-			textView.setTextSize(textView.getTextSize() * scale);
-		}
-		
-
-		if (root instanceof ViewGroup) {
-			ViewGroup groupView = (ViewGroup) root;
-			for (int cnt = 0; cnt < groupView.getChildCount(); ++cnt)
-				scaleViewAndChildren(groupView.getChildAt(cnt), scale);
-		}
-	}
-
-	public static void scaleBackViewAndChildren(View root, float scale) {
-		ViewGroup.LayoutParams layoutParams = root.getLayoutParams();
-
-		if (layoutParams.width != ViewGroup.LayoutParams.MATCH_PARENT
-				&& layoutParams.width != ViewGroup.LayoutParams.WRAP_CONTENT) {
-			layoutParams.width /= scale;
-		}
-		if (layoutParams.height != ViewGroup.LayoutParams.MATCH_PARENT
-				&& layoutParams.height != ViewGroup.LayoutParams.WRAP_CONTENT) {
-			layoutParams.height /= scale;
-		}
-
-		if (layoutParams instanceof ViewGroup.MarginLayoutParams) {
-			ViewGroup.MarginLayoutParams marginParams = (ViewGroup.MarginLayoutParams) layoutParams;
-			marginParams.leftMargin /= scale;
-			marginParams.rightMargin /= scale;
-			marginParams.topMargin /= scale;
-			marginParams.bottomMargin /= scale;
-		}
-
-		root.setLayoutParams(layoutParams);
-
-		root.setPadding((int) (root.getPaddingLeft() / scale),
-				(int) (root.getPaddingTop() / scale),
-				(int) (root.getPaddingRight() / scale),
-				(int) (root.getPaddingBottom() / scale));
-
-//		if (root instanceof TextView) {
-//			TextView textView = (TextView) root;
-//			textView.setTextSize(textView.getTextSize() / scale);
-//		}
-		
-
-		if (root instanceof ViewGroup) {
-			ViewGroup groupView = (ViewGroup) root;
-			for (int cnt = 0; cnt < groupView.getChildCount(); ++cnt)
-				scaleViewAndChildren(groupView.getChildAt(cnt), scale);
-		}
-	}
 		
 		
 		

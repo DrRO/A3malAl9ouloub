@@ -35,7 +35,6 @@ import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -68,7 +67,7 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 	private ImageView preview1, preview2, preview3, preview4, preview5, 
 	preview6, preview7, preview8, preview9, preview10, preview11, preview12, preview13, preview14 ;
 
-	private Button back, add_bookmark, bookmark_list, crop, list_summary ;
+	private ImageView back, add_bookmark, bookmark_list, crop, list_summary ;
 	private RelativeLayout  bottom_layout ;
 
 	FrameLayout frame_layout;
@@ -182,11 +181,11 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 		}
 		
 
-		back = (Button) findViewById(R.id.pdf_back);
-		add_bookmark = (Button) findViewById(R.id.pdf_bookmark);
-		bookmark_list = (Button) findViewById(R.id.pdf_bookmark_list);
-		crop = (Button) findViewById(R.id.pdf_crop);
-		list_summary = (Button) findViewById(R.id.pdf_list);
+		back = (ImageView) findViewById(R.id.pdf_back);
+		add_bookmark = (ImageView) findViewById(R.id.pdf_bookmark);
+		bookmark_list = (ImageView) findViewById(R.id.pdf_bookmark_list);
+		crop = (ImageView) findViewById(R.id.pdf_crop);
+		list_summary = (ImageView) findViewById(R.id.pdf_list);
 
 		Bundle b = getIntent().getExtras();
 		final String book_to_read = b.getString("book");
@@ -205,16 +204,16 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 		
 
 		Bitmap bm1 = AKManager.originalResolution(this, "previews/"+book_to_read+"/1.png", preview1.getWidth(), preview1.getHeight());
-		Bitmap bm2 = AKManager.originalResolution(this, "previews/"+book_to_read+"/2.png", preview1.getWidth(), preview2.getHeight());
-		Bitmap bm3 = AKManager.originalResolution(this, "previews/"+book_to_read+"/3.png", preview1.getWidth(), preview3.getHeight());
-		Bitmap bm4 = AKManager.originalResolution(this, "previews/"+book_to_read+"/4.png", preview1.getWidth(), preview4.getHeight());
-		Bitmap bm5 = AKManager.originalResolution(this, "previews/"+book_to_read+"/5.png", preview1.getWidth(), preview5.getHeight());
-		Bitmap bm6 = AKManager.originalResolution(this, "previews/"+book_to_read+"/6.png", preview1.getWidth(), preview6.getHeight());
+		Bitmap bm2 = AKManager.originalResolution(this, "previews/"+book_to_read+"/2.png", preview2.getWidth(), preview2.getHeight());
+		Bitmap bm3 = AKManager.originalResolution(this, "previews/"+book_to_read+"/3.png", preview3.getWidth(), preview3.getHeight());
+		Bitmap bm4 = AKManager.originalResolution(this, "previews/"+book_to_read+"/4.png", preview4.getWidth(), preview4.getHeight());
+		Bitmap bm5 = AKManager.originalResolution(this, "previews/"+book_to_read+"/5.png", preview5.getWidth(), preview5.getHeight());
+		Bitmap bm6 = AKManager.originalResolution(this, "previews/"+book_to_read+"/6.png", preview6.getWidth(), preview6.getHeight());
 		
-		Bitmap bm7 = AKManager.originalResolution(this, "previews/"+book_to_read+"/7.png", preview1.getWidth(), preview7.getHeight());
-		Bitmap bm8 = AKManager.originalResolution(this, "previews/"+book_to_read+"/8.png", preview1.getWidth(), preview8.getHeight());
-		Bitmap bm9 = AKManager.originalResolution(this, "previews/"+book_to_read+"/4.png", preview1.getWidth(), preview4.getHeight());
-		Bitmap bm10 = AKManager.originalResolution(this, "previews/"+book_to_read+"/5.png", preview1.getWidth(), preview5.getHeight());
+		Bitmap bm7 = AKManager.originalResolution(this, "previews/"+book_to_read+"/7.png", preview7.getWidth(), preview7.getHeight());
+		Bitmap bm8 = AKManager.originalResolution(this, "previews/"+book_to_read+"/8.png", preview8.getWidth(), preview8.getHeight());
+		Bitmap bm9 = AKManager.originalResolution(this, "previews/"+book_to_read+"/4.png", preview4.getWidth(), preview4.getHeight());
+		Bitmap bm10 = AKManager.originalResolution(this, "previews/"+book_to_read+"/5.png", preview5.getWidth(), preview5.getHeight());
 
 		if (isTablet(PDFViewerActivity.this)){
 			Bitmap bm11 = AKManager.originalResolution(this, "previews/"+book_to_read+"/7.png", preview7.getWidth(), preview7.getHeight());
@@ -348,9 +347,9 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 
 	private void toggleBookMarkButton(boolean isBookMarked) {
 		if(isBookMarked)
-			add_bookmark.setBackgroundResource(R.drawable.pdf_bookmark_added);
+			add_bookmark.setImageResource(R.drawable.pdf_bookmark_added);
 		else
-			add_bookmark.setBackgroundResource(R.drawable.pdf_bookmark);
+			add_bookmark.setImageResource(R.drawable.pdf_bookmark);
 	}
 	public Bitmap getBitmapFromAssets(String fileName) {
 
@@ -440,7 +439,6 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 	public void onStartTrackingTouch(SeekBar arg0) {
 		seeking = true ;
 		enableJump = true;
-//		txt_pages.setText(" صفحة "+inversed_page+" من "+pdf_pages_number);
 	}
 	@Override
 	public void onStopTrackingTouch(SeekBar arg0) {
@@ -450,8 +448,6 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 			pdf.jumpTo(arg0.getProgress());
 			enableJump = false;
 		}
-	//	Toast.makeText(PDFViewerActivity.this, " صفحة "+inversed_page+" من "+pdf_pages_number, Toast.LENGTH_SHORT).show();
-//		txt_pages.setText(" صفحة "+inversed_page+" من "+pdf_pages_number);
 		
 		seeking = false ;
 	}
@@ -461,8 +457,13 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 
 		pdf.buildDrawingCache();
 		if(pdf.getDrawingCache() != null){
-			int width = (int)(75*scale);
-			int height = (int)(110*scale);
+			int width = (int) (0.10416 * screen_width) ; // 75 sur S3 1280x720
+			int height = (int) (0.0859375 * screen_height); // 110 sur S3 1280x720
+			if(isTablet)
+			{
+				width = (int) (0.075 * screen_width); // 60 sur tablette 10" 1280x800
+				height = (int) (0.0703125 * screen_height); // 90 sur tablette 10" 1280x800
+			}
 			Bitmap bm = Bitmap.createScaledBitmap(pdf.getDrawingCache(), width, height, false);
 			Drawable d = new BitmapDrawable(getResources(), addGrayBorder(bm, 1));
 			bar.setThumb(d);
