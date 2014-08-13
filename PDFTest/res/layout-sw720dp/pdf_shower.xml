@@ -18,15 +18,14 @@
         android:layout_height="wrap_content"
         android:background="@drawable/gradient_shape"
         android:orientation="horizontal"
-        android:layout_marginTop="15dp"
         android:weightSum="5" >
 
         <ImageView
             android:id="@+id/pdf_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:layout_gravity="center_vertical"
-            android:layout_margin="10dp"
+            android:layout_margin="15dp"
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:scaleType="fitCenter"
@@ -34,10 +33,10 @@
 
         <ImageView
             android:id="@+id/pdf_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:layout_gravity="center_vertical"
-            android:layout_margin="10dp"
+            android:layout_margin="15dp"
             android:layout_marginLeft="20dp"
             android:layout_weight="1"
             android:scaleType="fitCenter"
@@ -45,30 +44,30 @@
 
         <ImageView
             android:id="@+id/pdf_crop"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:layout_gravity="center_vertical"
-            android:layout_margin="10dp"
+            android:layout_margin="15dp"
             android:layout_weight="1"
             android:scaleType="fitCenter"
             android:src="@drawable/pdf_crop" />
 
         <ImageView
             android:id="@+id/pdf_bookmark_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:layout_gravity="center_vertical"
-            android:layout_margin="10dp"
+            android:layout_margin="15dp"
             android:layout_weight="1"
             android:scaleType="fitCenter"
             android:src="@drawable/pdf_bookmark_list" />
 
         <ImageView
             android:id="@+id/pdf_bookmark"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:layout_gravity="center_vertical"
-            android:layout_margin="10dp"
+            android:layout_margin="15dp"
             android:layout_weight="1"
             android:scaleType="fitCenter"
             android:src="@drawable/pdf_bookmark" />
