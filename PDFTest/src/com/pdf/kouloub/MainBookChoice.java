@@ -228,8 +228,8 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 		else
 			absParams.bottomMargin = (int)(screen_height - myNewY + srcView.getHeight() - 0.234375 * screen_height);
 		
-		if(absParams.height < 0)
-			absParams.height = (int) (0.2390625 * screen_height);
+//		if(absParams.height < 0)
+//			absParams.height = (int) (0.2390625 * screen_height);
 		
 		v.setLayoutParams(absParams);
 	}

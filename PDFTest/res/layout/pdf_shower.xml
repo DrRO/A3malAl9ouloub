@@ -103,7 +103,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="13dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:paddingLeft="20dp"
@@ -121,12 +121,12 @@
         android:orientation="horizontal" 
         android:weightSum="10"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp">
+        android:layout_marginBottom="15dp">
 
         <ImageView
             android:id="@+id/preview10"
             android:layout_width="wrap_content"
-            android:layout_height="45dp"
+            android:layout_height="42dp"
             android:layout_marginLeft="5dp"
             android:background="@android:color/darker_gray"
             android:padding="1dp" 
@@ -136,7 +136,7 @@
         <ImageView
             android:id="@+id/preview9"
            	android:layout_width="wrap_content"
-            android:layout_height="45dp"
+            android:layout_height="42dp"
             android:layout_marginLeft="5dp"
             android:background="@android:color/darker_gray"
             android:padding="1dp" 
@@ -146,7 +146,7 @@
         <ImageView
             android:id="@+id/preview8"
             android:layout_width="wrap_content"
-            android:layout_height="45dp"
+            android:layout_height="42dp"
             android:layout_marginLeft="5dp"
             android:background="@android:color/darker_gray"
             android:padding="1dp" 
@@ -156,7 +156,7 @@
         <ImageView
             android:id="@+id/preview7"
             android:layout_width="wrap_content"
-            android:layout_height="45dp"
+            android:layout_height="42dp"
             android:layout_marginLeft="5dp"
             android:background="@android:color/darker_gray"
             android:padding="1dp"
@@ -166,7 +166,7 @@
         <ImageView
             android:id="@+id/preview6"
             android:layout_width="wrap_content"
-            android:layout_height="45dp"
+            android:layout_height="42dp"
             android:layout_marginLeft="5dp"
             android:background="@android:color/darker_gray"
             android:padding="1dp" 
@@ -176,7 +176,7 @@
         <ImageView
             android:id="@+id/preview5"
             android:layout_width="wrap_content"
-            android:layout_height="45dp"
+            android:layout_height="42dp"
             android:layout_marginLeft="5dp"
             android:background="@android:color/darker_gray"
             android:padding="1dp"
@@ -186,7 +186,7 @@
         <ImageView
             android:id="@+id/preview4"
             android:layout_width="wrap_content"
-            android:layout_height="45dp"
+            android:layout_height="42dp"
             android:layout_marginLeft="5dp"
             android:background="@android:color/darker_gray"
             android:padding="1dp" 
@@ -196,7 +196,7 @@
         <ImageView
             android:id="@+id/preview3"
             android:layout_width="wrap_content"
-            android:layout_height="45dp"
+            android:layout_height="42dp"
             android:layout_marginLeft="5dp"
             android:background="@android:color/darker_gray"
             android:padding="1dp"
@@ -206,7 +206,7 @@
         <ImageView
             android:id="@+id/preview2"
             android:layout_width="wrap_content"
-            android:layout_height="45dp"
+            android:layout_height="42dp"
             android:layout_marginLeft="5dp"
             android:background="@android:color/darker_gray"
             android:padding="1dp" 
@@ -216,7 +216,7 @@
         <ImageView
             android:id="@+id/preview1"
             android:layout_width="wrap_content"
-            android:layout_height="45dp"
+            android:layout_height="42dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:background="@android:color/darker_gray"
