@@ -18,7 +18,6 @@
         android:layout_height="wrap_content"
         android:background="@drawable/gradient_shape"
         android:orientation="horizontal"
-        android:layout_marginTop="15dp"
         android:weightSum="5" >
 
         <ImageView
@@ -103,8 +102,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:background="@android:color/transparent"
-            android:paddingLeft="25dp"
-            android:paddingRight="40dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="30dp"
             android:progressDrawable="@android:color/transparent"
             android:thumb="@android:color/transparent"
             android:thumbOffset="0dp" >
