@@ -22,8 +22,9 @@ public class SplashScreen extends MySuperScaler {
 		public void handleMessage(Message msg) {
 
 			Intent intent = new Intent(SplashScreen.this, MainBookChoice.class);
-			SplashScreen.this.startActivity(intent);
-			SplashScreen.this.finish();
+			startActivity(intent);
+			overridePendingTransition(R.anim.up_in, R.anim.up_out);
+			finish();
 
 			super.handleMessage(msg);
 		}
