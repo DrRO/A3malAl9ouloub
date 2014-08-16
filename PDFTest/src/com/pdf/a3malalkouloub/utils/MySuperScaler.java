@@ -1,4 +1,4 @@
-package com.pdf.kouloub.utils;
+package com.pdf.a3malalkouloub.utils;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -21,7 +21,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
-import com.pdf.kouloub.externals.PDFDataBase;
+import com.pdf.a3malalkouloub.externals.PDFDataBase;
 
 /**
  * This is Super Scaler

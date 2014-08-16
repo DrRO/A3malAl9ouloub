@@ -1,4 +1,4 @@
-package com.pdf.kouloub;
+package com.pdf.a3malalkouloub;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -43,12 +43,11 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
-import com.example.pdftest.R;
 import com.joanzapata.pdfview.PDFView;
 import com.joanzapata.pdfview.listener.OnLoadCompleteListener;
 import com.joanzapata.pdfview.listener.OnPageChangeListener;
-import com.pdf.kouloub.externals.AKManager;
-import com.pdf.kouloub.utils.MySuperScaler;
+import com.pdf.a3malalkouloub.externals.AKManager;
+import com.pdf.a3malalkouloub.utils.MySuperScaler;
 
 public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteListener, OnPageChangeListener, OnSeekBarChangeListener {
 

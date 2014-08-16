@@ -1,4 +1,4 @@
-package com.pdf.kouloub;
+package com.pdf.a3malalkouloub;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -7,8 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.KeyEvent;
 
-import com.example.pdftest.R;
-import com.pdf.kouloub.utils.MySuperScaler;
+import com.pdf.a3malalkouloub.utils.MySuperScaler;
 
 
 

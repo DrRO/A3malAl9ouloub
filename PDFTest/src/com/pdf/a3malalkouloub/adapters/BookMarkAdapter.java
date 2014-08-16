@@ -1,4 +1,4 @@
-package com.pdf.kouloub.adapters;
+package com.pdf.a3malalkouloub.adapters;
 
 import java.util.ArrayList;
 
@@ -11,9 +11,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.example.pdftest.R;
-import com.pdf.kouloub.externals.BookMark;
-import com.pdf.kouloub.utils.MySuperScaler;
+import com.pdf.a3malalkouloub.R;
+import com.pdf.a3malalkouloub.externals.BookMark;
+import com.pdf.a3malalkouloub.utils.MySuperScaler;
 
 public class BookMarkAdapter extends ArrayAdapter<BookMark> {
 

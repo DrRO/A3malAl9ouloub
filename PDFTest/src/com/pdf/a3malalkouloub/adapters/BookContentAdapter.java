@@ -1,4 +1,4 @@
-package com.pdf.kouloub.adapters;
+package com.pdf.a3malalkouloub.adapters;
 
 import java.util.ArrayList;
 
@@ -12,9 +12,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.pdftest.R;
-import com.pdf.kouloub.externals.BookPart;
-import com.pdf.kouloub.utils.MySuperScaler;
+import com.pdf.a3malalkouloub.R;
+import com.pdf.a3malalkouloub.externals.BookPart;
+import com.pdf.a3malalkouloub.utils.MySuperScaler;
 
 public class BookContentAdapter extends ArrayAdapter<BookPart> {
 
