@@ -1,13 +1,15 @@
 package org.vudroid.pdfdroid.codec;
 
-import android.graphics.Bitmap;
-import android.graphics.Matrix;
-import android.graphics.Rect;
-import android.graphics.RectF;
+import java.nio.ByteBuffer;
 
 import org.vudroid.core.codec.CodecPage;
 
-import java.nio.ByteBuffer;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.graphics.Rect;
+import android.graphics.RectF;
 
 public class PdfPage implements CodecPage
 {
@@ -98,12 +100,29 @@ public class PdfPage implements CodecPage
         int height = viewbox.height();
         int[] bufferarray = new int[width * height];
         nativeCreateView(docHandle, pageHandle, mRect, matrixArray, bufferarray);
-        return Bitmap.createBitmap(bufferarray, width, height, Bitmap.Config.RGB_565);
+        
+        
+//        int [] pixels = bufferarray;
+//
+//        for( int i = 0; i < pixels.length; i++ ) {
+//            // Invert the red channel as an alpha bitmask for the desired color.
+//            pixels[i] = ~( pixels[i] << 8 & 0xFF000000 ) & Color.WHITE;
+//        }
+        BitmapFactory.Options opts = new BitmapFactory.Options();
+        opts.inPreferredConfig = Config.RGB_565;
+        opts.inDither = true;
+        
+        Bitmap bmp = Bitmap.createBitmap(bufferarray, width, height, Bitmap.Config.RGB_565);
+        
+        
         /*ByteBuffer buffer = ByteBuffer.allocateDirect(width * height * 2);
         render(docHandle, docHandle, mRect, matrixArray, buffer, ByteBuffer.allocateDirect(width * height * 8));
         final Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
         bitmap.copyPixelsFromBuffer(buffer);
         return bitmap;*/
+        
+        
+        return bmp ;
 	}
 
     private static native void getMediaBox(long handle, float[] mediabox);

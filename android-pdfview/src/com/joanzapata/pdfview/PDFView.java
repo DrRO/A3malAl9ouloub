@@ -23,25 +23,29 @@ import static com.joanzapata.pdfview.util.Constants.Cache.CACHE_SIZE;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.channels.FileChannel.MapMode;
 
 import org.vudroid.core.DecodeService;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Bitmap.CompressFormat;
 import android.graphics.Bitmap.Config;
-import android.graphics.BitmapFactory.Options;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.PointF;
+import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.util.AttributeSet;
 import android.view.SurfaceView;
 
@@ -453,8 +457,22 @@ public class PDFView extends SurfaceView {
         }
         
 //        renderedBitmap = codec(renderedBitmap, CompressFormat.PNG, 0);
-        canvas.drawBitmap(renderedBitmap, srcRect, dstRect, paint);
+        
+        
+//        renderedBitmap.eraseColor(Color.parseColor("#f8fcf8"));
+//        renderedBitmap.eraseColor(Color.TRANSPARENT);
+        
+        
+    //    paint.setXfermode (new PixelXorXfermode (Color.argb (255,255, 255, 255)));
+        
+        
+        Bitmap converted = renderedBitmap.copy(Config.ARGB_8888, false);
+        
+        
+        canvas.drawBitmap(converted, srcRect, dstRect, paint);
 
+        
+        
         if (Constants.DEBUG_MODE) {
             debugPaint.setColor(part.getUserPage() % 2 == 0 ? Color.RED : Color.BLUE);
             canvas.drawRect(dstRect, debugPaint);
@@ -462,7 +480,90 @@ public class PDFView extends SurfaceView {
 
         // Restore the canvas position
         canvas.translate(-localTranslation, 0);
+        
+        
 
+    }
+    
+    private Bitmap changeColor(Bitmap src, int colorToReplace, int colorThatWillReplace) {
+        int width = src.getWidth();
+        int height = src.getHeight();
+        int[] pixels = new int[width * height];
+        // get pixel array from source
+        src.getPixels(pixels, 0, width, 0, 0, width, height);
+
+        Bitmap bmOut = Bitmap.createBitmap(width, height, src.getConfig());
+
+        int A, R, G, B;
+        int pixel;
+
+         // iteration through pixels
+        for (int y = 0; y < height; ++y) {
+            for (int x = 0; x < width; ++x) {
+                // get current index in 2D-matrix
+                int index = y * width + x;
+                pixel = pixels[index];
+                if(pixel == colorToReplace){
+                    //change A-RGB individually
+                    A = Color.alpha(pixel);
+                    R = Color.red(pixel);
+                    G = Color.green(pixel);
+                    B = Color.blue(pixel);
+                    pixels[index] = Color.argb(A,R,G,B); 
+                    /*or change the whole color
+                    pixels[index] = colorThatWillReplace;*/
+                }
+            }
+        }
+        bmOut.setPixels(pixels, 0, width, 0, 0, width, height);
+        return bmOut;
+    }
+    
+    
+    public static Bitmap convertToMutable(Bitmap imgIn) {
+        try {
+            //this is the file going to use temporally to save the bytes. 
+            // This file will not be a image, it will store the raw image data.
+            File file = new File(Environment.getExternalStorageDirectory() + File.separator + "temp.tmp");
+
+            //Open an RandomAccessFile
+            //Make sure you have added uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+            //into AndroidManifest.xml file
+            RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rw");
+
+            // get the width and height of the source bitmap.
+            int width = imgIn.getWidth();
+            int height = imgIn.getHeight();
+            Config type = imgIn.getConfig();
+
+            //Copy the byte to the file
+            //Assume source bitmap loaded using options.inPreferredConfig = Config.ARGB_8888;
+            FileChannel channel = randomAccessFile.getChannel();
+            MappedByteBuffer map = channel.map(MapMode.READ_WRITE, 0, imgIn.getRowBytes()*height);
+            imgIn.copyPixelsToBuffer(map);
+            //recycle the source bitmap, this will be no longer used.
+            imgIn.recycle();
+            System.gc();// try to force the bytes from the imgIn to be released
+
+            //Create a new bitmap to load the bitmap again. Probably the memory will be available. 
+            imgIn = Bitmap.createBitmap(width, height, type);
+            map.position(0);
+            //load it back from temporary 
+            imgIn.copyPixelsFromBuffer(map);
+            //close the temporary file and channel , then delete that also
+            channel.close();
+            randomAccessFile.close();
+
+            // delete the temp file
+            file.delete();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } 
+
+        return imgIn;
     }
     
     private static Bitmap codec(Bitmap src, Bitmap.CompressFormat format,
