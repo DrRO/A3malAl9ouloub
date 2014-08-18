@@ -20,6 +20,7 @@ package com.joanzapata.pdfview;
 
 import static com.joanzapata.pdfview.util.Constants.Cache.CACHE_SIZE;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 
@@ -28,6 +29,10 @@ import org.vudroid.core.DecodeService;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
+import android.graphics.Bitmap.Config;
+import android.graphics.BitmapFactory.Options;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -38,7 +43,6 @@ import android.graphics.RectF;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.SurfaceView;
 
 import com.joanzapata.pdfview.exception.FileNotFoundException;
@@ -199,8 +203,11 @@ public class PDFView extends SurfaceView {
         cacheManager = new CacheManager();
         animationManager = new AnimationManager(this);
         dragPinchManager = new DragPinchManager(this);
-
+        
         paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setFilterBitmap(true);
+        paint.setDither(true);
         debugPaint = new Paint();
         debugPaint.setStyle(Style.STROKE);
         maskPaint = new Paint();
@@ -444,7 +451,8 @@ public class PDFView extends SurfaceView {
             canvas.translate(-localTranslation, 0);
             return;
         }
-
+        
+//        renderedBitmap = codec(renderedBitmap, CompressFormat.PNG, 0);
         canvas.drawBitmap(renderedBitmap, srcRect, dstRect, paint);
 
         if (Constants.DEBUG_MODE) {
@@ -456,6 +464,39 @@ public class PDFView extends SurfaceView {
         canvas.translate(-localTranslation, 0);
 
     }
+    
+    private static Bitmap codec(Bitmap src, Bitmap.CompressFormat format,
+			int quality) {
+		ByteArrayOutputStream os = new ByteArrayOutputStream();
+		src.compress(format, quality, os);
+ 
+		BitmapFactory.Options option = new BitmapFactory.Options();
+		option.inJustDecodeBounds = false;
+		option.inSampleSize = calculateInSampleSize(option, src.getWidth(), src.getHeight());
+		
+		byte[] array = os.toByteArray();
+		return BitmapFactory.decodeByteArray(array, 0, array.length, option);
+	}
+ 
+    private static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+
+		final int height = options.outHeight;
+		final int width = options.outWidth;
+		int inSampleSize = 1;
+
+		if (height > reqHeight || width > reqWidth) {
+
+			// Calculate ratios of height and width to requested height and width
+			final int heightRatio = Math.round((float) height / (float) reqHeight);
+			final int widthRatio = Math.round((float) width / (float) reqWidth);
+
+			// Choose the smallest ratio as inSampleSize value, this will guarantee
+			// a final image with both dimensions larger than or equal to the
+			// requested height and width.
+			inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
+		}
+		return inSampleSize;
+	}
 
     private void drawMiniMap(Canvas canvas) {
         canvas.drawRect(minimapBounds, paintMinimapBack);

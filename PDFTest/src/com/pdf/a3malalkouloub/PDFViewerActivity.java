@@ -15,6 +15,7 @@ import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.PixelFormat;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -103,7 +104,7 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 
 		akManager = AKManager.getInstance(this);
 		pdf = (PDFView) findViewById(R.id.pdfView);
-
+		
 		fadein = AnimationUtils.loadAnimation(this, R.anim.fadein);
 		fadeout = AnimationUtils.loadAnimation(this, R.anim.fadeout);
 		
@@ -308,7 +309,7 @@ public class PDFViewerActivity extends MySuperScaler implements OnLoadCompleteLi
 		bar.setMax(pdf_pages_number);
 		bar.setProgress(pdf_pages_number);
 		pdf.jumpTo(nbPages);
-		Log.e("NUMBER OF PAGES", pdf_pages_number +"");
+		Log.e("NUMBER OF PAGES", pdf_pages_number +" ... " + pdf.getAlpha());
 
 	}
 	@Override
