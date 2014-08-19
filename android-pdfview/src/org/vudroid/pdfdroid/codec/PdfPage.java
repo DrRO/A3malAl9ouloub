@@ -101,20 +101,12 @@ public class PdfPage implements CodecPage
         int[] bufferarray = new int[width * height];
         nativeCreateView(docHandle, pageHandle, mRect, matrixArray, bufferarray);
         
-        
-//        int [] pixels = bufferarray;
-//
-//        for( int i = 0; i < pixels.length; i++ ) {
-//            // Invert the red channel as an alpha bitmask for the desired color.
-//            pixels[i] = ~( pixels[i] << 8 & 0xFF000000 ) & Color.WHITE;
-//        }
         BitmapFactory.Options opts = new BitmapFactory.Options();
         opts.inPreferredConfig = Config.RGB_565;
         opts.inDither = true;
         
         Bitmap bmp = Bitmap.createBitmap(bufferarray, width, height, Bitmap.Config.RGB_565);
-        
-        
+
         /*ByteBuffer buffer = ByteBuffer.allocateDirect(width * height * 2);
         render(docHandle, docHandle, mRect, matrixArray, buffer, ByteBuffer.allocateDirect(width * height * 8));
         final Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
