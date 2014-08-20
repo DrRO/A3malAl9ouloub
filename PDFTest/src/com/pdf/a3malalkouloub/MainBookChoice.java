@@ -237,13 +237,15 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 
 		public void handleMessage(Message msg) {
 
-			Intent i = new Intent(MainBookChoice.this, PDFViewerActivity.class) ;
-			i.putExtra("book", pdfFile);
-			i.putExtra("book_id", book_id);
+			if(!isFinished){
+				Intent i = new Intent(MainBookChoice.this, PDFViewerActivity.class) ;
+				i.putExtra("book", pdfFile);
+				i.putExtra("book_id", book_id);
 
-			startActivity(i);
-			overridePendingTransition(R.anim.left_in, R.anim.left_out);
-			finish();
+				startActivity(i);
+				overridePendingTransition(R.anim.left_in, R.anim.left_out);
+				finish();
+			}
 
 			super.handleMessage(msg);
 		}
