@@ -52,7 +52,7 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 
 	private AnimationSet animationSet, animationSet2, animationSet3;
 	private TranslateAnimation translate;
-	private Animation zoomin, alpha, alphaToHide, zoomin2;
+	private Animation zoomin, alpha, alphaToHide, zoomin2, zoom_in_right, zoom_in_left, zoom_in_left_row1;
 	private AKManager akManager;
 
 	private boolean isFinished = false;
@@ -82,6 +82,10 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 		alpha = AnimationUtils.loadAnimation(this, R.anim.alpha);
 		alphaToHide = AnimationUtils.loadAnimation(this, R.anim.alphatohide);
 
+		zoom_in_right = AnimationUtils.loadAnimation(this, R.anim.zoom_in_right);
+		zoom_in_left = AnimationUtils.loadAnimation(this, R.anim.zoom_in_left);
+		zoom_in_left_row1 = AnimationUtils.loadAnimation(this, R.anim.zoom_in_left_row1);
+		
 		animationSet3 = new AnimationSet(true);
 		animationSet3.addAnimation(zoomin2);
 		animationSet3.addAnimation(alpha);
@@ -107,7 +111,72 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 				}
 			}
 		});
+		
+		zoom_in_left.setAnimationListener(new AnimationListener() {
 
+			@Override
+			public void onAnimationStart(Animation arg0) {
+
+			}
+
+			@Override
+			public void onAnimationRepeat(Animation arg0) {
+			}
+
+			@Override
+			public void onAnimationEnd(Animation arg0) {
+
+				if(!isFinished){
+					Message msg =  Message.obtain();
+					msg.what = 1;
+					splashHandler.sendMessageDelayed(msg, 2000);
+				}
+			}
+		});
+		
+		zoom_in_right.setAnimationListener(new AnimationListener() {
+
+			@Override
+			public void onAnimationStart(Animation arg0) {
+
+			}
+
+			@Override
+			public void onAnimationRepeat(Animation arg0) {
+			}
+
+			@Override
+			public void onAnimationEnd(Animation arg0) {
+
+				if(!isFinished){
+					Message msg =  Message.obtain();
+					msg.what = 1;
+					splashHandler.sendMessageDelayed(msg, 2000);
+				}
+			}
+		});
+
+		zoom_in_left_row1.setAnimationListener(new AnimationListener() {
+
+			@Override
+			public void onAnimationStart(Animation arg0) {
+
+			}
+
+			@Override
+			public void onAnimationRepeat(Animation arg0) {
+			}
+
+			@Override
+			public void onAnimationEnd(Animation arg0) {
+
+				if(!isFinished){
+					Message msg =  Message.obtain();
+					msg.what = 1;
+					splashHandler.sendMessageDelayed(msg, 2000);
+				}
+			}
+		});
 		principal_layout = (RelativeLayout) findViewById(R.id.principal_layout);
 		img_cover = (ImageView) findViewById(R.id.img_cover);
 		scrollView = (ScrollView) findViewById(R.id.scrollView);
@@ -297,12 +366,59 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 
 		animCounter = 0;
 
-
-		img_cover.setTag((Integer) v.getTag());
-		moveViewToScreenCenter(img_cover);
+		
+		int tagId = (Integer) v.getTag();
+		img_cover.setTag(tagId);
+		
+		LayoutParams params = new RelativeLayout.LayoutParams(screen_width, screen_height);
+		img_cover.setLayoutParams(params);
+		
+		if(!isTablet){
+			if(tagId % 2 == 0)
+				img_cover.startAnimation(zoom_in_right);
+			else
+				img_cover.startAnimation(zoom_in_left);
+		}
+		else
+			img_cover.startAnimation(getAnimationById(tagId));
+		
+//		moveViewToScreenCenter(img_cover);
 
 		isClickEnabled = false;
 
+	}
+	
+	private Animation getAnimationById(int id){
+		
+		switch (id) {
+		case 1:
+			return zoom_in_right;
+		case 2:
+			return zoom_in_right;
+		case 3:
+			return zoom_in_left_row1;
+		case 4:
+			return zoom_in_left_row1;
+		case 5:
+			return zoom_in_right;
+		case 6:
+			return zoom_in_right;
+		case 7:
+			return zoom_in_left;
+		case 8:
+			return zoom_in_left;
+		case 9:
+			return zoom_in_right;
+		case 10:
+			return zoom_in_right;
+		case 11:
+			return zoom_in_left;
+		case 12:
+			return zoom_in_left;
+		default:
+			return zoom_in_left;
+		}
+		
 	}
 
 	int animCounter = 0;
