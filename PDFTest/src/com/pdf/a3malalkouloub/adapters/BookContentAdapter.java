@@ -16,6 +16,12 @@ import com.pdf.a3malalkouloub.R;
 import com.pdf.a3malalkouloub.externals.BookPart;
 import com.pdf.a3malalkouloub.utils.MySuperScaler;
 
+/**
+ * A3mal Al Kouloub
+ * @author HICHEM LAROUSSI - RAMI TRABELSI
+ * Copyright (c) 2014 Zad Group. All rights reserved.
+ */
+
 public class BookContentAdapter extends ArrayAdapter<BookPart> {
 
 	Context mContext;

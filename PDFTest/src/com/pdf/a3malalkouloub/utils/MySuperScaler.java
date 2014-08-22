@@ -26,6 +26,10 @@ import com.pdf.a3malalkouloub.externals.PDFDataBase;
 /**
  * This is Super Scaler
  *
+ *
+ * A3mal Al Kouloub
+ * @author HICHEM LAROUSSI - RAMI TRABELSI
+ * Copyright (c) 2014 Zad Group. All rights reserved.
  */
 @SuppressLint("NewApi")
 public class MySuperScaler extends FragmentActivity  {

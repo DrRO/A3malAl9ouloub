@@ -15,6 +15,11 @@ package com.pdf.a3malalkouloub.utils;
  * limitations under the License.
  */
 
+/**
+ * A3mal Al Kouloub
+ * @author HICHEM LAROUSSI - RAMI TRABELSI
+ * Copyright (c) 2014 Zad Group. All rights reserved.
+ */
 
 import java.io.Closeable;
 

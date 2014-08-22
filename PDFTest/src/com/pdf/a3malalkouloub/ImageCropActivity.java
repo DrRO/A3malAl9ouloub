@@ -20,6 +20,12 @@ import com.pdf.a3malalkouloub.externals.AKManager;
 import com.pdf.a3malalkouloub.utils.CropUtil;
 import com.pdf.a3malalkouloub.utils.MonitoredActivity;
 
+/**
+ * A3mal Al Kouloub
+ * @author HICHEM LAROUSSI - RAMI TRABELSI
+ * Copyright (c) 2014 Zad Group. All rights reserved.
+ */
+
 public class ImageCropActivity extends MonitoredActivity{
 	
 	public static final  String IMAGE_PATH 				= "image-path";

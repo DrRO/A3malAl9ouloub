@@ -1,8 +1,4 @@
-/**
- * 
- */
 package com.pdf.a3malalkouloub.utils;
-
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -11,6 +7,12 @@ import android.graphics.Paint;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+
+/**
+ * A3mal Al Kouloub
+ * @author HICHEM LAROUSSI - RAMI TRABELSI
+ * Copyright (c) 2014 Zad Group. All rights reserved.
+ */
 
 public class LineView extends View {
 	int x;

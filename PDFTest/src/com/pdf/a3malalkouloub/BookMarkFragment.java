@@ -20,6 +20,11 @@ import com.pdf.a3malalkouloub.adapters.BookMarkAdapter;
 import com.pdf.a3malalkouloub.externals.BookMark;
 import com.pdf.a3malalkouloub.externals.PDFDataBase;
 
+/**
+ * A3mal Al Kouloub
+ * @author HICHEM LAROUSSI - RAMI TRABELSI
+ * Copyright (c) 2014 Zad Group. All rights reserved.
+ */
 
 @SuppressLint("ValidFragment")
 public class BookMarkFragment extends ListFragment{
