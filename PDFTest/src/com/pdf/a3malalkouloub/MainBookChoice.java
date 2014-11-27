@@ -58,7 +58,7 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 
 	private AnimationSet animationSet, animationSet2, animationSet3;
 	private TranslateAnimation translate;
-	private Animation alpha, alphaToHide, zoomin2;
+	private Animation alpha, alphaToHide, zoomin2, zoomin_left, zoomin_right;
 	private AKManager akManager;
 
 	private boolean isFinished = false;
@@ -84,12 +84,58 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 		zoomin2 = AnimationUtils.loadAnimation(this, R.anim.zoomin_2);
 		alpha = AnimationUtils.loadAnimation(this, R.anim.alpha);
 		alphaToHide = AnimationUtils.loadAnimation(this, R.anim.alphatohide);
+		zoomin_left = AnimationUtils.loadAnimation(this, R.anim.zoom_in_left); 
+		zoomin_right = AnimationUtils.loadAnimation(this, R.anim.zoom_in_right);
 
 		animationSet3 = new AnimationSet(true);
 		animationSet3.addAnimation(zoomin2);
 		animationSet3.addAnimation(alpha);
 		animationSet3.setFillAfter(true);
 		animationSet3.setAnimationListener(new AnimationListener() {
+
+			@Override
+			public void onAnimationStart(Animation arg0) {
+
+			}
+
+			@Override
+			public void onAnimationRepeat(Animation arg0) {
+			}
+
+			@Override
+			public void onAnimationEnd(Animation arg0) {
+
+				if(!isFinished){
+					Message msg =  Message.obtain();
+					msg.what = 1;
+					splashHandler.sendMessageDelayed(msg, 2000);
+				}
+			}
+		});
+		
+		zoomin_right.setAnimationListener(new AnimationListener() {
+
+			@Override
+			public void onAnimationStart(Animation arg0) {
+
+			}
+
+			@Override
+			public void onAnimationRepeat(Animation arg0) {
+			}
+
+			@Override
+			public void onAnimationEnd(Animation arg0) {
+
+				if(!isFinished){
+					Message msg =  Message.obtain();
+					msg.what = 1;
+					splashHandler.sendMessageDelayed(msg, 2000);
+				}
+			}
+		});
+		
+		zoomin_left.setAnimationListener(new AnimationListener() {
 
 			@Override
 			public void onAnimationStart(Animation arg0) {
@@ -143,51 +189,51 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 
 			switch (i+1) {
 			case 1:
-				book_1.setTag(i);
+				book_1.setTag(1);
 				book_1.setBackgroundDrawable(d);
 				break;
 			case 2:
-				book_2.setTag(i);
+				book_2.setTag(2);
 				book_2.setBackgroundDrawable(d);
 				break;
 			case 3:
-				book_3.setTag(i);
+				book_3.setTag(3);
 				book_3.setBackgroundDrawable(d);
 				break;
 			case 4:
-				book_4.setTag(i);
+				book_4.setTag(4);
 				book_4.setBackgroundDrawable(d);
 				break;
 			case 5:
-				book_5.setTag(i);
+				book_5.setTag(5);
 				book_5.setBackgroundDrawable(d);
 				break;
 			case 6:
-				book_6.setTag(i);
+				book_6.setTag(6);
 				book_6.setBackgroundDrawable(d);
 				break;
 			case 7:
-				book_7.setTag(i);
+				book_7.setTag(7);
 				book_7.setBackgroundDrawable(d);
 				break;
 			case 8:
-				book_8.setTag(i);
+				book_8.setTag(8);
 				book_8.setBackgroundDrawable(d);
 				break;
 			case 9:
-				book_9.setTag(i);
+				book_9.setTag(9);
 				book_9.setBackgroundDrawable(d);
 				break;
 			case 10:
-				book_10.setTag(i);
+				book_10.setTag(10);
 				book_10.setBackgroundDrawable(d);
 				break;
 			case 11:
-				book_11.setTag(i);
+				book_11.setTag(11);
 				book_11.setBackgroundDrawable(d);
 				break;
 			case 12:
-				book_12.setTag(i);
+				book_12.setTag(12);
 				book_12.setBackgroundDrawable(d);
 				break;
 			default :
@@ -227,7 +273,7 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 	}
 	public static void setMargins (View v, View srcView, int myNewX, int myNewY) {
 		RelativeLayout.LayoutParams absParams = 
-				(RelativeLayout.LayoutParams)srcView.getLayoutParams();
+				(RelativeLayout.LayoutParams)v.getLayoutParams();
 		absParams.leftMargin = myNewX;
 
 		if(!isTablet)
@@ -284,8 +330,8 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 		}
 
 		int selectedPosition = (Integer) v.getTag();
-		pdfFile = books.get(selectedPosition).getPdfFile();
-		book_id = books.get(selectedPosition).getId();
+		pdfFile = books.get(selectedPosition-1).getPdfFile();
+		book_id = books.get(selectedPosition-1).getId();
 
 		v.setVisibility(View.INVISIBLE);
 		img_cover.setBackgroundDrawable(v.getBackground());
@@ -300,11 +346,59 @@ public class MainBookChoice extends MySuperScaler implements OnClickListener {
 		Log.i("", "locations:  X " + x + " ... Y " + y );
 		setMargins(img_cover, v, x, y);
 
+		LayoutParams params = new RelativeLayout.LayoutParams(screen_width, screen_height);
+		img_cover.setLayoutParams(params);
+		
 		animCounter = 0;		
-		moveViewToScreenCenter(img_cover);
+		
+		Log.i(TAG, " TAG ID " + selectedPosition);
+		
+		img_cover.startAnimation(getAnimationById(selectedPosition));
+//		moveViewToScreenCenter(img_cover);
 
 		isClickEnabled = false;
 
+	}
+	
+	private Animation getAnimationById(int id){
+		if(!isTablet)
+		{
+			if(id % 2 == 0)
+				return zoomin_left;
+			else
+				return zoomin_right;
+			
+		}else
+		{
+			switch (id) {
+			case 1:
+				return zoomin_right;
+			case 2:
+				return zoomin_right;
+			case 3:
+				return zoomin_left;
+			case 4:
+				return zoomin_left;
+			case 5:
+				return zoomin_right;
+			case 6:
+				return zoomin_right;
+			case 7:
+				return zoomin_left;
+			case 8:
+				return zoomin_left;
+			case 9:
+				return zoomin_right;
+			case 10:
+				return zoomin_right;
+			case 11:
+				return zoomin_left;
+			case 12:
+				return zoomin_left;
+			default:
+				return zoomin_right;
+			}
+		}
 	}
 	
 	int animCounter = 0;

@@ -34,7 +34,7 @@ import com.pdf.a3malalkouloub.externals.PDFDataBase;
 @SuppressLint("NewApi")
 public class MySuperScaler extends FragmentActivity  {
 	
-	private static final String TAG = MySuperScaler.class.getSimpleName();
+	protected static final String TAG = MySuperScaler.class.getSimpleName();
 	public static float scale ;
 	public static boolean scaled = false;
 	
