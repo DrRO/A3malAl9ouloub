@@ -17,11 +17,6 @@ import android.util.Log;
 
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
-/**
- * AlMoufasserAlSaghir
- * @author HICHEM LAROUSSI - RAMI TRABELSI
- * Copyright (c) 2014 Zad Group. All rights reserved.
- */
 
 public class PDFDataBase extends SQLiteAssetHelper {
 
